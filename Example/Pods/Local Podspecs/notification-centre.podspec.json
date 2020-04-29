@@ -1,9 +1,9 @@
 {
   "name": "notification-centre",
   "version": "0.1.0",
-  "summary": "A short description of notification-centre.",
-  "description": "TODO: Add long description of the pod here.",
-  "homepage": "https://github.com/Richard Fisk/notification-centre",
+  "summary": "notification-centre proof of concept",
+  "description": "Proof of concept for server driven UIs, using the notification centre domain",
+  "homepage": "https://github.com/richardpFisk/ios-poc",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -12,11 +12,22 @@
     "Richard Fisk": "rfisk@seek.com.au"
   },
   "source": {
-    "git": "https://github.com/Richard Fisk/notification-centre.git",
+    "git": "git@github.com:richardPFisk/ios-poc.git",
     "tag": "0.1.0"
   },
   "platforms": {
-    "ios": "8.0"
+    "ios": "13.4"
   },
-  "source_files": "notification-centre/Classes/**/*"
+  "source_files": "notification-centre/Classes/**/*",
+  "frameworks": "SwiftUI",
+  "dependencies": {
+    "URLImage": [
+
+    ],
+    "AWSAppSync": [
+
+    ]
+  },
+  "swift_versions": "4.0",
+  "swift_version": "4.0"
 }

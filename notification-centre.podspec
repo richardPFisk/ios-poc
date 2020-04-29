@@ -37,5 +37,6 @@ Pod::Spec.new do |s|
   # s.public_header_files = 'Pod/Classes/**/*.h'
    s.frameworks = 'SwiftUI'
    s.dependency 'URLImage'
+   s.dependency 'AWSAppSync'
    s.swift_versions = '4.0'
 end

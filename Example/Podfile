@@ -9,5 +9,6 @@ target 'notification-centre_Example' do
     pod 'Quick', '~> 1.2.0'
     pod 'Nimble', '~> 7.0'
     pod 'URLImage'
+    pod 'AWSAppSync'
   end
 end

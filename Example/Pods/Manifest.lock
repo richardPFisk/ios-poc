@@ -1,10 +1,26 @@
 PODS:
+  - AppSyncRealTimeClient (1.1.6):
+    - Starscream (= 3.0.6)
+  - AWSAppSync (3.1.2):
+    - AppSyncRealTimeClient (~> 1.1)
+    - AWSCore (~> 2.13.0)
+    - ReachabilitySwift (~> 5.0.0)
+    - SQLite.swift (~> 0.12.2)
+  - AWSCore (2.13.2)
   - Nimble (7.3.4)
-  - notification-centre (0.1.0)
+  - notification-centre (0.1.0):
+    - AWSAppSync
+    - URLImage
   - Quick (1.2.0)
+  - ReachabilitySwift (5.0.0)
+  - SQLite.swift (0.12.2):
+    - SQLite.swift/standard (= 0.12.2)
+  - SQLite.swift/standard (0.12.2)
+  - Starscream (3.0.6)
   - URLImage (0.9.15)
 
 DEPENDENCIES:
+  - AWSAppSync
   - Nimble (~> 7.0)
   - notification-centre (from `../`)
   - Quick (~> 1.2.0)
@@ -12,8 +28,14 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - AppSyncRealTimeClient
+    - AWSAppSync
+    - AWSCore
     - Nimble
     - Quick
+    - ReachabilitySwift
+    - SQLite.swift
+    - Starscream
     - URLImage
 
 EXTERNAL SOURCES:
@@ -21,11 +43,17 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
+  AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
+  AWSAppSync: 4b91c48712913ca4f2bb38273280190e65d59a45
+  AWSCore: 8e878a5b1b99cdf3d7df0c1c86be0bfcd6294c11
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  notification-centre: d306d8ef4ff0e216d4eb4ab35db87b1b9bcfa1d1
+  notification-centre: 8efa2352afe513c70868d4c77577b2787af49099
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   URLImage: 1adef9b81f071fc2fc13a1a87ff882c0a694d48b
 
-PODFILE CHECKSUM: 443ae7d8cec2c47984ae5973ffeef2d54219cd14
+PODFILE CHECKSUM: 4d21a63b2f2a89b430456392b9539b8af950b11b
 
 COCOAPODS: 1.9.1
