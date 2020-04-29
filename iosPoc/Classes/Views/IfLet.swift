@@ -1,6 +1,5 @@
 //
 //  IfLet.swift
-//  InfiniteScrollTutorial
 //
 //  Created by Richard Fisk on 28/4/20.
 //  Copyright © 2020 mac. All rights reserved.
