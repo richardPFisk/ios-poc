@@ -8,16 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		3450EE3A110092779BD0AF26 /* Pods_notification_centre_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A80955DBF62DD0524981F1C7 /* Pods_notification_centre_Example.framework */; };
-		38F813F0245907720062E99E /* NotificationJobView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813E6245907710062E99E /* NotificationJobView.swift */; };
-		38F813F1245907720062E99E /* InfiniteScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813E7245907710062E99E /* InfiniteScrollView.swift */; };
-		38F813F2245907720062E99E /* CircleImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813E8245907710062E99E /* CircleImageView.swift */; };
-		38F813F3245907720062E99E /* ApplicationViewedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813E9245907710062E99E /* ApplicationViewedView.swift */; };
-		38F813F4245907720062E99E /* IfLet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813EA245907720062E99E /* IfLet.swift */; };
-		38F813F5245907720062E99E /* NewSavedSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813EB245907720062E99E /* NewSavedSearchView.swift */; };
-		38F813F6245907720062E99E /* NotificationCentreQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813EC245907720062E99E /* NotificationCentreQuery.swift */; };
 		38F813F7245907720062E99E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813ED245907720062E99E /* SceneDelegate.swift */; };
-		38F813F8245907720062E99E /* ListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813EE245907720062E99E /* ListData.swift */; };
-		38F813F9245907720062E99E /* NotificationCentreQueryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F813EF245907720062E99E /* NotificationCentreQueryClient.swift */; };
+		38F8141324590BDD0062E99E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 38F8141224590BDD0062E99E /* Info.plist */; };
 		607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD51AFB9204008FA782 /* AppDelegate.swift */; };
 		607FACD81AFB9204008FA782 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 607FACD71AFB9204008FA782 /* ViewController.swift */; };
 		607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 607FACD91AFB9204008FA782 /* Main.storyboard */; };
@@ -40,16 +32,8 @@
 /* Begin PBXFileReference section */
 		20751D4A22A79FF7C717F0BD /* Pods-notification-centre_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification-centre_Tests.release.xcconfig"; path = "Target Support Files/Pods-notification-centre_Tests/Pods-notification-centre_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		27CBBF8D3A3C0770ACCE6158 /* Pods_notification_centre_Tests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_notification_centre_Tests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		38F813E6245907710062E99E /* NotificationJobView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationJobView.swift; path = "notification-centre/NotificationJobView.swift"; sourceTree = "<group>"; };
-		38F813E7245907710062E99E /* InfiniteScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = InfiniteScrollView.swift; path = "notification-centre/InfiniteScrollView.swift"; sourceTree = "<group>"; };
-		38F813E8245907710062E99E /* CircleImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CircleImageView.swift; path = "notification-centre/CircleImageView.swift"; sourceTree = "<group>"; };
-		38F813E9245907710062E99E /* ApplicationViewedView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ApplicationViewedView.swift; path = "notification-centre/ApplicationViewedView.swift"; sourceTree = "<group>"; };
-		38F813EA245907720062E99E /* IfLet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = IfLet.swift; path = "notification-centre/IfLet.swift"; sourceTree = "<group>"; };
-		38F813EB245907720062E99E /* NewSavedSearchView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NewSavedSearchView.swift; path = "notification-centre/NewSavedSearchView.swift"; sourceTree = "<group>"; };
-		38F813EC245907720062E99E /* NotificationCentreQuery.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCentreQuery.swift; path = "notification-centre/NotificationCentreQuery.swift"; sourceTree = "<group>"; };
-		38F813ED245907720062E99E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = "notification-centre/SceneDelegate.swift"; sourceTree = "<group>"; };
-		38F813EE245907720062E99E /* ListData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ListData.swift; path = "notification-centre/ListData.swift"; sourceTree = "<group>"; };
-		38F813EF245907720062E99E /* NotificationCentreQueryClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationCentreQueryClient.swift; path = "notification-centre/NotificationCentreQueryClient.swift"; sourceTree = "<group>"; };
+		38F813ED245907720062E99E /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		38F8141224590BDD0062E99E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		396116BDC360816B3027964F /* Pods-notification-centre_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification-centre_Example.release.xcconfig"; path = "Target Support Files/Pods-notification-centre_Example/Pods-notification-centre_Example.release.xcconfig"; sourceTree = "<group>"; };
 		3FD4B4373C1CC2272A456605 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		47DDE95490C1E4122B4DF498 /* Pods-notification-centre_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification-centre_Tests.debug.xcconfig"; path = "Target Support Files/Pods-notification-centre_Tests/Pods-notification-centre_Tests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -103,16 +87,6 @@
 		607FACC71AFB9204008FA782 = {
 			isa = PBXGroup;
 			children = (
-				38F813E9245907710062E99E /* ApplicationViewedView.swift */,
-				38F813E8245907710062E99E /* CircleImageView.swift */,
-				38F813EA245907720062E99E /* IfLet.swift */,
-				38F813E7245907710062E99E /* InfiniteScrollView.swift */,
-				38F813EE245907720062E99E /* ListData.swift */,
-				38F813EB245907720062E99E /* NewSavedSearchView.swift */,
-				38F813EC245907720062E99E /* NotificationCentreQuery.swift */,
-				38F813EF245907720062E99E /* NotificationCentreQueryClient.swift */,
-				38F813E6245907710062E99E /* NotificationJobView.swift */,
-				38F813ED245907720062E99E /* SceneDelegate.swift */,
 				607FACF51AFB993E008FA782 /* Podspec Metadata */,
 				607FACD21AFB9204008FA782 /* Example for notification-centre */,
 				607FACE81AFB9204008FA782 /* Tests */,
@@ -136,10 +110,12 @@
 			children = (
 				607FACD51AFB9204008FA782 /* AppDelegate.swift */,
 				607FACD71AFB9204008FA782 /* ViewController.swift */,
+				38F813ED245907720062E99E /* SceneDelegate.swift */,
 				607FACD91AFB9204008FA782 /* Main.storyboard */,
 				607FACDC1AFB9204008FA782 /* Images.xcassets */,
 				607FACDE1AFB9204008FA782 /* LaunchScreen.xib */,
 				607FACD31AFB9204008FA782 /* Supporting Files */,
+				38F8141224590BDD0062E99E /* Info.plist */,
 			);
 			name = "Example for notification-centre";
 			path = "notification-centre";
@@ -277,6 +253,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38F8141324590BDD0062E99E /* Info.plist in Resources */,
 				607FACDB1AFB9204008FA782 /* Main.storyboard in Resources */,
 				607FACE01AFB9204008FA782 /* LaunchScreen.xib in Resources */,
 				607FACDD1AFB9204008FA782 /* Images.xcassets in Resources */,
@@ -384,18 +361,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38F813F4245907720062E99E /* IfLet.swift in Sources */,
-				38F813F5245907720062E99E /* NewSavedSearchView.swift in Sources */,
 				607FACD81AFB9204008FA782 /* ViewController.swift in Sources */,
-				38F813F3245907720062E99E /* ApplicationViewedView.swift in Sources */,
 				607FACD61AFB9204008FA782 /* AppDelegate.swift in Sources */,
 				38F813F7245907720062E99E /* SceneDelegate.swift in Sources */,
-				38F813F0245907720062E99E /* NotificationJobView.swift in Sources */,
-				38F813F9245907720062E99E /* NotificationCentreQueryClient.swift in Sources */,
-				38F813F8245907720062E99E /* ListData.swift in Sources */,
-				38F813F2245907720062E99E /* CircleImageView.swift in Sources */,
-				38F813F6245907720062E99E /* NotificationCentreQuery.swift in Sources */,
-				38F813F1245907720062E99E /* InfiniteScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
