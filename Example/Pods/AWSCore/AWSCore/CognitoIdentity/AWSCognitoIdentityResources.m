@@ -1,5 +1,5 @@
 //
-// Copyright 2010-2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2010-2019 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 //
 // Licensed under the Apache License, Version 2.0 (the "License").
 // You may not use this file except in compliance with the License.
@@ -86,7 +86,7 @@
         {\"shape\":\"InternalErrorException\"},\
         {\"shape\":\"LimitExceededException\"}\
       ],\
-      \"documentation\":\"<p>Creates a new identity pool. The identity pool is a store of user identity information that is specific to your AWS account. The keys for <code>SupportedLoginProviders</code> are as follows:</p> <ul> <li> <p>Facebook: <code>graph.facebook.com</code> </p> </li> <li> <p>Google: <code>accounts.google.com</code> </p> </li> <li> <p>Amazon: <code>www.amazon.com</code> </p> </li> <li> <p>Twitter: <code>api.twitter.com</code> </p> </li> <li> <p>Digits: <code>www.digits.com</code> </p> </li> </ul> <p>You must use AWS Developer credentials to call this API.</p>\"\
+      \"documentation\":\"<p>Creates a new identity pool. The identity pool is a store of user identity information that is specific to your AWS account. The limit on identity pools is 60 per account. The keys for <code>SupportedLoginProviders</code> are as follows:</p> <ul> <li> <p>Facebook: <code>graph.facebook.com</code> </p> </li> <li> <p>Google: <code>accounts.google.com</code> </p> </li> <li> <p>Amazon: <code>www.amazon.com</code> </p> </li> <li> <p>Twitter: <code>api.twitter.com</code> </p> </li> <li> <p>Digits: <code>www.digits.com</code> </p> </li> </ul> <p>You must use AWS Developer credentials to call this API.</p>\"\
     },\
     \"DeleteIdentities\":{\
       \"name\":\"DeleteIdentities\",\
@@ -475,7 +475,6 @@
       \"max\":128,\
       \"min\":1\
     },\
-    \"ClassicFlow\":{\"type\":\"boolean\"},\
     \"CognitoIdentityProvider\":{\
       \"type\":\"structure\",\
       \"members\":{\
@@ -537,10 +536,6 @@
         \"AllowUnauthenticatedIdentities\":{\
           \"shape\":\"IdentityPoolUnauthenticated\",\
           \"documentation\":\"<p>TRUE if the identity pool supports unauthenticated logins.</p>\"\
-        },\
-        \"AllowClassicFlow\":{\
-          \"shape\":\"ClassicFlow\",\
-          \"documentation\":\"<p>Enables or disables the Basic (Classic) authentication flow. For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/authentication-flow.html\\\">Identity Pools (Federated Identities) Authentication Flow</a> in the <i>Amazon Cognito Developer Guide</i>.</p>\"\
         },\
         \"SupportedLoginProviders\":{\
           \"shape\":\"IdentityProviders\",\
@@ -802,7 +797,7 @@
         },\
         \"TokenDuration\":{\
           \"shape\":\"TokenDuration\",\
-          \"documentation\":\"<p>The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary AWS credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your AWS resources for the token's duration.</p> <note> <p>Please provide for a small grace period, usually no more than 5 minutes, to account for clock skew.</p> </note>\"\
+          \"documentation\":\"<p>The expiration time of the token, in seconds. You can specify a custom expiration time for the token so that you can cache it. If you don't provide an expiration time, the token is valid for 15 minutes. You can exchange the token with Amazon STS for temporary AWS credentials, which are valid for a maximum of one hour. The maximum token duration you can set is 24 hours. You should take care in setting the expiration time for a token, as there are significant security implications: an attacker could use a leaked token to access your AWS resources for the token's duration.</p>\"\
         }\
       },\
       \"documentation\":\"<p>Input to the <code>GetOpenIdTokenForDeveloperIdentity</code> action.</p>\"\
@@ -909,10 +904,6 @@
           \"shape\":\"IdentityPoolUnauthenticated\",\
           \"documentation\":\"<p>TRUE if the identity pool supports unauthenticated logins.</p>\"\
         },\
-        \"AllowClassicFlow\":{\
-          \"shape\":\"ClassicFlow\",\
-          \"documentation\":\"<p>Enables or disables the Basic (Classic) authentication flow. For more information, see <a href=\\\"https://docs.aws.amazon.com/cognito/latest/developerguide/authentication-flow.html\\\">Identity Pools (Federated Identities) Authentication Flow</a> in the <i>Amazon Cognito Developer Guide</i>.</p>\"\
-        },\
         \"SupportedLoginProviders\":{\
           \"shape\":\"IdentityProviders\",\
           \"documentation\":\"<p>Optional key:value pairs mapping provider names to provider app IDs.</p>\"\
@@ -950,7 +941,7 @@
       \"type\":\"string\",\
       \"max\":128,\
       \"min\":1,\
-      \"pattern\":\"[\\\\w\\\\s+=,.@-]+\"\
+      \"pattern\":\"[\\\\w ]+\"\
     },\
     \"IdentityPoolShortDescription\":{\
       \"type\":\"structure\",\
@@ -1412,10 +1403,7 @@
     },\
     \"TagResourceInput\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"ResourceArn\",\
-        \"Tags\"\
-      ],\
+      \"required\":[\"ResourceArn\"],\
       \"members\":{\
         \"ResourceArn\":{\
           \"shape\":\"ARNString\",\
@@ -1525,10 +1513,7 @@
     },\
     \"UntagResourceInput\":{\
       \"type\":\"structure\",\
-      \"required\":[\
-        \"ResourceArn\",\
-        \"TagKeys\"\
-      ],\
+      \"required\":[\"ResourceArn\"],\
       \"members\":{\
         \"ResourceArn\":{\
           \"shape\":\"ARNString\",\

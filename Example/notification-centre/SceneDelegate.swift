@@ -1,6 +1,5 @@
 //
 //  SceneDelegate.swift
-//  InfiniteScrollTutorial
 //
 //  Created by mac on 25/09/2019.
 //  Copyright © 2019 mac. All rights reserved.
@@ -8,7 +7,7 @@
 
 import UIKit
 import SwiftUI
-import notification_centre
+import iosPoc
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -21,7 +20,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = notification_centre.InfiniteScrollView()
+        let contentView = iosPoc.InfiniteScrollView()
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {

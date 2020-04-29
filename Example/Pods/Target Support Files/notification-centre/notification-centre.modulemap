@@ -1,6 +1,0 @@
-framework module notification_centre {
-  umbrella header "notification-centre-umbrella.h"
-
-  export *
-  module * { export * }
-}

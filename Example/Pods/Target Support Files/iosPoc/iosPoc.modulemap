@@ -1,0 +1,6 @@
+framework module iosPoc {
+  umbrella header "iosPoc-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -19,8 +19,7 @@
 FOUNDATION_EXPORT NSString *const AWSNetworkingErrorDomain;
 typedef NS_ENUM(NSInteger, AWSNetworkingErrorType) {
     AWSNetworkingErrorUnknown,
-    AWSNetworkingErrorCancelled,
-    AWSNetworkingErrorSessionInvalid
+    AWSNetworkingErrorCancelled
 };
 
 typedef NS_ENUM(NSInteger, AWSNetworkingRetryType) {
@@ -31,9 +30,6 @@ typedef NS_ENUM(NSInteger, AWSNetworkingRetryType) {
     AWSNetworkingRetryTypeShouldCorrectClockSkewAndRetry,
     AWSNetworkingRetryTypeResetStreamAndRetry
 };
-
-/** UserInfo dictionary key for response errors */
-FOUNDATION_EXPORT NSString *const AWSResponseObjectErrorUserInfoKey;
 
 @class AWSNetworkingConfiguration;
 @class AWSNetworkingRequest;

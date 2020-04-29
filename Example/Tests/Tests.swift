@@ -2,7 +2,7 @@
 
 import Quick
 import Nimble
-import notification_centre
+import iosPoc
 
 class TableOfContentsSpec: QuickSpec {
     override func spec() {

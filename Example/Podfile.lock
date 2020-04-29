@@ -1,59 +1,51 @@
 PODS:
-  - AppSyncRealTimeClient (1.1.6):
-    - Starscream (= 3.0.6)
-  - AWSAppSync (3.1.2):
-    - AppSyncRealTimeClient (~> 1.1)
-    - AWSCore (~> 2.13.0)
-    - ReachabilitySwift (~> 5.0.0)
-    - SQLite.swift (~> 0.12.2)
-  - AWSCore (2.13.2)
-  - Nimble (7.3.4)
-  - notification-centre (0.1.0):
+  - AWSAppSync (2.13.1):
+    - AWSCore (~> 2.9.0)
+    - ReachabilitySwift (= 4.3.0)
+    - SQLite.swift (= 0.11.6)
+  - AWSCore (2.9.10)
+  - iosPoc (0.1.0):
     - AWSAppSync
     - URLImage
+  - Nimble (7.3.4)
   - Quick (1.2.0)
-  - ReachabilitySwift (5.0.0)
-  - SQLite.swift (0.12.2):
-    - SQLite.swift/standard (= 0.12.2)
-  - SQLite.swift/standard (0.12.2)
-  - Starscream (3.0.6)
+  - ReachabilitySwift (4.3.0)
+  - SQLite.swift (0.11.6):
+    - SQLite.swift/standard (= 0.11.6)
+  - SQLite.swift/standard (0.11.6)
   - URLImage (0.9.15)
 
 DEPENDENCIES:
-  - AWSAppSync
+  - AWSAppSync (~> 2.13.1)
+  - iosPoc (from `../`)
   - Nimble (~> 7.0)
-  - notification-centre (from `../`)
   - Quick (~> 1.2.0)
-  - URLImage
+  - URLImage (~> 0.9.15)
 
 SPEC REPOS:
   trunk:
-    - AppSyncRealTimeClient
     - AWSAppSync
     - AWSCore
     - Nimble
     - Quick
     - ReachabilitySwift
     - SQLite.swift
-    - Starscream
     - URLImage
 
 EXTERNAL SOURCES:
-  notification-centre:
+  iosPoc:
     :path: "../"
 
 SPEC CHECKSUMS:
-  AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
-  AWSAppSync: 4b91c48712913ca4f2bb38273280190e65d59a45
-  AWSCore: 8e878a5b1b99cdf3d7df0c1c86be0bfcd6294c11
+  AWSAppSync: 6dd42e4c25ff01cfa652392bdc080bb9ec2b6d5f
+  AWSCore: 22b6bbc6761ca9981d878155d11bc02edd681a64
+  iosPoc: c4c06d8a14d7eb8f36fa069b20d033128b6f4b3e
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
-  notification-centre: 8efa2352afe513c70868d4c77577b2787af49099
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
-  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
-  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SQLite.swift: 46d890be8601964454bd3392527f863d1b802d45
   URLImage: 1adef9b81f071fc2fc13a1a87ff882c0a694d48b
 
-PODFILE CHECKSUM: 4d21a63b2f2a89b430456392b9539b8af950b11b
+PODFILE CHECKSUM: d440157cb6713e7f5a46825bb606d8189ef8f6f1
 
 COCOAPODS: 1.9.1

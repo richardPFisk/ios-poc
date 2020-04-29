@@ -1,7 +1,7 @@
 use_frameworks!
 
 target 'notification-centre_Example' do
-  pod 'notification-centre', :path => '../'
+  pod 'iosPoc', :path => '../'
 
   target 'notification-centre_Tests' do
     inherit! :search_paths
