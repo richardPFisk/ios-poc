@@ -1,9 +1,9 @@
-# notification-centre
+# iosPoc
 
-[![CI Status](https://img.shields.io/travis/Richard Fisk/notification-centre.svg?style=flat)](https://travis-ci.org/Richard Fisk/notification-centre)
-[![Version](https://img.shields.io/cocoapods/v/notification-centre.svg?style=flat)](https://cocoapods.org/pods/notification-centre)
-[![License](https://img.shields.io/cocoapods/l/notification-centre.svg?style=flat)](https://cocoapods.org/pods/notification-centre)
-[![Platform](https://img.shields.io/cocoapods/p/notification-centre.svg?style=flat)](https://cocoapods.org/pods/notification-centre)
+[![CI Status](https://img.shields.io/travis/richardpfisk/iosPoc.svg?style=flat)](https://travis-ci.org/Richard Fisk/notification-centre)
+[![Version](https://img.shields.io/cocoapods/v/iosPoc.svg?style=flat)](https://cocoapods.org/pods/iosPoc)
+[![License](https://img.shields.io/cocoapods/l/iosPoc.svg?style=flat)](https://cocoapods.org/pods/iosPoc)
+[![Platform](https://img.shields.io/cocoapods/p/iosPoc.svg?style=flat)](https://cocoapods.org/pods/iosPoc)
 
 ## Example
 
@@ -13,7 +13,7 @@ To run the example project, clone the repo, and run `pod install` from the Examp
 
 ## Installation
 
-notification-centre is available through [CocoaPods](https://cocoapods.org). To install
+iosPoc is available through [CocoaPods](https://cocoapods.org). To install
 it, simply add the following line to your Podfile:
 
 ```ruby
@@ -26,4 +26,4 @@ Richard Fisk, rfisk@seek.com.au
 
 ## License
 
-notification-centre is available under the MIT license. See the LICENSE file for more info.
+iosPoc is available under the MIT license. See the LICENSE file for more info.
