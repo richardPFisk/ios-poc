@@ -1,0 +1,22 @@
+{
+  "name": "notification-centre",
+  "version": "0.1.0",
+  "summary": "A short description of notification-centre.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/Richard Fisk/notification-centre",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "Richard Fisk": "rfisk@seek.com.au"
+  },
+  "source": {
+    "git": "https://github.com/Richard Fisk/notification-centre.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "notification-centre/Classes/**/*"
+}

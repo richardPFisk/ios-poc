@@ -1,0 +1,6 @@
+framework module Pods_notification_centre_Example {
+  umbrella header "Pods-notification-centre_Example-umbrella.h"
+
+  export *
+  module * { export * }
+}
