@@ -47,7 +47,7 @@
 		607FACEB1AFB9204008FA782 /* Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tests.swift; sourceTree = "<group>"; };
 		9977C194807A365A230C5015 /* Pods-notification-centre_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-notification-centre_Example.debug.xcconfig"; path = "Target Support Files/Pods-notification-centre_Example/Pods-notification-centre_Example.debug.xcconfig"; sourceTree = "<group>"; };
 		A80955DBF62DD0524981F1C7 /* Pods_notification_centre_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_notification_centre_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C011B350C8610044A77D5300 /* notification-centre.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = "notification-centre.podspec"; path = "../notification-centre.podspec"; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		C011B350C8610044A77D5300 /* iosPoc.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = iosPoc.podspec; path = ../iosPoc.podspec; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		C6DCE8EEA844216844E3242A /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,7 +146,7 @@
 		607FACF51AFB993E008FA782 /* Podspec Metadata */ = {
 			isa = PBXGroup;
 			children = (
-				C011B350C8610044A77D5300 /* notification-centre.podspec */,
+				C011B350C8610044A77D5300 /* iosPoc.podspec */,
 				3FD4B4373C1CC2272A456605 /* README.md */,
 				C6DCE8EEA844216844E3242A /* LICENSE */,
 			);
