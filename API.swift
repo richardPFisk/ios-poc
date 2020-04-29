@@ -4,7 +4,7 @@ import AWSAppSync
 
 public final class NotificationCentreQuery: GraphQLQuery {
   public static let operationString =
-    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        id\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
+    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          date\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          date\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
 
   public var first: Int?
   public var after: String?
@@ -231,7 +231,6 @@ public final class NotificationCentreQuery: GraphQLQuery {
               variants: ["ApplicationViewedNotification": AsApplicationViewedNotification.selections, "NewSavedSearchNotification": AsNewSavedSearchNotification.selections],
               default: [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               ]
             )
           ]
@@ -242,12 +241,12 @@ public final class NotificationCentreQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public static func makeApplicationViewedNotification(id: GraphQLID, viewed: Bool, job: AsApplicationViewedNotification.Job? = nil) -> Node {
-            return Node(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "job": job.flatMap { $0.snapshot }])
+          public static func makeApplicationViewedNotification(id: GraphQLID, viewed: Bool, date: String? = nil, job: AsApplicationViewedNotification.Job? = nil) -> Node {
+            return Node(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "date": date, "job": job.flatMap { $0.snapshot }])
           }
 
-          public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, jobs: [AsNewSavedSearchNotification.Job]) -> Node {
-            return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "jobs": jobs.map { $0.snapshot }])
+          public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, date: String? = nil, jobs: [AsNewSavedSearchNotification.Job]) -> Node {
+            return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date, "jobs": jobs.map { $0.snapshot }])
           }
 
           public var __typename: String {
@@ -256,15 +255,6 @@ public final class NotificationCentreQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "__typename")
-            }
-          }
-
-          public var id: GraphQLID {
-            get {
-              return snapshot["id"]! as! GraphQLID
-            }
-            set {
-              snapshot.updateValue(newValue, forKey: "id")
             }
           }
 
@@ -285,8 +275,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("date", type: .scalar(String.self)),
               GraphQLField("job", type: .object(Job.selections)),
             ]
 
@@ -296,8 +286,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, viewed: Bool, job: Job? = nil) {
-              self.init(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "job": job.flatMap { $0.snapshot }])
+            public init(id: GraphQLID, viewed: Bool, date: String? = nil, job: Job? = nil) {
+              self.init(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "date": date, "job": job.flatMap { $0.snapshot }])
             }
 
             public var __typename: String {
@@ -324,6 +314,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "viewed")
+              }
+            }
+
+            public var date: String? {
+              get {
+                return snapshot["date"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "date")
               }
             }
 
@@ -515,8 +514,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("date", type: .scalar(String.self)),
               GraphQLField("jobs", type: .nonNull(.list(.nonNull(.object(Job.selections))))),
             ]
 
@@ -526,8 +525,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, viewed: Bool, jobs: [Job]) {
-              self.init(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "jobs": jobs.map { $0.snapshot }])
+            public init(id: GraphQLID, viewed: Bool, date: String? = nil, jobs: [Job]) {
+              self.init(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date, "jobs": jobs.map { $0.snapshot }])
             }
 
             public var __typename: String {
@@ -554,6 +553,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "viewed")
+              }
+            }
+
+            public var date: String? {
+              get {
+                return snapshot["date"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "date")
               }
             }
 

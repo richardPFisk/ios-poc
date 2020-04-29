@@ -22,7 +22,8 @@ class InfiniteScrollViewModel: ObservableObject {
         if let nodeValue = node {
             let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
             let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
-            return NotificationViewModel(applicationViewedViewModel: appViewed, asNewViewModel: asNew)
+            
+            return NotificationViewModel(id: nodeValue.id, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
         }
         return nil
     }
@@ -31,11 +32,15 @@ class InfiniteScrollViewModel: ObservableObject {
         if self.pageInfo.hasNextPage {
             GraphQLPocCLient.getNotifications(first: 10, after: self.pageInfo.endCursor) { (result, error) in
                 if case .some(let resultValue) = result {
-                    let newItems: [ListData<NotificationViewModel>] = resultValue.edges.enumerated().map { (index, element) in
-                        let notificationViewModel = NotificationViewModel(applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(element.node?.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(element.node?.asNewSavedSearchNotification))
-                        return ListData(value: notificationViewModel, id: index + self.items.count)
+                    let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
+                        if let node = element.node {
+                            let notificationViewModel = NotificationViewModel(id: node.id, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
+                            return ListData(value: notificationViewModel, id: index + self.items.count)
+                        }
+                        return nil
                     }
-                    self.items.append(contentsOf: newItems)
+
+                    self.items.append(contentsOf: newItems.compactMap { $0 })
                     
                     self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
                 }

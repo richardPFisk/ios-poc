@@ -17,7 +17,13 @@ public struct InfiniteScrollView: View {
                             .frame(width: geo.size.width)
                         
                         NewSavedSearchView(listItem.value.asNewViewModel)
+                            .onAppear {
+                                listItem.value.notificationUpdateViewed()
+                            }
                         ApplicationViewedView(listItem.value.applicationViewedViewModel)
+                            .onAppear {
+                                listItem.value.notificationUpdateViewed()
+                            }
 
                         
                     }.onAppear {

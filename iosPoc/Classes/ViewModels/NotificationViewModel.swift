@@ -61,6 +61,11 @@ struct ApplicationViewedViewModel {
 }
 
 struct NotificationViewModel {
+    var id: String
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
+    
+    func notificationUpdateViewed() {
+        GraphQLPocCLient.notificationUpdateViewed(id: self.id)
+    }
 }
