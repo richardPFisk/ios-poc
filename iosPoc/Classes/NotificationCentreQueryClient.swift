@@ -23,7 +23,7 @@ struct GraphQLPocCLient {
         let query = NotificationCentreQuery(first: first, after: after)
         graphQLClient?.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, queue: .main) { (result, error) in
             if let errorValue = error {
-                print("error {}", errorValue)
+                print("error \(errorValue)")
                 
             }
             if let handler = resultHandler {
@@ -36,7 +36,9 @@ struct GraphQLPocCLient {
         let graphQLClient = getClient()
         let mutation = NotificationUpdateViewedMutation(id: id)
         graphQLClient?.perform(mutation: mutation, queue: DispatchQueue.main, resultHandler: { result, error in
-            print("result {} error {}", result ?? "", error ?? "")
+            if let errorValue = error {
+                print("error \(errorValue)")
+            }
         })
     }
 }
