@@ -1,14 +1,14 @@
 
 import SwiftUI
 
-struct InfiniteScrollView: View {
+public struct InfiniteScrollView: View {
     @ObservedObject var viewModel = InfiniteScrollViewModel()
      
-    init() {
+    public init() {
         self.viewModel.getNewItems(currentListSize: 0)
     }
     
-    var body: some View {
+    public var body: some View {
         GeometryReader { geo in
             List {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
