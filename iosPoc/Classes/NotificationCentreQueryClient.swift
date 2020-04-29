@@ -36,7 +36,7 @@ struct GraphQLPocCLient {
         let graphQLClient = getClient()
         let mutation = NotificationUpdateViewedMutation(id: id)
         graphQLClient?.perform(mutation: mutation, queue: DispatchQueue.main, resultHandler: { result, error in
-            print("result {} error {}", result, error)
+            print("result {} error {}", result ?? "", error ?? "")
         })
     }
 }
