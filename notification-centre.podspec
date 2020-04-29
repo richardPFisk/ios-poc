@@ -9,7 +9,7 @@
 Pod::Spec.new do |s|
   s.name             = 'notification-centre'
   s.version          = '0.1.0'
-  s.summary          = 'A short description of notification-centre.'
+  s.summary          = 'notification-centre proof of concept'
 
 # This description is used to generate tags and improve search results.
 #   * Think: What does it do? Why did you write it? What is the focus?
@@ -17,18 +17,16 @@ Pod::Spec.new do |s|
 #   * Write the description between the DESC delimiters below.
 #   * Finally, don't worry about the indent, CocoaPods strips it!
 
-  s.description      = <<-DESC
-TODO: Add long description of the pod here.
-                       DESC
+  s.description      =  "Proof of concept for server driven UIs, using the notification centre domain"
 
-  s.homepage         = 'https://github.com/Richard Fisk/notification-centre'
+  s.homepage         = 'https://github.com/richardpFisk/ios-poc'
   # s.screenshots     = 'www.example.com/screenshots_1', 'www.example.com/screenshots_2'
   s.license          = { :type => 'MIT', :file => 'LICENSE' }
   s.author           = { 'Richard Fisk' => 'rfisk@seek.com.au' }
-  s.source           = { :git => 'https://github.com/Richard Fisk/notification-centre.git', :tag => s.version.to_s }
+  s.source           = { :git => 'git@github.com:richardPFisk/ios-poc.git', :tag => s.version.to_s }
   # s.social_media_url = 'https://twitter.com/<TWITTER_USERNAME>'
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '13.4'
 
   s.source_files = 'notification-centre/Classes/**/*'
   
@@ -38,5 +36,6 @@ TODO: Add long description of the pod here.
 
   # s.public_header_files = 'Pod/Classes/**/*.h'
   # s.frameworks = 'UIKit', 'MapKit'
-  # s.dependency 'AFNetworking', '~> 2.3'
+   s.dependency 'URLImage'
+   s.swift_versions = '4.0'
 end

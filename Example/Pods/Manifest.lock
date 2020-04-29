@@ -2,16 +2,19 @@ PODS:
   - Nimble (7.3.4)
   - notification-centre (0.1.0)
   - Quick (1.2.0)
+  - URLImage (0.9.15)
 
 DEPENDENCIES:
   - Nimble (~> 7.0)
   - notification-centre (from `../`)
   - Quick (~> 1.2.0)
+  - URLImage
 
 SPEC REPOS:
   trunk:
     - Nimble
     - Quick
+    - URLImage
 
 EXTERNAL SOURCES:
   notification-centre:
@@ -21,7 +24,8 @@ SPEC CHECKSUMS:
   Nimble: 051e3d8912d40138fa5591c78594f95fb172af37
   notification-centre: d306d8ef4ff0e216d4eb4ab35db87b1b9bcfa1d1
   Quick: 58d203b1c5e27fff7229c4c1ae445ad7069a7a08
+  URLImage: 1adef9b81f071fc2fc13a1a87ff882c0a694d48b
 
-PODFILE CHECKSUM: 6b3a8097ffd1431a4c9a9edf6733e2c577ee3340
+PODFILE CHECKSUM: 443ae7d8cec2c47984ae5973ffeef2d54219cd14
 
 COCOAPODS: 1.9.1
