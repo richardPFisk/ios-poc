@@ -61,20 +61,21 @@ struct ApplicationViewedViewModel {
 }
 
 struct NotificationViewModel {
+    let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
+    
     var id: String
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()
+    
     func notificationUpdateViewed() {
-        client.notificationUpdateViewed(id: self.id) { notification, _ in
-          DispatchQueue.main.async {
-//            [weak self] in
+        client.notificationUpdateViewed(id: self.id, dispatchQueue: dispatchQueue) { notification, _ in
+//          DispatchQueue.main.async { [weak self] in
 //              guard let self = self else {
 //                return
 //              }
-//            self.asNewViewModel?.viewed = true
-//            // Update stuff
-          }
+//              self.asNewViewModel?.viewed = true
+//          }
         }
     }
 }

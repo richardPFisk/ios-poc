@@ -19,6 +19,8 @@ class InfiniteScrollViewModel: ObservableObject {
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
     var client = GraphQLPocCLient()
     
+    let dispatchQueue = DispatchQueue(label: "clientRequestQueue", qos: .userInitiated)
+    
     func convertGraphQL(node: SeekNotification.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
             let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
@@ -31,7 +33,7 @@ class InfiniteScrollViewModel: ObservableObject {
     
     func getNewItems(currentListSize: Int) {
         if self.pageInfo.hasNextPage {
-            client.getNotifications(first: 10, after: self.pageInfo.endCursor) { (result, error) in
+            client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
                     let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
                         if let node = element.node {

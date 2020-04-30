@@ -10,7 +10,6 @@ public typealias SeekNotification = NotificationCentreQuery.Data.Notification;
 public typealias NotificationResultHandler = (_ result: SeekNotification?, _ error: Error?) -> Void
 
 struct GraphQLPocCLient {
-    let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
     var graphQLClient: ApolloClient?
     
     init() {
@@ -25,7 +24,7 @@ struct GraphQLPocCLient {
         return graphQLClient
     }
     
-    func getNotifications(first: Int, after: String?, resultHandler: NotificationResultHandler? = nil) {
+    func getNotifications(first: Int, after: String?, dispatchQueue: DispatchQueue, resultHandler: NotificationResultHandler? = nil) {
         
         let query = NotificationCentreQuery(first: first, after: after)
         graphQLClient?.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, queue: dispatchQueue) { (result, error) in
@@ -39,7 +38,7 @@ struct GraphQLPocCLient {
         }
     }
     
-    func notificationUpdateViewed(id: String, resultHandler: NotificationResultHandler? = nil) {
+    func notificationUpdateViewed(id: String, dispatchQueue: DispatchQueue, resultHandler: NotificationResultHandler? = nil) {
         let mutation = NotificationUpdateViewedMutation(id: id)
         graphQLClient?.perform(mutation: mutation, queue: dispatchQueue, resultHandler: { result, error in
             if let errorValue = error {
