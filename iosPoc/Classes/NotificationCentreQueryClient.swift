@@ -10,9 +10,14 @@ public typealias SeekNotification = NotificationCentreQuery.Data.Notification;
 public typealias NotificationResultHandler = (_ result: SeekNotification?, _ error: Error?) -> Void
 
 struct GraphQLPocCLient {
-    static let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
+    let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
+    var graphQLClient: ApolloClient?
     
-    static func getClient() -> ApolloClient? {
+    init() {
+        self.graphQLClient = getClient()
+    }
+    
+    func getClient() -> ApolloClient? {
         guard let url = URL(string: "https://candidate-graphql-api-poc.cloud.seek.com.au/graphql")
         else { return nil }
 
@@ -20,8 +25,8 @@ struct GraphQLPocCLient {
         return graphQLClient
     }
     
-    static func getNotifications(first: Int, after: String?, resultHandler: NotificationResultHandler? = nil) {
-        let graphQLClient = getClient()
+    func getNotifications(first: Int, after: String?, resultHandler: NotificationResultHandler? = nil) {
+        
         let query = NotificationCentreQuery(first: first, after: after)
         graphQLClient?.fetch(query: query, cachePolicy: .fetchIgnoringCacheData, queue: dispatchQueue) { (result, error) in
             if let errorValue = error {
@@ -34,8 +39,7 @@ struct GraphQLPocCLient {
         }
     }
     
-    static func notificationUpdateViewed(id: String, resultHandler: NotificationResultHandler? = nil) {
-        let graphQLClient = getClient()
+    func notificationUpdateViewed(id: String, resultHandler: NotificationResultHandler? = nil) {
         let mutation = NotificationUpdateViewedMutation(id: id)
         graphQLClient?.perform(mutation: mutation, queue: dispatchQueue, resultHandler: { result, error in
             if let errorValue = error {

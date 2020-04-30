@@ -15,8 +15,9 @@ struct PageInfoViewModel {
 
 class InfiniteScrollViewModel: ObservableObject {
     @Published var items: [ListData<NotificationViewModel>] = []
-    
+    @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
+    var client = GraphQLPocCLient()
     
     func convertGraphQL(node: SeekNotification.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
@@ -30,7 +31,7 @@ class InfiniteScrollViewModel: ObservableObject {
     
     func getNewItems(currentListSize: Int) {
         if self.pageInfo.hasNextPage {
-            GraphQLPocCLient.getNotifications(first: 10, after: self.pageInfo.endCursor) { (result, error) in
+            client.getNotifications(first: 10, after: self.pageInfo.endCursor) { (result, error) in
                 if case .some(let resultValue) = result {
                     let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
                         if let node = element.node {
@@ -39,13 +40,23 @@ class InfiniteScrollViewModel: ObservableObject {
                         }
                         return nil
                     }
-                    DispatchQueue.main.async {
-                      self.items.append(contentsOf: newItems.compactMap { $0 })
-                      self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {
+                          return
+                        }
+                        self.items.append(contentsOf: newItems.compactMap { $0 })
+                        self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                        self.isLoading = false
                     }
                 }
                 if case .some(let errorValue) = error {
-                    print("GraphQL error {}", errorValue)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {
+                          return
+                        }
+                        print("GraphQL error {}", errorValue)
+                        self.isLoading = false
+                    }
                 }
             }
         }
