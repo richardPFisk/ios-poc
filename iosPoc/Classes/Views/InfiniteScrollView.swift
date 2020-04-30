@@ -18,7 +18,7 @@ public struct InfiniteScrollView: View {
                         
                         NewSavedSearchView(listItem.value.asNewViewModel)
                             .onAppear {
-                                listItem.value.notificationUpdateViewed()
+                                listItem.value.notificationUpdateViewed() 
                             }
                         ApplicationViewedView(listItem.value.applicationViewedViewModel)
                             .onAppear {

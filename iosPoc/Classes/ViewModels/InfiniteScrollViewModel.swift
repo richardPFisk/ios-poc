@@ -39,10 +39,10 @@ class InfiniteScrollViewModel: ObservableObject {
                         }
                         return nil
                     }
-
-                    self.items.append(contentsOf: newItems.compactMap { $0 })
-                    
-                    self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                    DispatchQueue.main.async {
+                      self.items.append(contentsOf: newItems.compactMap { $0 })
+                      self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                    }
                 }
                 if case .some(let errorValue) = error {
                     print("GraphQL error {}", errorValue)
