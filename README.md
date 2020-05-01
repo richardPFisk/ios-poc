@@ -1,5 +1,7 @@
 # iosPoc
 
+![Pub Sub Scroll](pub-sub-scroll.gif)
+
 [![CI Status](https://img.shields.io/travis/richardpfisk/iosPoc.svg?style=flat)](https://travis-ci.org/Richard Fisk/notification-centre)
 [![Version](https://img.shields.io/cocoapods/v/iosPoc.svg?style=flat)](https://cocoapods.org/pods/iosPoc)
 [![License](https://img.shields.io/cocoapods/l/iosPoc.svg?style=flat)](https://cocoapods.org/pods/iosPoc)
