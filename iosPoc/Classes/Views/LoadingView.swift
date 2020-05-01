@@ -8,44 +8,24 @@
 import Foundation
 import SwiftUI
 
-struct ActivityIndicator: UIViewRepresentable {
-
-    @Binding var isAnimating: Bool
-    let style: UIActivityIndicatorView.Style
-
-    func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
-        return UIActivityIndicatorView(activityIndicatorStyle: style)
-    }
-
-    func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
-        isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
-    }
-}
-
-struct LoadingView<Content>: View where Content: View {
-    var isShowing: Bool
-    var content: () -> Content
+struct LoadingView: View {
 
     var body: some View {
-        GeometryReader { geometry in
-            ZStack(alignment: .center) {
-
-                self.content()
-                    .disabled(self.isShowing)
-                    .blur(radius: self.isShowing ? 3 : 0)
-
-                VStack {
-                    Text("Loading...")
-                    ActivityIndicator(isAnimating: .constant(true), style: .large)
-                }
-                .frame(width: geometry.size.width / 2,
-                       height: geometry.size.height / 5)
-                .background(Color.secondary.colorInvert())
-                .foregroundColor(Color.primary)
-                .cornerRadius(20)
-                .opacity(self.isShowing ? 1 : 0)
-
+        List {
+            ForEach((1...10).reversed(), id: \.self) { index in
+                return VStack {
+                    Text("Your application was viewed")
+                        .font(.headline)
+                        .padding(.all, 8.0)
+                        .frame(width: UIScreen.main.bounds.width)
+                    CircleImageView(text: "Loading...")
+                        .frame(width: 120, height: 120)
+                    Text("Job title here")
+                        .font(.footnote)
+                }.frame(width: UIScreen.main.bounds.width - 60)
             }
-        }
+        }.frame(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height)
+        .disabled(true)
+        .blur(radius: 3)
     }
 }

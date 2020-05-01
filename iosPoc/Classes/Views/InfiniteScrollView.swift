@@ -8,35 +8,39 @@ public struct InfiniteScrollView: View {
         self.viewModel.getNewItems(currentListSize: 0)
     }
     
+    @ViewBuilder
     public var body: some View {
+        if self.viewModel.isLoading {
+            LoadingView()
+        }
+        else {
         GeometryReader { geo in
-            LoadingView(isShowing: self.viewModel.isLoading) {
-                List {
-                    ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
-                        VStack {
-                            Spacer()
-                                .frame(width: geo.size.width)
-                            
-                            NewSavedSearchView(listItem.value.asNewViewModel)
-                                .onAppear {
-                                    listItem.value.notificationUpdateViewed()
-                                }
-                            ApplicationViewedView(listItem.value.applicationViewedViewModel)
-                                .onAppear {
-                                    listItem.value.notificationUpdateViewed()
-                                }
-
-                            
-                        }.onAppear {
-                            let count = self.viewModel.items.count
-                            if index == count-1 {
-                                self.viewModel.getNewItems(currentListSize: count)
+            List {
+                ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
+                    VStack {
+                        Spacer()
+                            .frame(width: geo.size.width)
+                        
+                        NewSavedSearchView(listItem.value.asNewViewModel)
+                            .onAppear {
+                                listItem.value.notificationUpdateViewed()
                             }
+                        ApplicationViewedView(listItem.value.applicationViewedViewModel)
+                            .onAppear {
+                                listItem.value.notificationUpdateViewed()
+                            }
+
+                        
+                    }.onAppear {
+                        let count = self.viewModel.items.count
+                        if index == count-1 {
+                            self.viewModel.getNewItems(currentListSize: count)
                         }
-                        .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
+                    .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }
+        }
         }
     }
 }
