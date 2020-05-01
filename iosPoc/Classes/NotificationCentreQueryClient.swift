@@ -7,7 +7,9 @@ import Foundation
 import AWSAppSync
 
 public typealias SeekNotification = NotificationCentreQuery.Data.Notification;
+public typealias NotificationUpdateViewed = NotificationUpdateViewedMutation.Data.NotificationUpdateViewed;
 public typealias NotificationResultHandler = (_ result: SeekNotification?, _ error: Error?) -> Void
+public typealias NotificationResultMutationHandler = (_ result: NotificationUpdateViewed?, _ error: Error?) -> Void
 
 struct GraphQLPocCLient {
     var graphQLClient: ApolloClient?
@@ -38,11 +40,15 @@ struct GraphQLPocCLient {
         }
     }
     
-    func notificationUpdateViewed(id: String, dispatchQueue: DispatchQueue, resultHandler: NotificationResultHandler? = nil) {
+    func notificationUpdateViewed(id: String, dispatchQueue: DispatchQueue, resultHandler: NotificationResultMutationHandler? = nil) {
         let mutation = NotificationUpdateViewedMutation(id: id)
         graphQLClient?.perform(mutation: mutation, queue: dispatchQueue, resultHandler: { result, error in
             if let errorValue = error {
                 print("error \(errorValue)")
+            }
+            
+            if let handler = resultHandler {
+                handler(result?.data?.notificationUpdateViewed, error)
             }
         })
     }

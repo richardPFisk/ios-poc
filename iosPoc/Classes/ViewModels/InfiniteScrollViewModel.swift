@@ -17,6 +17,7 @@ class InfiniteScrollViewModel: ObservableObject {
     @Published var items: [ListData<NotificationViewModel>] = []
     @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
+    
     var client = GraphQLPocCLient()
     
     let dispatchQueue = DispatchQueue(label: "clientRequestQueue", qos: .userInitiated)
@@ -29,6 +30,18 @@ class InfiniteScrollViewModel: ObservableObject {
             return NotificationViewModel(id: nodeValue.id, viewed: nodeValue.viewed, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
         }
         return nil
+    }
+    
+    func updateViewed(_ id: String, _ index: Int) {
+        client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                guard let self = self else {
+                  return
+                }
+                print("id \(index)")
+                self.items[index].value.viewed = false
+            }
+        }
     }
     
     func getNewItems(currentListSize: Int) {
