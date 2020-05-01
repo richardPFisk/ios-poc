@@ -26,7 +26,7 @@ class InfiniteScrollViewModel: ObservableObject {
             let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
             let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
             
-            return NotificationViewModel(id: nodeValue.id, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
+            return NotificationViewModel(id: nodeValue.id, viewed: nodeValue.viewed, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
         }
         return nil
     }
@@ -37,7 +37,7 @@ class InfiniteScrollViewModel: ObservableObject {
                 if case .some(let resultValue) = result {
                     let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
                         if let node = element.node {
-                            let notificationViewModel = NotificationViewModel(id: node.id, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
+                            let notificationViewModel = NotificationViewModel(id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
                             return ListData(value: notificationViewModel, id: index + self.items.count)
                         }
                         return nil

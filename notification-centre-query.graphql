@@ -15,6 +15,7 @@ query notificationCentre($first: Int, $after: String) {
       node {
         __typename
         id
+	viewed
         ... on ApplicationViewedNotification {
           id
           viewed

@@ -3,6 +3,8 @@ import SwiftUI
 
 public struct InfiniteScrollView: View {
     @ObservedObject var viewModel = InfiniteScrollViewModel()
+    private let viewedColor = Color(red: 245/255.0, green: 245/255.0, blue: 245/255.0)
+    private let notViewedColor = Color(red: 253/255.0, green: 253/255.0, blue: 253/255.0)
     
     public init() {
         self.viewModel.getNewItems(currentListSize: 0)
@@ -18,17 +20,16 @@ public struct InfiniteScrollView: View {
             List {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
                     VStack {
-                        Spacer()
-                            .frame(width: geo.size.width)
-                        
                         NewSavedSearchView(listItem.value.asNewViewModel)
                             .onAppear {
                                 listItem.value.notificationUpdateViewed()
                             }
+                            .background(self.viewedColor)
                         ApplicationViewedView(listItem.value.applicationViewedViewModel)
                             .onAppear {
                                 listItem.value.notificationUpdateViewed()
                             }
+                        .background(self.notViewedColor)
 
                         
                     }.onAppear {
@@ -37,6 +38,7 @@ public struct InfiniteScrollView: View {
                             self.viewModel.getNewItems(currentListSize: count)
                         }
                     }
+                    .frame(width: geo.size.width)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                 }
             }

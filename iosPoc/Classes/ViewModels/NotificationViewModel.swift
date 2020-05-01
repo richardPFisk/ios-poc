@@ -64,6 +64,7 @@ struct NotificationViewModel {
     let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
     
     var id: String
+    var viewed: Bool
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()

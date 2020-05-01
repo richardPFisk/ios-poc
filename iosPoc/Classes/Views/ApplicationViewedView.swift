@@ -20,7 +20,7 @@ struct ApplicationViewedView: View {
             VStack {
                 Text("Your application was viewed")
                     .font(.headline)
-                    .padding(.all, 8.0)
+                    .padding(.top, 20.0)
                 NotificationJobView(appViewed.job)
                     .padding(.all, 8.0)
             }

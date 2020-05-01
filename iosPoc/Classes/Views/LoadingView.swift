@@ -16,12 +16,14 @@ struct LoadingView: View {
                 return VStack {
                     Text("Your application was viewed")
                         .font(.headline)
-                        .padding(.all, 8.0)
+                        .padding(.top, 20.0)
                         .frame(width: UIScreen.main.bounds.width)
                     CircleImageView(text: "Loading...")
                         .frame(width: 120, height: 120)
+                        .padding(.all, 8.0)
                     Text("Job title here")
                         .font(.footnote)
+                        .padding(.bottom, 20.0)
                 }.frame(width: UIScreen.main.bounds.width - 60)
             }
         }.frame(width: UIScreen.main.bounds.width - 40, height: UIScreen.main.bounds.height)

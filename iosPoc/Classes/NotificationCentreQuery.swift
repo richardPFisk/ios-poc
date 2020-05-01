@@ -4,7 +4,7 @@ import AWSAppSync
 
 public final class NotificationCentreQuery: GraphQLQuery {
   public static let operationString =
-    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        id\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
+    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        id\n        viewed\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
 
   public var first: Int?
   public var after: String?
@@ -232,6 +232,7 @@ public final class NotificationCentreQuery: GraphQLQuery {
               default: [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
                 GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+                GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               ]
             )
           ]
@@ -268,6 +269,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
             }
           }
 
+          public var viewed: Bool {
+            get {
+              return snapshot["viewed"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "viewed")
+            }
+          }
+
           public var asApplicationViewedNotification: AsApplicationViewedNotification? {
             get {
               if !AsApplicationViewedNotification.possibleTypes.contains(__typename) { return nil }
@@ -285,6 +295,7 @@ public final class NotificationCentreQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("job", type: .object(Job.selections)),
@@ -515,6 +526,7 @@ public final class NotificationCentreQuery: GraphQLQuery {
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("jobs", type: .nonNull(.list(.nonNull(.object(Job.selections))))),
