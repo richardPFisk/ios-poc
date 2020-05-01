@@ -14,10 +14,11 @@ query notificationCentre($first: Int, $after: String) {
       __typename
       node {
         __typename
+        id
+	viewed
         ... on ApplicationViewedNotification {
           id
           viewed
-          date
           job {
             __typename
             id
@@ -37,7 +38,6 @@ query notificationCentre($first: Int, $after: String) {
         ... on NewSavedSearchNotification {
           id
           viewed
-          date
           jobs {
             __typename
             id

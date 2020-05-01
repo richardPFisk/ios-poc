@@ -27,3 +27,7 @@ Richard Fisk, rfisk@seek.com.au
 ## License
 
 iosPoc is available under the MIT license. See the LICENSE file for more info.
+
+## Updating graphql
+
+`aws-appsync-codegen generate *.graphql --schema schema.json --output iosPoc/Classes/NotificationCentreQuery.swift --passthrough-custom-scalars`

@@ -17,13 +17,14 @@ struct ApplicationViewedView: View {
     
     var body: some View {
         IfLet(self.viewModel, whenPresent: { appViewed in
-            VStack {
+            VStack(alignment: .center, spacing: 20) {
                 Text("Your application was viewed")
                     .font(.headline)
-                    .padding(.all, 8.0)
+                    .padding(.top, 20.0)
                 NotificationJobView(appViewed.job)
                     .padding(.all, 8.0)
             }
+            .frame(width: UIScreen.main.bounds.width)
         }, whenNil: {
             EmptyView()
         })

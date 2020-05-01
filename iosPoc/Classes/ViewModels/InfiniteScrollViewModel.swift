@@ -15,32 +15,63 @@ struct PageInfoViewModel {
 
 class InfiniteScrollViewModel: ObservableObject {
     @Published var items: [ListData<NotificationViewModel>] = []
-    
+    @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
+    
+    var client = GraphQLPocCLient()
+    
+    let dispatchQueue = DispatchQueue(label: "clientRequestQueue", qos: .userInitiated)
     
     func convertGraphQL(node: SeekNotification.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
             let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
             let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
-            return NotificationViewModel(applicationViewedViewModel: appViewed, asNewViewModel: asNew)
+            
+            return NotificationViewModel(id: nodeValue.id, viewed: nodeValue.viewed, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
         }
         return nil
     }
     
+    func updateViewed(_ id: String, _ index: Int) {
+        client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                guard let self = self else {
+                  return
+                }
+                print("id \(index)")
+                self.items[index].value.viewed = false
+            }
+        }
+    }
+    
     func getNewItems(currentListSize: Int) {
         if self.pageInfo.hasNextPage {
-            GraphQLPocCLient.getNotifications(first: 10, after: self.pageInfo.endCursor) { (result, error) in
+            client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
-                    let newItems: [ListData<NotificationViewModel>] = resultValue.edges.enumerated().map { (index, element) in
-                        let notificationViewModel = NotificationViewModel(applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(element.node?.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(element.node?.asNewSavedSearchNotification))
-                        return ListData(value: notificationViewModel, id: index + self.items.count)
+                    let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
+                        if let node = element.node {
+                            let notificationViewModel = NotificationViewModel(id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
+                            return ListData(value: notificationViewModel, id: index + self.items.count)
+                        }
+                        return nil
                     }
-                    self.items.append(contentsOf: newItems)
-                    
-                    self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {
+                          return
+                        }
+                        self.items.append(contentsOf: newItems.compactMap { $0 })
+                        self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
+                        self.isLoading = false
+                    }
                 }
                 if case .some(let errorValue) = error {
-                    print("GraphQL error {}", errorValue)
+                    DispatchQueue.main.async { [weak self] in
+                        guard let self = self else {
+                          return
+                        }
+                        print("GraphQL error {}", errorValue)
+                        self.isLoading = false
+                    }
                 }
             }
         }

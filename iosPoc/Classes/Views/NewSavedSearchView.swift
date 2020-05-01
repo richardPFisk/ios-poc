@@ -21,7 +21,7 @@ struct NewSavedSearchView: View {
         IfLet(self.viewModel, whenPresent: { newSavedSearch in
             VStack {
                 Text("New saved search jobs")
-                    .padding(.all, 8.0)
+                    .padding(.top, 20.0)
                     .font(.headline)
         
                 ScrollView(.horizontal, content: {
