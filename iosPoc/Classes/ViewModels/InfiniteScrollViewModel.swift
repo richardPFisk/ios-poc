@@ -32,14 +32,33 @@ class InfiniteScrollViewModel: ObservableObject {
         return nil
     }
     
+    func hasBeenOnScreen(_ dateOnScreen: Date?, maxSeconds: Int = 2) -> Bool {
+        if let dateOnScreenValue = dateOnScreen {
+            let calendar1 = Calendar.current
+            let components = calendar1
+                .dateComponents([.year,.month,.day,.hour,.minute,.second,.nanosecond], from: dateOnScreenValue, to: Date())
+            if let elapsedSeconds = components.second {
+                return elapsedSeconds > maxSeconds
+            }
+            return false
+        }
+        return false
+    }
+    
     func updateViewed(_ id: String, _ index: Int) {
-        client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
-                guard let self = self else {
-                  return
+        if self.items[index].value.dateOnScreen == nil {
+           self.items[index].value.dateOnScreen = Date()
+        }
+        else if !self.items[index].value.viewed && hasBeenOnScreen(self.items[index].value.dateOnScreen) {
+            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {
+                      return
+                    }
+                    if let viewed = result?.node?.viewed {
+                        self.items[index].value.viewed = viewed
+                    }
                 }
-                print("id \(index)")
-                self.items[index].value.viewed = false
             }
         }
     }

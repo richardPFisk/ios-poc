@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 typealias AsNew = Optional<SeekNotification.Edge.Node.AsNewSavedSearchNotification>
 typealias AppViewed = Optional<SeekNotification.Edge.Node.AsApplicationViewedNotification>
@@ -36,42 +37,13 @@ struct JobViewModel {
     }
 }
 
-struct AsNewViewModel {
-    var viewed: Bool?
-    var jobs: [JobViewModel]?
-    
-    static func convertGraphQL(_ asNew: AsNew) -> AsNewViewModel? {
-        if let jobs = asNew?.jobs, let viewedValue = asNew?.viewed {
-            return AsNewViewModel(viewed: viewedValue, jobs: jobs.map({ JobViewModel.convertGraphQL($0) }))
-        }
-        return nil
-    }
-}
-
-struct ApplicationViewedViewModel {
-    var viewed: Bool
-    var job: JobViewModel
-    
-    static func convertGraphQL(_ applicationViewed: AppViewed) -> ApplicationViewedViewModel? {
-        if let job = applicationViewed?.job, let viewedValue = applicationViewed?.viewed {
-            return ApplicationViewedViewModel(viewed: viewedValue, job: JobViewModel.convertGraphQL(job))
-        }
-        return nil
-    }
-}
-
 struct NotificationViewModel {
     let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
     
     var id: String
     var viewed: Bool
+    var dateOnScreen:Date?
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()
-    
-    func notificationUpdateViewed() {
-        client.notificationUpdateViewed(id: self.id, dispatchQueue: dispatchQueue) { _, _ in
-//            self.viewed = true
-        }
-    }
 }
