@@ -12,9 +12,10 @@ struct ApplicationViewedViewModel {
     var viewed: Bool
     var job: JobViewModel
     
-    static func convertGraphQL(_ applicationViewed: AppViewed) -> ApplicationViewedViewModel? {
+    init?(_ applicationViewed: AppViewed) {
         if let job = applicationViewed?.job, let viewedValue = applicationViewed?.viewed {
-            return ApplicationViewedViewModel(viewed: viewedValue, job: JobViewModel.convertGraphQL(job))
+            self.viewed = viewedValue
+            self.job = JobViewModel.convertGraphQL(job)
         }
         return nil
     }

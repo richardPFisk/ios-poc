@@ -22,21 +22,21 @@ public struct InfiniteScrollView: View {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
                     VStack {
                         NewSavedSearchView(listItem.value.asNewViewModel)
-                            .onAppear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
+//                            .onAppear {
+//                                listItem.value.asNewViewModel?.updateViewed(listItem.value.id, index)
+//                            }
+//                            .onDisappear {
+//                                listItem.value.asNewViewModel?.updateViewed(listItem.value.id, index)
+//                            }
                             .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
                         
                         ApplicationViewedView(listItem.value.applicationViewedViewModel)
-                            .onAppear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
+//                            .onAppear {
+//                                listItem.value.applicationViewedViewModel?.updateViewed(listItem.value.id, index)
+//                            }
+//                            .onDisappear {
+//                                listItem.value.applicationViewedViewModel?.updateViewed(listItem.value.id, index)
+//                            }
                             .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
                         
                     }.onAppear {

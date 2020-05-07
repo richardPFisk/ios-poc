@@ -36,6 +36,10 @@ struct NewSavedSearchView: View {
             }
         }, whenNil: {
             EmptyView()
-        })
+        }).onAppear {
+            print("yo")
+        }.onDisappear {
+            print("bye")
+        }
     }
 }

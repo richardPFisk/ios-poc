@@ -37,13 +37,52 @@ struct JobViewModel {
     }
 }
 
-struct NotificationViewModel {
+class NotificationViewModel: ObservableObject {
     let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
     
     var id: String
-    var viewed: Bool
-    var dateOnScreen:Date?
+    @State var viewed: Bool
+    @State var dateOnScreen:Date?
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()
+    
+    init (id: String, viewed: Bool, applicationViewedViewModel: ApplicationViewedViewModel?, asNewViewModel: AsNewViewModel?) {
+        self.id = id
+        self.viewed = viewed
+        self.applicationViewedViewModel = applicationViewedViewModel
+        self.asNewViewModel = asNewViewModel
+    }
+    
+    func hasBeenOnScreen(_ dateOnScreen: Date?, maxSeconds: Int = 2) -> Bool {
+        if let dateOnScreenValue = dateOnScreen {
+            let calendar1 = Calendar.current
+            let components = calendar1
+                .dateComponents([.year,.month,.day,.hour,.minute,.second,.nanosecond], from: dateOnScreenValue, to: Date())
+            if let elapsedSeconds = components.second {
+                return elapsedSeconds > maxSeconds
+            }
+            return false
+        }
+        return false
+    }
+    
+    // Move into sub-classes
+    func updateViewed(_ id: String, _ index: Int) {
+        if self.dateOnScreen == nil {
+           self.dateOnScreen = Date()
+        }
+        else if !self.viewed && hasBeenOnScreen(self.dateOnScreen) {
+            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else {
+                      return
+                    }
+                    if let viewed = result?.node?.viewed {
+                        self.viewed = viewed
+                    }
+                }
+            }
+        }
+    }
 }

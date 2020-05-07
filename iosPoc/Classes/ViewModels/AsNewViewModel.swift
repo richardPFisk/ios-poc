@@ -8,13 +8,14 @@
 import Foundation
 import SwiftUI
 
-struct AsNewViewModel {
-    var viewed: Bool?
-    var jobs: [JobViewModel]?
+class AsNewViewModel: ObservableObject {
+    @State var viewed: Bool?
+    @State var jobs: [JobViewModel]?
     
-    static func convertGraphQL(_ asNew: AsNew) -> AsNewViewModel? {
+    init?(_ asNew: AsNew) {
         if let jobs = asNew?.jobs, let viewedValue = asNew?.viewed {
-            return AsNewViewModel(viewed: viewedValue, jobs: jobs.map({ JobViewModel.convertGraphQL($0) }))
+            self.viewed = viewedValue
+            self.jobs = jobs.map({ JobViewModel.convertGraphQL($0) })
         }
         return nil
     }
