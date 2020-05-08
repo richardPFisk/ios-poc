@@ -9,24 +9,32 @@ import Foundation
 import SwiftUI
 
 struct ApplicationViewedView: View {
-    var viewModel: Optional<ApplicationViewedViewModel>
+    @ObservedObject var viewModel: ApplicationViewedViewModel
     
-    init(_ viewModel: Optional<ApplicationViewedViewModel>) {
-        self.viewModel = viewModel;
+    init?(_ viewModel: Optional<ApplicationViewedViewModel>) {
+        if let viewModelValue = viewModel {
+            self.viewModel = viewModelValue;
+        }
+        else {
+            return nil
+        }
     }
     
     var body: some View {
-        IfLet(self.viewModel, whenPresent: { appViewed in
-            VStack(alignment: .center, spacing: 20) {
-                Text("Your application was viewed")
-                    .font(.headline)
-                    .padding(.top, 20.0)
-                NotificationJobView(appViewed.job)
-                    .padding(.all, 8.0)
-            }
-            .frame(width: UIScreen.main.bounds.width)
-        }, whenNil: {
-            EmptyView()
-        })
+        VStack(alignment: .center, spacing: 20) {
+            Text("Your application was viewed")
+                .font(.headline)
+                .padding(.top, 20.0)
+            NotificationJobView(viewModel.job)
+                .padding(.all, 8.0)
+        }
+        .frame(width: UIScreen.main.bounds.width)
+        .onAppear {
+            self.viewModel.updateViewed()
+        }
+        .onDisappear {
+            self.viewModel.updateViewed()
+        }
+        .background(self.viewModel.viewed ? NotificationViewModel.viewedColor : NotificationViewModel.notViewedColor)
     }
 }

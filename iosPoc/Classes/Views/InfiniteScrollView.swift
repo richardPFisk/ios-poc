@@ -3,10 +3,7 @@ import SwiftUI
 
 public struct InfiniteScrollView: View {
     @ObservedObject var viewModel = InfiniteScrollViewModel()
-    
-    private let viewedColor = Color(red: 225/255.0, green: 225/255.0, blue: 225/255.0)
-    private let notViewedColor = Color(red: 253/255.0, green: 253/255.0, blue: 253/255.0)
-    
+
     public init() {
         self.viewModel.getNewItems(currentListSize: 0)
     }
@@ -19,25 +16,18 @@ public struct InfiniteScrollView: View {
         else {
         GeometryReader { geo in
             List {
-                ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
+                ForEach((self.viewModel.items).indices, id: \.self) { index in
                     VStack {
-                        NewSavedSearchView(listItem.value.asNewViewModel)
-//                            .onAppear {
-//                                listItem.value.asNewViewModel?.updateViewed(listItem.value.id, index)
-//                            }
-//                            .onDisappear {
-//                                listItem.value.asNewViewModel?.updateViewed(listItem.value.id, index)
-//                            }
-                            .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
+                        NewSavedSearchView(self.viewModel.items[index].asNewViewModel)
                         
-                        ApplicationViewedView(listItem.value.applicationViewedViewModel)
+                        ApplicationViewedView(self.viewModel.items[index].applicationViewedViewModel)
 //                            .onAppear {
-//                                listItem.value.applicationViewedViewModel?.updateViewed(listItem.value.id, index)
+//                                self.viewModel.items[index].applicationViewedViewModel?.updateViewed(self.viewModel.items[index].id, index)
 //                            }
 //                            .onDisappear {
-//                                listItem.value.applicationViewedViewModel?.updateViewed(listItem.value.id, index)
+//                                self.viewModel.items[index].applicationViewedViewModel?.updateViewed(self.viewModel.items[index].id, index)
 //                            }
-                            .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
+//                            .background(self.viewModel.items[index].viewed ? self.viewedColor : self.notViewedColor)
                         
                     }.onAppear {
                         let count = self.viewModel.items.count

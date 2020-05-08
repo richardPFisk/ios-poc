@@ -11,35 +11,37 @@ import Foundation
 import SwiftUI
 
 struct NewSavedSearchView: View {
-    var viewModel: Optional<AsNewViewModel>
+    @ObservedObject var viewModel: AsNewViewModel
     
-    init(_ viewModel: Optional<AsNewViewModel>) {
-        self.viewModel = viewModel;
+    init?(_ viewModel: Optional<AsNewViewModel>) {
+        if let viewModelValue = viewModel {
+            self.viewModel = viewModelValue
+        }
+        else {
+            return nil
+        }
     }
     
     var body: some View {
-        IfLet(self.viewModel, whenPresent: { newSavedSearch in
-            VStack {
-                Text("New saved search jobs")
-                    .padding(.top, 20.0)
-                    .font(.headline)
-        
-                ScrollView(.horizontal, content: {
-                    HStack {
-                        ForEach((newSavedSearch.jobs ?? []).indices, id: \.self) { index in
-                            NotificationJobView(newSavedSearch.jobs?[index])
-                                .padding(.all, 8.0)
-                        }
+        VStack {
+            Text("New saved search jobs")
+                .padding(.top, 20.0)
+                .font(.headline)
+    
+            ScrollView(.horizontal, content: {
+                HStack {
+                    ForEach((self.viewModel.jobs).indices, id: \.self) { index in
+                        NotificationJobView(self.viewModel.jobs[index])
+                            .padding(.all, 8.0)
                     }
-                })
-                
-            }
-        }, whenNil: {
-            EmptyView()
-        }).onAppear {
-            print("yo")
-        }.onDisappear {
-            print("bye")
+                }
+            })
+        }.onAppear {
+            self.viewModel.updateViewed()
         }
+        .onDisappear {
+            self.viewModel.updateViewed()
+        }
+        .background(self.viewModel.viewed ? NotificationViewModel.viewedColor : NotificationViewModel.notViewedColor)
     }
 }

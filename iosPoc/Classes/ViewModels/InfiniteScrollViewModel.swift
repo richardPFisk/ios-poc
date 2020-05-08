@@ -14,7 +14,7 @@ struct PageInfoViewModel {
 }
 
 class InfiniteScrollViewModel: ObservableObject {
-    @Published var items: [ListData<NotificationViewModel>] = []
+    @Published var items: [NotificationViewModel] = []
     @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
     
@@ -36,10 +36,13 @@ class InfiniteScrollViewModel: ObservableObject {
         if self.pageInfo.hasNextPage {
             client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
-                    let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
+                    let newItems: [NotificationViewModel?] = resultValue.edges.enumerated().map { (index, element) in
                         if let node = element.node {
-                            let notificationViewModel = NotificationViewModel(id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel(node.asNewSavedSearchNotification))
-                            return ListData(value: notificationViewModel, id: index + self.items.count)
+                            let appViewedViewModel = ApplicationViewedViewModel(node.asApplicationViewedNotification)
+                            let asNewViewModel = AsNewViewModel(node.asNewSavedSearchNotification)
+
+                            let notificationViewModel = NotificationViewModel(id: node.id, viewed: node.viewed, applicationViewedViewModel: appViewedViewModel, asNewViewModel: asNewViewModel)
+                            return notificationViewModel
                         }
                         return nil
                     }
