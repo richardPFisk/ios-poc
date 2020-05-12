@@ -8,8 +8,8 @@
 import Foundation
 import SwiftUI
 
-typealias AsNew = Optional<SeekNotification.Edge.Node.AsNewSavedSearchNotification>
-typealias AppViewed = Optional<SeekNotification.Edge.Node.AsApplicationViewedNotification>
+typealias AsNew = SeekNotification.Edge.Node.AsNewSavedSearchNotification
+typealias AppViewed = SeekNotification.Edge.Node.AsApplicationViewedNotification
 typealias AppViewedJob = SeekNotification.Edge.Node.AsApplicationViewedNotification.Job;
 typealias AsNewJob = SeekNotification.Edge.Node.AsNewSavedSearchNotification.Job;
 
@@ -40,10 +40,16 @@ struct JobViewModel {
 struct NotificationViewModel {
     let dispatchQueue: DispatchQueue = DispatchQueue.global(qos: .userInitiated)
     
+    var node: SeekNotification.Edge.Node
     var id: String
     var viewed: Bool
     var dateOnScreen:Date?
     var applicationViewedViewModel: ApplicationViewedViewModel?
     var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()
+    var hasSpecificType: Bool {
+        get {
+            return applicationViewedViewModel != nil || asNewViewModel != nil
+        }
+    }
 }

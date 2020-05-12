@@ -38,7 +38,14 @@ public struct InfiniteScrollView: View {
                                 self.viewModel.updateViewed(listItem.value.id, index)
                             }
                             .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
-                        
+                        NotificationView(listItem.value)
+                            .onAppear {
+                                self.viewModel.updateViewed(listItem.value.id, index)
+                            }
+                            .onDisappear {
+                                self.viewModel.updateViewed(listItem.value.id, index)
+                            }
+                            .background(listItem.value.viewed ? self.viewedColor : self.notViewedColor)
                     }.onAppear {
                         let count = self.viewModel.items.count
                         if index == count-1 {

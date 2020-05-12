@@ -20,10 +20,14 @@ struct NewSavedSearchView: View {
     var body: some View {
         IfLet(self.viewModel, whenPresent: { newSavedSearch in
             VStack {
-                Text("New saved search jobs")
-                    .padding(.top, 20.0)
+                Text(newSavedSearch.node.title)
+                    .lineLimit(nil)
+                    .multilineTextAlignment(.center)
+                    .padding(.all, 20.0)
                     .font(.headline)
-        
+                    .frame(width: UIScreen.main.bounds.width - 40)
+                    .fixedSize(horizontal: false, vertical: true)
+                
                 ScrollView(.horizontal, content: {
                     HStack {
                         ForEach((newSavedSearch.jobs ?? []).indices, id: \.self) { index in
@@ -34,6 +38,7 @@ struct NewSavedSearchView: View {
                 })
                 
             }
+            .frame(width: UIScreen.main.bounds.width)
         }, whenNil: {
             EmptyView()
         })

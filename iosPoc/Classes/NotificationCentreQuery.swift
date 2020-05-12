@@ -4,7 +4,7 @@ import AWSAppSync
 
 public final class NotificationCentreQuery: GraphQLQuery {
   public static let operationString =
-    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        id\n        viewed\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
+    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        title\n        id\n        viewed\n        allowFallback\n        actionUrl(platform: IOS)\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
 
   public var first: Int?
   public var after: String?
@@ -224,15 +224,18 @@ public final class NotificationCentreQuery: GraphQLQuery {
         }
 
         public struct Node: GraphQLSelectionSet {
-          public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification"]
+          public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification", "ReminderToApplyNotification"]
 
           public static let selections: [GraphQLSelection] = [
             GraphQLTypeCase(
               variants: ["ApplicationViewedNotification": AsApplicationViewedNotification.selections, "NewSavedSearchNotification": AsNewSavedSearchNotification.selections],
               default: [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("title", type: .nonNull(.scalar(String.self))),
                 GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                 GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
+                GraphQLField("allowFallback", type: .nonNull(.scalar(Bool.self))),
+                GraphQLField("actionUrl", arguments: ["platform": "IOS"], type: .scalar(String.self)),
               ]
             )
           ]
@@ -243,12 +246,16 @@ public final class NotificationCentreQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public static func makeApplicationViewedNotification(id: GraphQLID, viewed: Bool, job: AsApplicationViewedNotification.Job? = nil) -> Node {
-            return Node(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "job": job.flatMap { $0.snapshot }])
+          public static func makeReminderToApplyNotification(title: String, id: GraphQLID, viewed: Bool, allowFallback: Bool, actionUrl: String? = nil) -> Node {
+            return Node(snapshot: ["__typename": "ReminderToApplyNotification", "title": title, "id": id, "viewed": viewed, "allowFallback": allowFallback, "actionUrl": actionUrl])
           }
 
-          public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, jobs: [AsNewSavedSearchNotification.Job]) -> Node {
-            return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "jobs": jobs.map { $0.snapshot }])
+          public static func makeApplicationViewedNotification(title: String, id: GraphQLID, viewed: Bool, allowFallback: Bool, actionUrl: String? = nil, job: AsApplicationViewedNotification.Job? = nil) -> Node {
+            return Node(snapshot: ["__typename": "ApplicationViewedNotification", "title": title, "id": id, "viewed": viewed, "allowFallback": allowFallback, "actionUrl": actionUrl, "job": job.flatMap { $0.snapshot }])
+          }
+
+          public static func makeNewSavedSearchNotification(title: String, id: GraphQLID, viewed: Bool, allowFallback: Bool, actionUrl: String? = nil, jobs: [AsNewSavedSearchNotification.Job]) -> Node {
+            return Node(snapshot: ["__typename": "NewSavedSearchNotification", "title": title, "id": id, "viewed": viewed, "allowFallback": allowFallback, "actionUrl": actionUrl, "jobs": jobs.map { $0.snapshot }])
           }
 
           public var __typename: String {
@@ -257,6 +264,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "__typename")
+            }
+          }
+
+          public var title: String {
+            get {
+              return snapshot["title"]! as! String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "title")
             }
           }
 
@@ -278,6 +294,24 @@ public final class NotificationCentreQuery: GraphQLQuery {
             }
           }
 
+          public var allowFallback: Bool {
+            get {
+              return snapshot["allowFallback"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "allowFallback")
+            }
+          }
+
+          public var actionUrl: String? {
+            get {
+              return snapshot["actionUrl"] as? String
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "actionUrl")
+            }
+          }
+
           public var asApplicationViewedNotification: AsApplicationViewedNotification? {
             get {
               if !AsApplicationViewedNotification.possibleTypes.contains(__typename) { return nil }
@@ -294,8 +328,11 @@ public final class NotificationCentreQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("allowFallback", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("actionUrl", arguments: ["platform": "IOS"], type: .scalar(String.self)),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("job", type: .object(Job.selections)),
@@ -307,8 +344,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, viewed: Bool, job: Job? = nil) {
-              self.init(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "job": job.flatMap { $0.snapshot }])
+            public init(title: String, id: GraphQLID, viewed: Bool, allowFallback: Bool, actionUrl: String? = nil, job: Job? = nil) {
+              self.init(snapshot: ["__typename": "ApplicationViewedNotification", "title": title, "id": id, "viewed": viewed, "allowFallback": allowFallback, "actionUrl": actionUrl, "job": job.flatMap { $0.snapshot }])
             }
 
             public var __typename: String {
@@ -317,6 +354,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var title: String {
+              get {
+                return snapshot["title"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "title")
               }
             }
 
@@ -335,6 +381,24 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "viewed")
+              }
+            }
+
+            public var allowFallback: Bool {
+              get {
+                return snapshot["allowFallback"]! as! Bool
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "allowFallback")
+              }
+            }
+
+            public var actionUrl: String? {
+              get {
+                return snapshot["actionUrl"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "actionUrl")
               }
             }
 
@@ -525,8 +589,11 @@ public final class NotificationCentreQuery: GraphQLQuery {
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("title", type: .nonNull(.scalar(String.self))),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("allowFallback", type: .nonNull(.scalar(Bool.self))),
+              GraphQLField("actionUrl", arguments: ["platform": "IOS"], type: .scalar(String.self)),
               GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
               GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
               GraphQLField("jobs", type: .nonNull(.list(.nonNull(.object(Job.selections))))),
@@ -538,8 +605,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, viewed: Bool, jobs: [Job]) {
-              self.init(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "jobs": jobs.map { $0.snapshot }])
+            public init(title: String, id: GraphQLID, viewed: Bool, allowFallback: Bool, actionUrl: String? = nil, jobs: [Job]) {
+              self.init(snapshot: ["__typename": "NewSavedSearchNotification", "title": title, "id": id, "viewed": viewed, "allowFallback": allowFallback, "actionUrl": actionUrl, "jobs": jobs.map { $0.snapshot }])
             }
 
             public var __typename: String {
@@ -548,6 +615,15 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var title: String {
+              get {
+                return snapshot["title"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "title")
               }
             }
 
@@ -566,6 +642,24 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
               set {
                 snapshot.updateValue(newValue, forKey: "viewed")
+              }
+            }
+
+            public var allowFallback: Bool {
+              get {
+                return snapshot["allowFallback"]! as! Bool
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "allowFallback")
+              }
+            }
+
+            public var actionUrl: String? {
+              get {
+                return snapshot["actionUrl"] as? String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "actionUrl")
               }
             }
 
@@ -822,7 +916,7 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
       }
 
       public struct Node: GraphQLSelectionSet {
-        public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification"]
+        public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification", "ReminderToApplyNotification"]
 
         public static let selections: [GraphQLSelection] = [
           GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
@@ -843,6 +937,10 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
 
         public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, date: String? = nil) -> Node {
           return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date])
+        }
+
+        public static func makeReminderToApplyNotification(id: GraphQLID, viewed: Bool, date: String? = nil) -> Node {
+          return Node(snapshot: ["__typename": "ReminderToApplyNotification", "id": id, "viewed": viewed, "date": date])
         }
 
         public var __typename: String {

@@ -18,7 +18,8 @@ struct ApplicationViewedView: View {
     var body: some View {
         IfLet(self.viewModel, whenPresent: { appViewed in
             VStack(alignment: .center, spacing: 20) {
-                Text("Your application was viewed")
+                Text(appViewed.node.title)
+                    .multilineTextAlignment(.center)
                     .font(.headline)
                     .padding(.top, 20.0)
                 NotificationJobView(appViewed.job)
