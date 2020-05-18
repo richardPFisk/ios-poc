@@ -18,7 +18,7 @@ struct LoadingView: View {
                         .font(.headline)
                         .padding(.top, 20.0)
                         .frame(width: UIScreen.main.bounds.width)
-                    CircleImageView(text: "Loading...")
+                    CircleImageView(text: "Loading...", theme: [:])
                         .frame(width: 120, height: 120)
                         .padding(.all, 8.0)
                     Text("Job title here")

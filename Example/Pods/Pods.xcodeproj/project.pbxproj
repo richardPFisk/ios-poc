@@ -110,6 +110,8 @@
 		3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0A246E111300BFF8F4 /* RatingView.swift */; };
 		3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */; };
 		3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */; };
+		3806AE172472325500BFF8F4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE162472325500BFF8F4 /* CardView.swift */; };
+		3806AE192472428000BFF8F4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE182472428000BFF8F4 /* ColorExtension.swift */; };
 		385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13912463D4D30017AA24 /* AsNewViewModel.swift */; };
 		385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */; };
 		38B147F8246A81C500C2612D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B147F7246A81C500C2612D /* NotificationView.swift */; };
@@ -761,6 +763,8 @@
 		3806AE0A246E111300BFF8F4 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressBar.swift; sourceTree = "<group>"; };
+		3806AE162472325500BFF8F4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		3806AE182472428000BFF8F4 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
 		385B13912463D4D30017AA24 /* AsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsNewViewModel.swift; sourceTree = "<group>"; };
 		385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationViewedViewModel.swift; sourceTree = "<group>"; };
 		38B147F7246A81C500C2612D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -1562,6 +1566,7 @@
 				EB9B8BF8FE2C612EBE67999A5F309D3F /* Support Files */,
 				3D2E510648E2EAC45FD24BCCEB92E9B9 /* ViewModels */,
 				B90EA0F07A8F8DFF1B28300920062BC6 /* Views */,
+				3806AE182472428000BFF8F4 /* ColorExtension.swift */,
 			);
 			name = iosPoc;
 			path = ../..;
@@ -1839,6 +1844,7 @@
 				3806AE0A246E111300BFF8F4 /* RatingView.swift */,
 				3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */,
 				3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */,
+				3806AE162472325500BFF8F4 /* CardView.swift */,
 			);
 			name = Views;
 			path = iosPoc/Classes/Views;
@@ -2789,6 +2795,7 @@
 				C916E1A01060755F431B73941AAF829B /* ApplicationViewedView.swift in Sources */,
 				E56719263762693ABFD76F7C9E43315F /* CircleImageView.swift in Sources */,
 				0EB3EBA600FC1CF70288E6ABCC794D9D /* IfLet.swift in Sources */,
+				3806AE192472428000BFF8F4 /* ColorExtension.swift in Sources */,
 				3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */,
 				3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */,
 				89C1F5908B73F7552A4F742F658AAA60 /* InfiniteScrollView.swift in Sources */,
@@ -2804,6 +2811,7 @@
 				65102648B3C3371C5446B1BC0DFE3AA2 /* NotificationJobView.swift in Sources */,
 				C5015867C4B11646F836749B33360785 /* NotificationViewModel.swift in Sources */,
 				385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */,
+				3806AE172472325500BFF8F4 /* CardView.swift in Sources */,
 				344D1C8CAE9191F8C7D8BBC780A766C7 /* SceneDelegate.swift in Sources */,
 				2A5251A84F5658EBC7E342B4E318D9E0 /* ViewController.swift in Sources */,
 				3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */,

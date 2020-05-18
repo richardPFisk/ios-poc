@@ -10,10 +10,12 @@ import SwiftUI
 
 struct NotificationView: View {
     var viewModel: Optional<NotificationViewModel>
+    var viewed: Bool
     
-    init?(_ viewModel: Optional<NotificationViewModel>) {
+    init?(_ viewModel: Optional<NotificationViewModel>, viewed: Bool) {
         if let viewModelValue = viewModel, !viewModelValue.hasSpecificType {
             self.viewModel = viewModel
+            self.viewed = viewed
         }
         return nil
     }

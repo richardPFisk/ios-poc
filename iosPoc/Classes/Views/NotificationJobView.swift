@@ -12,8 +12,11 @@ import URLImage
 struct NotificationJobView : View {
     let jobViewModel: JobViewModel?
     let ciContext = CIContext()
-    init(_ jobViewModel: JobViewModel?) {
+    var theme: Dictionary<String, Color>
+    
+    init(_ jobViewModel: JobViewModel?, theme: Dictionary<String, Color>) {
         self.jobViewModel = jobViewModel
+        self.theme = theme
     }
     
     var body: some View {
@@ -38,7 +41,7 @@ struct NotificationJobView : View {
                         }
                     },
                       whenNil: {
-                        CircleImageView(text: (job.advertiser?.name ?? "New Job") as String)
+                        CircleImageView(text: (job.advertiser?.name ?? "New Job") as String, theme: self.theme)
                             .frame(width: 120, height: 120)
                     })
                     .frame(width: 120, height: 125)
@@ -65,6 +68,6 @@ struct NotificationJobView : View {
 
 struct NotificationJobView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationJobView(JobViewModel(url: URL(string: "https://www.seek.com.au")!, title: "title", brandingLogo: URL(string: "https://image-service-cdn.cloud.seek.com.au/6aa399bad6c6109736adb6d1fdd0909a8438a5b7?timestamp=1587971674")))
+        NotificationJobView(JobViewModel(url: URL(string: "https://www.seek.com.au")!, title: "title", brandingLogo: URL(string: "https://image-service-cdn.cloud.seek.com.au/6aa399bad6c6109736adb6d1fdd0909a8438a5b7?timestamp=1587971674")), theme: [:])
     }
 }
