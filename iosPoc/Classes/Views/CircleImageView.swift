@@ -20,7 +20,7 @@ struct CircleImageView: View {
                     .frame(width: geo.size.width, height: geo.size.width)
                     .shadow(color: self.theme["snackbarBackground"]?.opacity(0.33) ?? Color.black.opacity(0.33), radius: 4.0)
                 Text(self.text)
-                    .foregroundColor(self.theme["textPrimary"] ?? Color.white)
+                    .foregroundColor(self.theme["textSecondary"] ?? Color.black)
                     .font(.caption)
                     .frame(width: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0), height: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0))
             }

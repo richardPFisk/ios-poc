@@ -1,0 +1,65 @@
+fragment actionable on Actionable {
+  text
+  actions {
+   action
+    ...on NavigationAction {
+      action
+    }
+    ... on MutationAction {
+      action
+    }
+  }
+}
+query notificationCentre($first: Int, $after: String) {
+  notifications(first: $first, after: $after) {
+    __typename
+    totalCount
+    totalUnread
+    pageInfo {
+      __typename
+      startCursor
+      hasPrevPage
+      endCursor
+      hasNextPage
+    }
+    edges {
+      __typename
+      node {
+        __typename
+        id 
+        allowFallback
+        viewed {
+          ...actionable
+        }
+        items {
+          ...on Job {
+             __typename
+            id
+            title {
+              ...actionable
+            }
+            advertiser {
+              __typename
+              name
+            }
+            location {
+              __typename
+              flattened
+            }
+            branding {
+              logo
+              tooltip
+            } 
+          }
+          ...on NotificationItem {
+            id
+            title {
+              ...actionable
+            } 
+          }
+        }
+      }
+      cursor
+    }
+  }
+}

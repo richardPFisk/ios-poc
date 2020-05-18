@@ -78,7 +78,6 @@
 		27C9739C4EF0EFA1A3083BEF98D0E7E4 /* AWSFMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73CD9173863ED314EF6633B75862E8CA /* AWSFMDatabaseAdditions.m */; };
 		29BD2C99AD744B303AE9E4E0B8D27D33 /* AWSSRWebSocket.h in Headers */ = {isa = PBXBuildFile; fileRef = B2A288C1BD2CA89331871ABC9DEE70FE /* AWSSRWebSocket.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		29D49DC1B3EE3EA5B9FDDE24547420D3 /* AWSDDTTYLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 0378A10FF7B519B5BBB6CB344BA4588F /* AWSDDTTYLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2A5251A84F5658EBC7E342B4E318D9E0 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5864112059A108DCECDEED6B42F6058 /* ViewController.swift */; };
 		2A94FACEA07096DDE05ACF58491DD963 /* World+DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFFC3EC0A55956865B0F6395AC0DE314 /* World+DSL.swift */; };
 		2A95AD48CE160CCC59957E4F91EEC9B9 /* XCTestSuite+QuickTestSuiteBuilder.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D42E3311F305A31B4BDBB705EC3475F /* XCTestSuite+QuickTestSuiteBuilder.m */; };
 		2ADD7D3E0B94EF044CF3FFD2F8EA2C67 /* DSL.swift in Sources */ = {isa = PBXBuildFile; fileRef = 065DCC98D51D1A8BC0394B86E031AB3B /* DSL.swift */; };
@@ -96,7 +95,6 @@
 		315B038C5422BBAF3F3E157549483351 /* AWSMutationState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CF0B6BCBF56758C14F2B99D0C1278BC /* AWSMutationState.swift */; };
 		31F6B493AE4E5F95FD4CDDBABBE322A1 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7585522F712163C432210E12E8F2EE20 /* Security.framework */; };
 		341433BC3D205741C080FF96A12BA091 /* NSObject+AWSMTLComparisonAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = A70F677F2271F0E9625DBAF87B182ED6 /* NSObject+AWSMTLComparisonAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		344D1C8CAE9191F8C7D8BBC780A766C7 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 263AF9E3BBDC1A239FD528FE784CA822 /* SceneDelegate.swift */; };
 		3488A0F40401DBDD185271764CF246D1 /* AWSTMMemoryCache.h in Headers */ = {isa = PBXBuildFile; fileRef = F1D6382D0D4FCFA095D14F36FBDD847B /* AWSTMMemoryCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		34E86DF05F3F142A10F66385EAF0BE10 /* AWSSignature.h in Headers */ = {isa = PBXBuildFile; fileRef = 82119B1BFAC0B1C3162974BD06C7B01C /* AWSSignature.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		354F103E11DEA4E1398B26C7C9E4A4EF /* AWSDDContextFilterLogFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 1440A8543BDC64117E1A46A91D2CC165 /* AWSDDContextFilterLogFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -111,7 +109,7 @@
 		3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */; };
 		3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */; };
 		3806AE172472325500BFF8F4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE162472325500BFF8F4 /* CardView.swift */; };
-		3806AE192472428000BFF8F4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE182472428000BFF8F4 /* ColorExtension.swift */; };
+		3806AE1F24724F7500BFF8F4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE1E24724F7500BFF8F4 /* ColorExtension.swift */; };
 		385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13912463D4D30017AA24 /* AsNewViewModel.swift */; };
 		385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */; };
 		38B147F8246A81C500C2612D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B147F7246A81C500C2612D /* NotificationView.swift */; };
@@ -718,7 +716,6 @@
 		2306C765F3A0BB3CAFE5246FDFCD15D2 /* AWSXMLWriter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSXMLWriter.h; path = AWSCore/XMLWriter/AWSXMLWriter.h; sourceTree = "<group>"; };
 		245C45D4246A461A6DE1A6189EFEBC26 /* BeAKindOf.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = BeAKindOf.swift; path = Sources/Nimble/Matchers/BeAKindOf.swift; sourceTree = "<group>"; };
 		25181BC4AFBC2C7CEA94F12E899EE4C5 /* DSL.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DSL.swift; path = Sources/Nimble/DSL.swift; sourceTree = "<group>"; };
-		263AF9E3BBDC1A239FD528FE784CA822 /* SceneDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SceneDelegate.swift; path = iosPoc/Classes/SceneDelegate.swift; sourceTree = "<group>"; };
 		264EBB7DADDE9ABC2F144ACDE8B549B9 /* AWSMQTTEncoder.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSMQTTEncoder.m; path = AWSAppSyncClient/MQTTSDK/MQTTSDK/AWSMQTTEncoder.m; sourceTree = "<group>"; };
 		26E2539DF5C9A538F3DF9541033504BD /* AWSTask.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AWSTask.m; path = AWSCore/Bolts/AWSTask.m; sourceTree = "<group>"; };
 		27F01E5B952630AAF07FAB43065612B1 /* XCTestObservationCenter+Register.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "XCTestObservationCenter+Register.m"; path = "Sources/NimbleObjectiveC/XCTestObservationCenter+Register.m"; sourceTree = "<group>"; };
@@ -764,7 +761,7 @@
 		3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressBar.swift; sourceTree = "<group>"; };
 		3806AE162472325500BFF8F4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
-		3806AE182472428000BFF8F4 /* ColorExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorExtension.swift; sourceTree = "<group>"; };
+		3806AE1E24724F7500BFF8F4 /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtension.swift; path = iosPoc/Classes/ColorExtension.swift; sourceTree = "<group>"; };
 		385B13912463D4D30017AA24 /* AsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsNewViewModel.swift; sourceTree = "<group>"; };
 		385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationViewedViewModel.swift; sourceTree = "<group>"; };
 		38B147F7246A81C500C2612D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -1083,7 +1080,6 @@
 		C3F929055774E54D99BA94F4D31DA2A5 /* InfiniteScrollViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = InfiniteScrollViewModel.swift; sourceTree = "<group>"; };
 		C40A31B6D760977482270AB6620875D9 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/SwiftUI.framework; sourceTree = DEVELOPER_DIR; };
 		C54DF1A6CF4693C8F731109238DE6B60 /* iosPoc-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "iosPoc-dummy.m"; sourceTree = "<group>"; };
-		C5864112059A108DCECDEED6B42F6058 /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = iosPoc/Classes/ViewController.swift; sourceTree = "<group>"; };
 		C5AA3F472616FA00121D5B86B7DAF756 /* NetworkReachability.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachability.swift; path = AWSAppSyncClient/NetworkReachability.swift; sourceTree = "<group>"; };
 		C5E4B51E9900D7397A8F05732B233298 /* InMemoryNormalizedCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = InMemoryNormalizedCache.swift; path = AWSAppSyncClient/Apollo/Sources/Apollo/InMemoryNormalizedCache.swift; sourceTree = "<group>"; };
 		C600CB5D2AC21DCF08B5CA2208EDE003 /* Result.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Result.swift; path = AWSAppSyncClient/Apollo/Sources/Apollo/Result.swift; sourceTree = "<group>"; };
@@ -1557,16 +1553,14 @@
 		4D142165302594F1F0A2BE68F99C8096 /* iosPoc */ = {
 			isa = PBXGroup;
 			children = (
+				3806AE1E24724F7500BFF8F4 /* ColorExtension.swift */,
 				527538BF5FD714A602F0EF88B6A55724 /* ListData.swift */,
 				94F6F5C4270B7A18F3B1ACB32F165B2F /* NotificationCentreQuery.swift */,
 				837AD50FFE109498D415C42C0873A7F7 /* NotificationCentreQueryClient.swift */,
-				263AF9E3BBDC1A239FD528FE784CA822 /* SceneDelegate.swift */,
-				C5864112059A108DCECDEED6B42F6058 /* ViewController.swift */,
 				FEE0A2305827BBAE4459B931E7D66D23 /* Pod */,
 				EB9B8BF8FE2C612EBE67999A5F309D3F /* Support Files */,
 				3D2E510648E2EAC45FD24BCCEB92E9B9 /* ViewModels */,
 				B90EA0F07A8F8DFF1B28300920062BC6 /* Views */,
-				3806AE182472428000BFF8F4 /* ColorExtension.swift */,
 			);
 			name = iosPoc;
 			path = ../..;
@@ -2795,13 +2789,13 @@
 				C916E1A01060755F431B73941AAF829B /* ApplicationViewedView.swift in Sources */,
 				E56719263762693ABFD76F7C9E43315F /* CircleImageView.swift in Sources */,
 				0EB3EBA600FC1CF70288E6ABCC794D9D /* IfLet.swift in Sources */,
-				3806AE192472428000BFF8F4 /* ColorExtension.swift in Sources */,
 				3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */,
 				3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */,
 				89C1F5908B73F7552A4F742F658AAA60 /* InfiniteScrollView.swift in Sources */,
 				4D20695041C4548632C1169D3C81CAE3 /* InfiniteScrollViewModel.swift in Sources */,
 				5CEAC1413F80DB6B7E09A9385B3EF3A3 /* iosPoc-dummy.m in Sources */,
 				546F46C521387B5F19676AC190B7C40C /* ListData.swift in Sources */,
+				3806AE1F24724F7500BFF8F4 /* ColorExtension.swift in Sources */,
 				EC0E28D329CF29DC476AE1C9EE4F9488 /* NewSavedSearchView.swift in Sources */,
 				38F8141C245A7FD60062E99E /* LoadingView.swift in Sources */,
 				385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */,
@@ -2812,8 +2806,6 @@
 				C5015867C4B11646F836749B33360785 /* NotificationViewModel.swift in Sources */,
 				385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */,
 				3806AE172472325500BFF8F4 /* CardView.swift in Sources */,
-				344D1C8CAE9191F8C7D8BBC780A766C7 /* SceneDelegate.swift in Sources */,
-				2A5251A84F5658EBC7E342B4E318D9E0 /* ViewController.swift in Sources */,
 				3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */,
 				38B147F8246A81C500C2612D /* NotificationView.swift in Sources */,
 			);

@@ -17,7 +17,9 @@ struct NotificationView: View {
             self.viewModel = viewModel
             self.viewed = viewed
         }
-        return nil
+        else {
+            return nil
+        }
     }
     
     var body: some View {

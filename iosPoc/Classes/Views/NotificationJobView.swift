@@ -1,9 +1,5 @@
 //
 //  NotificationJobView.swift
-//
-//  Created by Richard Fisk on 24/4/20.
-//  Copyright © 2020 mac. All rights reserved.
-//
 
 import Foundation
 import SwiftUI
@@ -48,6 +44,7 @@ struct NotificationJobView : View {
                     
                     Text(job.title)
                         .font(.footnote)
+                        .foregroundColor(self.theme["textSecondary"])
                         .frame(width: 180, height: 50)
                 }
             }.gesture(TapGesture().onEnded {

@@ -6,7 +6,6 @@
 //  Copyright © 2020 CocoaPods. All rights reserved.
 //
 
-import Foundation
 import SwiftUI
 
 struct ColorThemeProvider {
@@ -21,6 +20,8 @@ struct ColorThemeProvider {
         values["backgroundPrimary"] = Color("backgroundPrimary")
         values["backgroundBrand"] = Color("backgroundBrand")
         values["snackbarBackground"] = Color("snackbarBackground")
+        values["textSecondary"] = Color("textSecondary")
+        
         
         return values
     }
