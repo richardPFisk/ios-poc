@@ -38,5 +38,12 @@ Pod::Spec.new do |s|
    s.frameworks = 'SwiftUI'
    s.dependency 'URLImage'
    s.dependency 'AWSAppSync'
-   s.swift_versions = '4.0'
+   s.swift_versions = '5.0'
+   s.pod_target_xcconfig = {
+   'ONLY_ACTIVE_ARCH' => 'YES',
+   'SPECIFIC_RELEASE' => 'YES'
+   }
+   s.compiler_flags = [
+   'SPECIFIC_RELEASE' => 'YES'
+   ]
 end

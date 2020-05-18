@@ -106,6 +106,10 @@
 		36C809AD8402F351B53528AB7210C3BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5B06EE76C1CD8DA7654EBDC438FF84 /* SystemConfiguration.framework */; };
 		3722B93E1E8BF31C11CDF45AA815A767 /* QuickTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183A486C9F01BFBED2B058EC2A2B93AC /* QuickTestSuite.swift */; };
 		37B980F9CDE4DB538416F1902C0E946E /* AWSSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F5AFC72EF5F85DA9443D3978EA888 /* AWSSerialization.m */; };
+		3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE08246E0D1600BFF8F4 /* StarView.swift */; };
+		3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0A246E111300BFF8F4 /* RatingView.swift */; };
+		3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */; };
+		3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */; };
 		385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13912463D4D30017AA24 /* AsNewViewModel.swift */; };
 		385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */; };
 		38B147F8246A81C500C2612D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B147F7246A81C500C2612D /* NotificationView.swift */; };
@@ -753,6 +757,10 @@
 		37B786F8D3E2D8D8E8E7BD351BC73285 /* Deprecations+Removals.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Deprecations+Removals.swift"; path = "AWSAppSyncClient/Deprecations+Removals.swift"; sourceTree = "<group>"; };
 		37D3083A57D2260306A6B60FA3EBFACA /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		37D33A6D2EEED255DA400E6837A22D97 /* CwlBadInstructionException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlBadInstructionException.swift; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlPreconditionTesting/CwlBadInstructionException.swift; sourceTree = "<group>"; };
+		3806AE08246E0D1600BFF8F4 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		3806AE0A246E111300BFF8F4 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
+		3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
+		3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressBar.swift; sourceTree = "<group>"; };
 		385B13912463D4D30017AA24 /* AsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsNewViewModel.swift; sourceTree = "<group>"; };
 		385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationViewedViewModel.swift; sourceTree = "<group>"; };
 		38B147F7246A81C500C2612D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
@@ -1827,6 +1835,10 @@
 				B5B36E878389D10887A680703E31CBB0 /* NotificationJobView.swift */,
 				38F8141A245A7DBE0062E99E /* LoadingView.swift */,
 				38B147F7246A81C500C2612D /* NotificationView.swift */,
+				3806AE08246E0D1600BFF8F4 /* StarView.swift */,
+				3806AE0A246E111300BFF8F4 /* RatingView.swift */,
+				3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */,
+				3806AE0E246E1E8600BFF8F4 /* AnimatedProgressBar.swift */,
 			);
 			name = Views;
 			path = iosPoc/Classes/Views;
@@ -2777,6 +2789,8 @@
 				C916E1A01060755F431B73941AAF829B /* ApplicationViewedView.swift in Sources */,
 				E56719263762693ABFD76F7C9E43315F /* CircleImageView.swift in Sources */,
 				0EB3EBA600FC1CF70288E6ABCC794D9D /* IfLet.swift in Sources */,
+				3806AE0F246E1E8600BFF8F4 /* AnimatedProgressBar.swift in Sources */,
+				3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */,
 				89C1F5908B73F7552A4F742F658AAA60 /* InfiniteScrollView.swift in Sources */,
 				4D20695041C4548632C1169D3C81CAE3 /* InfiniteScrollViewModel.swift in Sources */,
 				5CEAC1413F80DB6B7E09A9385B3EF3A3 /* iosPoc-dummy.m in Sources */,
@@ -2786,11 +2800,13 @@
 				385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */,
 				0BB45B4ADC15F8227F8D4311A6D6BF2C /* NotificationCentreQuery.swift in Sources */,
 				E2554C7EB1DE30126D664A04A1851294 /* NotificationCentreQueryClient.swift in Sources */,
+				3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */,
 				65102648B3C3371C5446B1BC0DFE3AA2 /* NotificationJobView.swift in Sources */,
 				C5015867C4B11646F836749B33360785 /* NotificationViewModel.swift in Sources */,
 				385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */,
 				344D1C8CAE9191F8C7D8BBC780A766C7 /* SceneDelegate.swift in Sources */,
 				2A5251A84F5658EBC7E342B4E318D9E0 /* ViewController.swift in Sources */,
+				3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */,
 				38B147F8246A81C500C2612D /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

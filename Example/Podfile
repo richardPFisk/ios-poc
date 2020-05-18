@@ -11,4 +11,21 @@ target 'notification-centre_Example' do
     pod 'URLImage', '~> 0.9.15'
     pod 'AWSAppSync', '~> 2.13.1'
   end
+  target.build_configurations.each do |config|
+      if config.name == 'Debug' then
+          config.build_settings['OTHER_SWIFT_FLAGS'] = '-DSPECIFIC_RELEASE'
+      end
+  end
+
 end
+
+post_install do |installer|
+    installer.pods_project.targets.each do |target|
+            target.build_configurations.each do |config|
+                config.build_settings['OTHER_SWIFT_FLAGS'] = '-D' 'SPECIFIC_RELEASE'
+                print target.name
+            end
+        end
+    end
+end
+

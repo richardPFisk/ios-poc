@@ -11,10 +11,11 @@ import SwiftUI
 struct NotificationView: View {
     var viewModel: Optional<NotificationViewModel>
     
-    init(_ viewModel: Optional<NotificationViewModel>) {
+    init?(_ viewModel: Optional<NotificationViewModel>) {
         if let viewModelValue = viewModel, !viewModelValue.hasSpecificType {
             self.viewModel = viewModel
         }
+        return nil
     }
     
     var body: some View {
@@ -24,13 +25,13 @@ struct NotificationView: View {
                     .multilineTextAlignment(.center)
                     .font(.headline)
                     .padding(.all, 30.0)
+
             }
             .frame(width: UIScreen.main.bounds.width)
             .gesture(TapGesture().onEnded {
 
-                let path = self.viewModel?.node.actionUrl ?? ""
-                print("path \(path)")
-                let url = URL(string: path)!
+                let actionUrl = self.viewModel?.node.actionUrl ?? ""
+                let url = URL(string: actionUrl)!
                 
                 UIApplication.shared.open(url, options: [:], completionHandler: { completed in
                     print("completed {} {}", completed, url)
