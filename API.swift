@@ -4,7 +4,9 @@ import AWSAppSync
 
 public final class NotificationCentreQuery: GraphQLQuery {
   public static let operationString =
-    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        ... on ApplicationViewedNotification {\n          id\n          viewed\n          date\n          job {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n        ... on NewSavedSearchNotification {\n          id\n          viewed\n          date\n          jobs {\n            __typename\n            id\n            title\n            url\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            brandingLogo\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
+    "query notificationCentre($first: Int, $after: String) {\n  notifications(first: $first, after: $after) {\n    __typename\n    totalCount\n    totalUnread\n    pageInfo {\n      __typename\n      startCursor\n      hasPrevPage\n      endCursor\n      hasNextPage\n    }\n    edges {\n      __typename\n      node {\n        __typename\n        id\n        allowFallback\n        viewed {\n          __typename\n          ...actionable\n        }\n        items {\n          __typename\n          ... on Job {\n            id\n            title {\n              __typename\n              ...actionable\n            }\n            advertiser {\n              __typename\n              name\n            }\n            location {\n              __typename\n              flattened\n            }\n            branding {\n              __typename\n              logo\n              tooltip\n            }\n          }\n          ... on NotificationItem {\n            id\n            title {\n              __typename\n              ...actionable\n            }\n          }\n        }\n      }\n      cursor\n    }\n  }\n}"
+
+  public static var requestString: String { return operationString.appending(Actionable.fragmentString) }
 
   public var first: Int?
   public var after: String?
@@ -224,15 +226,14 @@ public final class NotificationCentreQuery: GraphQLQuery {
         }
 
         public struct Node: GraphQLSelectionSet {
-          public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification"]
+          public static let possibleTypes = ["SimpleNotification"]
 
           public static let selections: [GraphQLSelection] = [
-            GraphQLTypeCase(
-              variants: ["ApplicationViewedNotification": AsApplicationViewedNotification.selections, "NewSavedSearchNotification": AsNewSavedSearchNotification.selections],
-              default: [
-                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              ]
-            )
+            GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+            GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("allowFallback", type: .nonNull(.scalar(Bool.self))),
+            GraphQLField("viewed", type: .nonNull(.object(Viewed.selections))),
+            GraphQLField("items", type: .nonNull(.list(.nonNull(.object(Item.selections))))),
           ]
 
           public var snapshot: Snapshot
@@ -241,12 +242,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public static func makeApplicationViewedNotification(id: GraphQLID, viewed: Bool, date: String? = nil, job: AsApplicationViewedNotification.Job? = nil) -> Node {
-            return Node(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "date": date, "job": job.flatMap { $0.snapshot }])
-          }
-
-          public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, date: String? = nil, jobs: [AsNewSavedSearchNotification.Job]) -> Node {
-            return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date, "jobs": jobs.map { $0.snapshot }])
+          public init(id: GraphQLID, allowFallback: Bool, viewed: Viewed, items: [Item]) {
+            self.init(snapshot: ["__typename": "SimpleNotification", "id": id, "allowFallback": allowFallback, "viewed": viewed.snapshot, "items": items.map { $0.snapshot }])
           }
 
           public var __typename: String {
@@ -258,26 +255,50 @@ public final class NotificationCentreQuery: GraphQLQuery {
             }
           }
 
-          public var asApplicationViewedNotification: AsApplicationViewedNotification? {
+          public var id: GraphQLID {
             get {
-              if !AsApplicationViewedNotification.possibleTypes.contains(__typename) { return nil }
-              return AsApplicationViewedNotification(snapshot: snapshot)
+              return snapshot["id"]! as! GraphQLID
             }
             set {
-              guard let newValue = newValue else { return }
-              snapshot = newValue.snapshot
+              snapshot.updateValue(newValue, forKey: "id")
             }
           }
 
-          public struct AsApplicationViewedNotification: GraphQLSelectionSet {
-            public static let possibleTypes = ["ApplicationViewedNotification"]
+          public var allowFallback: Bool {
+            get {
+              return snapshot["allowFallback"]! as! Bool
+            }
+            set {
+              snapshot.updateValue(newValue, forKey: "allowFallback")
+            }
+          }
+
+          public var viewed: Viewed {
+            get {
+              return Viewed(snapshot: snapshot["viewed"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "viewed")
+            }
+          }
+
+          public var items: [Item] {
+            get {
+              return (snapshot["items"] as! [Snapshot]).map { Item(snapshot: $0) }
+            }
+            set {
+              snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "items")
+            }
+          }
+
+          public struct Viewed: GraphQLSelectionSet {
+            public static let possibleTypes = ["Actionable"]
 
             public static let selections: [GraphQLSelection] = [
               GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
-              GraphQLField("date", type: .scalar(String.self)),
-              GraphQLField("job", type: .object(Job.selections)),
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("text", type: .nonNull(.scalar(String.self))),
+              GraphQLField("actions", type: .list(.nonNull(.object(Action.selections)))),
             ]
 
             public var snapshot: Snapshot
@@ -286,8 +307,226 @@ public final class NotificationCentreQuery: GraphQLQuery {
               self.snapshot = snapshot
             }
 
-            public init(id: GraphQLID, viewed: Bool, date: String? = nil, job: Job? = nil) {
-              self.init(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "date": date, "job": job.flatMap { $0.snapshot }])
+            public init(text: String, actions: [Action]? = nil) {
+              self.init(snapshot: ["__typename": "Actionable", "text": text, "actions": actions.flatMap { $0.map { $0.snapshot } }])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var text: String {
+              get {
+                return snapshot["text"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "text")
+              }
+            }
+
+            public var actions: [Action]? {
+              get {
+                return (snapshot["actions"] as? [Snapshot]).flatMap { $0.map { Action(snapshot: $0) } }
+              }
+              set {
+                snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "actions")
+              }
+            }
+
+            public var fragments: Fragments {
+              get {
+                return Fragments(snapshot: snapshot)
+              }
+              set {
+                snapshot += newValue.snapshot
+              }
+            }
+
+            public struct Fragments {
+              public var snapshot: Snapshot
+
+              public var actionable: Actionable {
+                get {
+                  return Actionable(snapshot: snapshot)
+                }
+                set {
+                  snapshot += newValue.snapshot
+                }
+              }
+            }
+
+            public struct Action: GraphQLSelectionSet {
+              public static let possibleTypes = ["NavigationAction", "MutationAction"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLTypeCase(
+                  variants: ["NavigationAction": AsNavigationAction.selections, "MutationAction": AsMutationAction.selections],
+                  default: [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("action", type: .scalar(String.self)),
+                  ]
+                )
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public static func makeNavigationAction(action: String? = nil) -> Action {
+                return Action(snapshot: ["__typename": "NavigationAction", "action": action])
+              }
+
+              public static func makeMutationAction(action: String? = nil) -> Action {
+                return Action(snapshot: ["__typename": "MutationAction", "action": action])
+              }
+
+              public var __typename: String {
+                get {
+                  return snapshot["__typename"]! as! String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "__typename")
+                }
+              }
+
+              public var action: String? {
+                get {
+                  return snapshot["action"] as? String
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "action")
+                }
+              }
+
+              public var asNavigationAction: AsNavigationAction? {
+                get {
+                  if !AsNavigationAction.possibleTypes.contains(__typename) { return nil }
+                  return AsNavigationAction(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsNavigationAction: GraphQLSelectionSet {
+                public static let possibleTypes = ["NavigationAction"]
+
+                public static let selections: [GraphQLSelection] = [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("action", type: .scalar(String.self)),
+                  GraphQLField("action", type: .scalar(String.self)),
+                ]
+
+                public var snapshot: Snapshot
+
+                public init(snapshot: Snapshot) {
+                  self.snapshot = snapshot
+                }
+
+                public init(action: String? = nil) {
+                  self.init(snapshot: ["__typename": "NavigationAction", "action": action])
+                }
+
+                public var __typename: String {
+                  get {
+                    return snapshot["__typename"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                public var action: String? {
+                  get {
+                    return snapshot["action"] as? String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "action")
+                  }
+                }
+              }
+
+              public var asMutationAction: AsMutationAction? {
+                get {
+                  if !AsMutationAction.possibleTypes.contains(__typename) { return nil }
+                  return AsMutationAction(snapshot: snapshot)
+                }
+                set {
+                  guard let newValue = newValue else { return }
+                  snapshot = newValue.snapshot
+                }
+              }
+
+              public struct AsMutationAction: GraphQLSelectionSet {
+                public static let possibleTypes = ["MutationAction"]
+
+                public static let selections: [GraphQLSelection] = [
+                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                  GraphQLField("action", type: .scalar(String.self)),
+                  GraphQLField("action", type: .scalar(String.self)),
+                ]
+
+                public var snapshot: Snapshot
+
+                public init(snapshot: Snapshot) {
+                  self.snapshot = snapshot
+                }
+
+                public init(action: String? = nil) {
+                  self.init(snapshot: ["__typename": "MutationAction", "action": action])
+                }
+
+                public var __typename: String {
+                  get {
+                    return snapshot["__typename"]! as! String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "__typename")
+                  }
+                }
+
+                public var action: String? {
+                  get {
+                    return snapshot["action"] as? String
+                  }
+                  set {
+                    snapshot.updateValue(newValue, forKey: "action")
+                  }
+                }
+              }
+            }
+          }
+
+          public struct Item: GraphQLSelectionSet {
+            public static let possibleTypes = ["Job"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("title", type: .nonNull(.object(Title.selections))),
+              GraphQLField("advertiser", type: .object(Advertiser.selections)),
+              GraphQLField("location", type: .object(Location.selections)),
+              GraphQLField("branding", type: .object(Branding.selections)),
+              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("title", type: .nonNull(.object(Title.selections))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(id: GraphQLID, title: Title, advertiser: Advertiser? = nil, location: Location? = nil, branding: Branding? = nil) {
+              self.init(snapshot: ["__typename": "Job", "id": id, "title": title.snapshot, "advertiser": advertiser.flatMap { $0.snapshot }, "location": location.flatMap { $0.snapshot }, "branding": branding.flatMap { $0.snapshot }])
             }
 
             public var __typename: String {
@@ -308,44 +547,51 @@ public final class NotificationCentreQuery: GraphQLQuery {
               }
             }
 
-            public var viewed: Bool {
+            public var title: Title {
               get {
-                return snapshot["viewed"]! as! Bool
+                return Title(snapshot: snapshot["title"]! as! Snapshot)
               }
               set {
-                snapshot.updateValue(newValue, forKey: "viewed")
+                snapshot.updateValue(newValue.snapshot, forKey: "title")
               }
             }
 
-            public var date: String? {
+            public var advertiser: Advertiser? {
               get {
-                return snapshot["date"] as? String
+                return (snapshot["advertiser"] as? Snapshot).flatMap { Advertiser(snapshot: $0) }
               }
               set {
-                snapshot.updateValue(newValue, forKey: "date")
+                snapshot.updateValue(newValue?.snapshot, forKey: "advertiser")
               }
             }
 
-            public var job: Job? {
+            public var location: Location? {
               get {
-                return (snapshot["job"] as? Snapshot).flatMap { Job(snapshot: $0) }
+                return (snapshot["location"] as? Snapshot).flatMap { Location(snapshot: $0) }
               }
               set {
-                snapshot.updateValue(newValue?.snapshot, forKey: "job")
+                snapshot.updateValue(newValue?.snapshot, forKey: "location")
               }
             }
 
-            public struct Job: GraphQLSelectionSet {
-              public static let possibleTypes = ["Job"]
+            public var branding: Branding? {
+              get {
+                return (snapshot["branding"] as? Snapshot).flatMap { Branding(snapshot: $0) }
+              }
+              set {
+                snapshot.updateValue(newValue?.snapshot, forKey: "branding")
+              }
+            }
+
+            public struct Title: GraphQLSelectionSet {
+              public static let possibleTypes = ["Actionable"]
 
               public static let selections: [GraphQLSelection] = [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                GraphQLField("title", type: .nonNull(.scalar(String.self))),
-                GraphQLField("url", type: .nonNull(.scalar(String.self))),
-                GraphQLField("advertiser", type: .object(Advertiser.selections)),
-                GraphQLField("location", type: .object(Location.selections)),
-                GraphQLField("brandingLogo", type: .scalar(URL.self)),
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("text", type: .nonNull(.scalar(String.self))),
+                GraphQLField("actions", type: .list(.nonNull(.object(Action.selections)))),
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
               ]
 
               public var snapshot: Snapshot
@@ -354,8 +600,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public init(id: GraphQLID, title: String, url: String, advertiser: Advertiser? = nil, location: Location? = nil, brandingLogo: URL? = nil) {
-                self.init(snapshot: ["__typename": "Job", "id": id, "title": title, "url": url, "advertiser": advertiser.flatMap { $0.snapshot }, "location": location.flatMap { $0.snapshot }, "brandingLogo": brandingLogo])
+              public init(text: String, actions: [Action]? = nil) {
+                self.init(snapshot: ["__typename": "Actionable", "text": text, "actions": actions.flatMap { $0.map { $0.snapshot } }])
               }
 
               public var __typename: String {
@@ -367,66 +613,57 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 }
               }
 
-              public var id: GraphQLID {
+              public var text: String {
                 get {
-                  return snapshot["id"]! as! GraphQLID
+                  return snapshot["text"]! as! String
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "id")
+                  snapshot.updateValue(newValue, forKey: "text")
                 }
               }
 
-              public var title: String {
+              public var actions: [Action]? {
                 get {
-                  return snapshot["title"]! as! String
+                  return (snapshot["actions"] as? [Snapshot]).flatMap { $0.map { Action(snapshot: $0) } }
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "title")
+                  snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "actions")
                 }
               }
 
-              public var url: String {
+              public var fragments: Fragments {
                 get {
-                  return snapshot["url"]! as! String
+                  return Fragments(snapshot: snapshot)
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "url")
+                  snapshot += newValue.snapshot
                 }
               }
 
-              public var advertiser: Advertiser? {
-                get {
-                  return (snapshot["advertiser"] as? Snapshot).flatMap { Advertiser(snapshot: $0) }
-                }
-                set {
-                  snapshot.updateValue(newValue?.snapshot, forKey: "advertiser")
+              public struct Fragments {
+                public var snapshot: Snapshot
+
+                public var actionable: Actionable {
+                  get {
+                    return Actionable(snapshot: snapshot)
+                  }
+                  set {
+                    snapshot += newValue.snapshot
+                  }
                 }
               }
 
-              public var location: Location? {
-                get {
-                  return (snapshot["location"] as? Snapshot).flatMap { Location(snapshot: $0) }
-                }
-                set {
-                  snapshot.updateValue(newValue?.snapshot, forKey: "location")
-                }
-              }
-
-              public var brandingLogo: URL? {
-                get {
-                  return snapshot["brandingLogo"] as? URL
-                }
-                set {
-                  snapshot.updateValue(newValue, forKey: "brandingLogo")
-                }
-              }
-
-              public struct Advertiser: GraphQLSelectionSet {
-                public static let possibleTypes = ["Advertiser"]
+              public struct Action: GraphQLSelectionSet {
+                public static let possibleTypes = ["NavigationAction", "MutationAction"]
 
                 public static let selections: [GraphQLSelection] = [
-                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("name", type: .nonNull(.scalar(String.self))),
+                  GraphQLTypeCase(
+                    variants: ["NavigationAction": AsNavigationAction.selections, "MutationAction": AsMutationAction.selections],
+                    default: [
+                      GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                      GraphQLField("action", type: .scalar(String.self)),
+                    ]
+                  )
                 ]
 
                 public var snapshot: Snapshot
@@ -435,8 +672,12 @@ public final class NotificationCentreQuery: GraphQLQuery {
                   self.snapshot = snapshot
                 }
 
-                public init(name: String) {
-                  self.init(snapshot: ["__typename": "Advertiser", "name": name])
+                public static func makeNavigationAction(action: String? = nil) -> Action {
+                  return Action(snapshot: ["__typename": "NavigationAction", "action": action])
+                }
+
+                public static func makeMutationAction(action: String? = nil) -> Action {
+                  return Action(snapshot: ["__typename": "MutationAction", "action": action])
                 }
 
                 public var __typename: String {
@@ -448,143 +689,121 @@ public final class NotificationCentreQuery: GraphQLQuery {
                   }
                 }
 
-                public var name: String {
+                public var action: String? {
                   get {
-                    return snapshot["name"]! as! String
+                    return snapshot["action"] as? String
                   }
                   set {
-                    snapshot.updateValue(newValue, forKey: "name")
+                    snapshot.updateValue(newValue, forKey: "action")
                   }
                 }
-              }
 
-              public struct Location: GraphQLSelectionSet {
-                public static let possibleTypes = ["Location"]
-
-                public static let selections: [GraphQLSelection] = [
-                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("flattened", type: .nonNull(.scalar(String.self))),
-                ]
-
-                public var snapshot: Snapshot
-
-                public init(snapshot: Snapshot) {
-                  self.snapshot = snapshot
-                }
-
-                public init(flattened: String) {
-                  self.init(snapshot: ["__typename": "Location", "flattened": flattened])
-                }
-
-                public var __typename: String {
+                public var asNavigationAction: AsNavigationAction? {
                   get {
-                    return snapshot["__typename"]! as! String
+                    if !AsNavigationAction.possibleTypes.contains(__typename) { return nil }
+                    return AsNavigationAction(snapshot: snapshot)
                   }
                   set {
-                    snapshot.updateValue(newValue, forKey: "__typename")
+                    guard let newValue = newValue else { return }
+                    snapshot = newValue.snapshot
                   }
                 }
 
-                public var flattened: String {
+                public struct AsNavigationAction: GraphQLSelectionSet {
+                  public static let possibleTypes = ["NavigationAction"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("action", type: .scalar(String.self)),
+                    GraphQLField("action", type: .scalar(String.self)),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(action: String? = nil) {
+                    self.init(snapshot: ["__typename": "NavigationAction", "action": action])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  public var action: String? {
+                    get {
+                      return snapshot["action"] as? String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "action")
+                    }
+                  }
+                }
+
+                public var asMutationAction: AsMutationAction? {
                   get {
-                    return snapshot["flattened"]! as! String
+                    if !AsMutationAction.possibleTypes.contains(__typename) { return nil }
+                    return AsMutationAction(snapshot: snapshot)
                   }
                   set {
-                    snapshot.updateValue(newValue, forKey: "flattened")
+                    guard let newValue = newValue else { return }
+                    snapshot = newValue.snapshot
+                  }
+                }
+
+                public struct AsMutationAction: GraphQLSelectionSet {
+                  public static let possibleTypes = ["MutationAction"]
+
+                  public static let selections: [GraphQLSelection] = [
+                    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                    GraphQLField("action", type: .scalar(String.self)),
+                    GraphQLField("action", type: .scalar(String.self)),
+                  ]
+
+                  public var snapshot: Snapshot
+
+                  public init(snapshot: Snapshot) {
+                    self.snapshot = snapshot
+                  }
+
+                  public init(action: String? = nil) {
+                    self.init(snapshot: ["__typename": "MutationAction", "action": action])
+                  }
+
+                  public var __typename: String {
+                    get {
+                      return snapshot["__typename"]! as! String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "__typename")
+                    }
+                  }
+
+                  public var action: String? {
+                    get {
+                      return snapshot["action"] as? String
+                    }
+                    set {
+                      snapshot.updateValue(newValue, forKey: "action")
+                    }
                   }
                 }
               }
             }
-          }
 
-          public var asNewSavedSearchNotification: AsNewSavedSearchNotification? {
-            get {
-              if !AsNewSavedSearchNotification.possibleTypes.contains(__typename) { return nil }
-              return AsNewSavedSearchNotification(snapshot: snapshot)
-            }
-            set {
-              guard let newValue = newValue else { return }
-              snapshot = newValue.snapshot
-            }
-          }
-
-          public struct AsNewSavedSearchNotification: GraphQLSelectionSet {
-            public static let possibleTypes = ["NewSavedSearchNotification"]
-
-            public static let selections: [GraphQLSelection] = [
-              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-              GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
-              GraphQLField("date", type: .scalar(String.self)),
-              GraphQLField("jobs", type: .nonNull(.list(.nonNull(.object(Job.selections))))),
-            ]
-
-            public var snapshot: Snapshot
-
-            public init(snapshot: Snapshot) {
-              self.snapshot = snapshot
-            }
-
-            public init(id: GraphQLID, viewed: Bool, date: String? = nil, jobs: [Job]) {
-              self.init(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date, "jobs": jobs.map { $0.snapshot }])
-            }
-
-            public var __typename: String {
-              get {
-                return snapshot["__typename"]! as! String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "__typename")
-              }
-            }
-
-            public var id: GraphQLID {
-              get {
-                return snapshot["id"]! as! GraphQLID
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "id")
-              }
-            }
-
-            public var viewed: Bool {
-              get {
-                return snapshot["viewed"]! as! Bool
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "viewed")
-              }
-            }
-
-            public var date: String? {
-              get {
-                return snapshot["date"] as? String
-              }
-              set {
-                snapshot.updateValue(newValue, forKey: "date")
-              }
-            }
-
-            public var jobs: [Job] {
-              get {
-                return (snapshot["jobs"] as! [Snapshot]).map { Job(snapshot: $0) }
-              }
-              set {
-                snapshot.updateValue(newValue.map { $0.snapshot }, forKey: "jobs")
-              }
-            }
-
-            public struct Job: GraphQLSelectionSet {
-              public static let possibleTypes = ["Job"]
+            public struct Advertiser: GraphQLSelectionSet {
+              public static let possibleTypes = ["Advertiser"]
 
               public static let selections: [GraphQLSelection] = [
                 GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-                GraphQLField("title", type: .nonNull(.scalar(String.self))),
-                GraphQLField("url", type: .nonNull(.scalar(String.self))),
-                GraphQLField("advertiser", type: .object(Advertiser.selections)),
-                GraphQLField("location", type: .object(Location.selections)),
-                GraphQLField("brandingLogo", type: .scalar(URL.self)),
+                GraphQLField("name", type: .nonNull(.scalar(String.self))),
               ]
 
               public var snapshot: Snapshot
@@ -593,8 +812,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public init(id: GraphQLID, title: String, url: String, advertiser: Advertiser? = nil, location: Location? = nil, brandingLogo: URL? = nil) {
-                self.init(snapshot: ["__typename": "Job", "id": id, "title": title, "url": url, "advertiser": advertiser.flatMap { $0.snapshot }, "location": location.flatMap { $0.snapshot }, "brandingLogo": brandingLogo])
+              public init(name: String) {
+                self.init(snapshot: ["__typename": "Advertiser", "name": name])
               }
 
               public var __typename: String {
@@ -606,131 +825,96 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 }
               }
 
-              public var id: GraphQLID {
+              public var name: String {
                 get {
-                  return snapshot["id"]! as! GraphQLID
+                  return snapshot["name"]! as! String
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "id")
+                  snapshot.updateValue(newValue, forKey: "name")
                 }
               }
+            }
 
-              public var title: String {
+            public struct Location: GraphQLSelectionSet {
+              public static let possibleTypes = ["Location"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("flattened", type: .nonNull(.scalar(String.self))),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(flattened: String) {
+                self.init(snapshot: ["__typename": "Location", "flattened": flattened])
+              }
+
+              public var __typename: String {
                 get {
-                  return snapshot["title"]! as! String
+                  return snapshot["__typename"]! as! String
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "title")
+                  snapshot.updateValue(newValue, forKey: "__typename")
                 }
               }
 
-              public var url: String {
+              public var flattened: String {
                 get {
-                  return snapshot["url"]! as! String
+                  return snapshot["flattened"]! as! String
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "url")
+                  snapshot.updateValue(newValue, forKey: "flattened")
                 }
               }
+            }
 
-              public var advertiser: Advertiser? {
+            public struct Branding: GraphQLSelectionSet {
+              public static let possibleTypes = ["Branding"]
+
+              public static let selections: [GraphQLSelection] = [
+                GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+                GraphQLField("logo", type: .nonNull(.scalar(URL.self))),
+                GraphQLField("tooltip", type: .scalar(String.self)),
+              ]
+
+              public var snapshot: Snapshot
+
+              public init(snapshot: Snapshot) {
+                self.snapshot = snapshot
+              }
+
+              public init(logo: URL, tooltip: String? = nil) {
+                self.init(snapshot: ["__typename": "Branding", "logo": logo, "tooltip": tooltip])
+              }
+
+              public var __typename: String {
                 get {
-                  return (snapshot["advertiser"] as? Snapshot).flatMap { Advertiser(snapshot: $0) }
+                  return snapshot["__typename"]! as! String
                 }
                 set {
-                  snapshot.updateValue(newValue?.snapshot, forKey: "advertiser")
+                  snapshot.updateValue(newValue, forKey: "__typename")
                 }
               }
 
-              public var location: Location? {
+              public var logo: URL {
                 get {
-                  return (snapshot["location"] as? Snapshot).flatMap { Location(snapshot: $0) }
+                  return snapshot["logo"]! as! URL
                 }
                 set {
-                  snapshot.updateValue(newValue?.snapshot, forKey: "location")
+                  snapshot.updateValue(newValue, forKey: "logo")
                 }
               }
 
-              public var brandingLogo: URL? {
+              public var tooltip: String? {
                 get {
-                  return snapshot["brandingLogo"] as? URL
+                  return snapshot["tooltip"] as? String
                 }
                 set {
-                  snapshot.updateValue(newValue, forKey: "brandingLogo")
-                }
-              }
-
-              public struct Advertiser: GraphQLSelectionSet {
-                public static let possibleTypes = ["Advertiser"]
-
-                public static let selections: [GraphQLSelection] = [
-                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("name", type: .nonNull(.scalar(String.self))),
-                ]
-
-                public var snapshot: Snapshot
-
-                public init(snapshot: Snapshot) {
-                  self.snapshot = snapshot
-                }
-
-                public init(name: String) {
-                  self.init(snapshot: ["__typename": "Advertiser", "name": name])
-                }
-
-                public var __typename: String {
-                  get {
-                    return snapshot["__typename"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "__typename")
-                  }
-                }
-
-                public var name: String {
-                  get {
-                    return snapshot["name"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "name")
-                  }
-                }
-              }
-
-              public struct Location: GraphQLSelectionSet {
-                public static let possibleTypes = ["Location"]
-
-                public static let selections: [GraphQLSelection] = [
-                  GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-                  GraphQLField("flattened", type: .nonNull(.scalar(String.self))),
-                ]
-
-                public var snapshot: Snapshot
-
-                public init(snapshot: Snapshot) {
-                  self.snapshot = snapshot
-                }
-
-                public init(flattened: String) {
-                  self.init(snapshot: ["__typename": "Location", "flattened": flattened])
-                }
-
-                public var __typename: String {
-                  get {
-                    return snapshot["__typename"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "__typename")
-                  }
-                }
-
-                public var flattened: String {
-                  get {
-                    return snapshot["flattened"]! as! String
-                  }
-                  set {
-                    snapshot.updateValue(newValue, forKey: "flattened")
-                  }
+                  snapshot.updateValue(newValue, forKey: "tooltip")
                 }
               }
             }
@@ -741,25 +925,66 @@ public final class NotificationCentreQuery: GraphQLQuery {
   }
 }
 
-public final class NotificationUpdateViewedMutation: GraphQLMutation {
-  public static let operationString =
-    "mutation notificationUpdateViewed($id: ID!) {\n  notificationUpdateViewed(input: {id: $id}) {\n    __typename\n    node {\n      __typename\n      id\n      viewed\n      date\n    }\n  }\n}"
+public struct Actionable: GraphQLFragment {
+  public static let fragmentString =
+    "fragment actionable on Actionable {\n  __typename\n  text\n  actions {\n    __typename\n    action\n    ... on NavigationAction {\n      action\n    }\n    ... on MutationAction {\n      action\n    }\n  }\n}"
 
-  public var id: GraphQLID
+  public static let possibleTypes = ["Actionable"]
 
-  public init(id: GraphQLID) {
-    self.id = id
+  public static let selections: [GraphQLSelection] = [
+    GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+    GraphQLField("text", type: .nonNull(.scalar(String.self))),
+    GraphQLField("actions", type: .list(.nonNull(.object(Action.selections)))),
+  ]
+
+  public var snapshot: Snapshot
+
+  public init(snapshot: Snapshot) {
+    self.snapshot = snapshot
   }
 
-  public var variables: GraphQLMap? {
-    return ["id": id]
+  public init(text: String, actions: [Action]? = nil) {
+    self.init(snapshot: ["__typename": "Actionable", "text": text, "actions": actions.flatMap { $0.map { $0.snapshot } }])
   }
 
-  public struct Data: GraphQLSelectionSet {
-    public static let possibleTypes = ["Mutation"]
+  public var __typename: String {
+    get {
+      return snapshot["__typename"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "__typename")
+    }
+  }
+
+  public var text: String {
+    get {
+      return snapshot["text"]! as! String
+    }
+    set {
+      snapshot.updateValue(newValue, forKey: "text")
+    }
+  }
+
+  public var actions: [Action]? {
+    get {
+      return (snapshot["actions"] as? [Snapshot]).flatMap { $0.map { Action(snapshot: $0) } }
+    }
+    set {
+      snapshot.updateValue(newValue.flatMap { $0.map { $0.snapshot } }, forKey: "actions")
+    }
+  }
+
+  public struct Action: GraphQLSelectionSet {
+    public static let possibleTypes = ["NavigationAction", "MutationAction"]
 
     public static let selections: [GraphQLSelection] = [
-      GraphQLField("notificationUpdateViewed", arguments: ["input": ["id": GraphQLVariable("id")]], type: .nonNull(.object(NotificationUpdateViewed.selections))),
+      GraphQLTypeCase(
+        variants: ["NavigationAction": AsNavigationAction.selections, "MutationAction": AsMutationAction.selections],
+        default: [
+          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+          GraphQLField("action", type: .scalar(String.self)),
+        ]
+      )
     ]
 
     public var snapshot: Snapshot
@@ -768,25 +993,50 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
       self.snapshot = snapshot
     }
 
-    public init(notificationUpdateViewed: NotificationUpdateViewed) {
-      self.init(snapshot: ["__typename": "Mutation", "notificationUpdateViewed": notificationUpdateViewed.snapshot])
+    public static func makeNavigationAction(action: String? = nil) -> Action {
+      return Action(snapshot: ["__typename": "NavigationAction", "action": action])
     }
 
-    public var notificationUpdateViewed: NotificationUpdateViewed {
+    public static func makeMutationAction(action: String? = nil) -> Action {
+      return Action(snapshot: ["__typename": "MutationAction", "action": action])
+    }
+
+    public var __typename: String {
       get {
-        return NotificationUpdateViewed(snapshot: snapshot["notificationUpdateViewed"]! as! Snapshot)
+        return snapshot["__typename"]! as! String
       }
       set {
-        snapshot.updateValue(newValue.snapshot, forKey: "notificationUpdateViewed")
+        snapshot.updateValue(newValue, forKey: "__typename")
       }
     }
 
-    public struct NotificationUpdateViewed: GraphQLSelectionSet {
-      public static let possibleTypes = ["NotificationUpdateViewedPayload"]
+    public var action: String? {
+      get {
+        return snapshot["action"] as? String
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "action")
+      }
+    }
+
+    public var asNavigationAction: AsNavigationAction? {
+      get {
+        if !AsNavigationAction.possibleTypes.contains(__typename) { return nil }
+        return AsNavigationAction(snapshot: snapshot)
+      }
+      set {
+        guard let newValue = newValue else { return }
+        snapshot = newValue.snapshot
+      }
+    }
+
+    public struct AsNavigationAction: GraphQLSelectionSet {
+      public static let possibleTypes = ["NavigationAction"]
 
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-        GraphQLField("node", type: .object(Node.selections)),
+        GraphQLField("action", type: .scalar(String.self)),
+        GraphQLField("action", type: .scalar(String.self)),
       ]
 
       public var snapshot: Snapshot
@@ -795,8 +1045,8 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
         self.snapshot = snapshot
       }
 
-      public init(node: Node? = nil) {
-        self.init(snapshot: ["__typename": "NotificationUpdateViewedPayload", "node": node.flatMap { $0.snapshot }])
+      public init(action: String? = nil) {
+        self.init(snapshot: ["__typename": "NavigationAction", "action": action])
       }
 
       public var __typename: String {
@@ -808,73 +1058,61 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
         }
       }
 
-      public var node: Node? {
+      public var action: String? {
         get {
-          return (snapshot["node"] as? Snapshot).flatMap { Node(snapshot: $0) }
+          return snapshot["action"] as? String
         }
         set {
-          snapshot.updateValue(newValue?.snapshot, forKey: "node")
+          snapshot.updateValue(newValue, forKey: "action")
+        }
+      }
+    }
+
+    public var asMutationAction: AsMutationAction? {
+      get {
+        if !AsMutationAction.possibleTypes.contains(__typename) { return nil }
+        return AsMutationAction(snapshot: snapshot)
+      }
+      set {
+        guard let newValue = newValue else { return }
+        snapshot = newValue.snapshot
+      }
+    }
+
+    public struct AsMutationAction: GraphQLSelectionSet {
+      public static let possibleTypes = ["MutationAction"]
+
+      public static let selections: [GraphQLSelection] = [
+        GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+        GraphQLField("action", type: .scalar(String.self)),
+        GraphQLField("action", type: .scalar(String.self)),
+      ]
+
+      public var snapshot: Snapshot
+
+      public init(snapshot: Snapshot) {
+        self.snapshot = snapshot
+      }
+
+      public init(action: String? = nil) {
+        self.init(snapshot: ["__typename": "MutationAction", "action": action])
+      }
+
+      public var __typename: String {
+        get {
+          return snapshot["__typename"]! as! String
+        }
+        set {
+          snapshot.updateValue(newValue, forKey: "__typename")
         }
       }
 
-      public struct Node: GraphQLSelectionSet {
-        public static let possibleTypes = ["ApplicationViewedNotification", "NewSavedSearchNotification"]
-
-        public static let selections: [GraphQLSelection] = [
-          GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
-          GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-          GraphQLField("viewed", type: .nonNull(.scalar(Bool.self))),
-          GraphQLField("date", type: .scalar(String.self)),
-        ]
-
-        public var snapshot: Snapshot
-
-        public init(snapshot: Snapshot) {
-          self.snapshot = snapshot
+      public var action: String? {
+        get {
+          return snapshot["action"] as? String
         }
-
-        public static func makeApplicationViewedNotification(id: GraphQLID, viewed: Bool, date: String? = nil) -> Node {
-          return Node(snapshot: ["__typename": "ApplicationViewedNotification", "id": id, "viewed": viewed, "date": date])
-        }
-
-        public static func makeNewSavedSearchNotification(id: GraphQLID, viewed: Bool, date: String? = nil) -> Node {
-          return Node(snapshot: ["__typename": "NewSavedSearchNotification", "id": id, "viewed": viewed, "date": date])
-        }
-
-        public var __typename: String {
-          get {
-            return snapshot["__typename"]! as! String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "__typename")
-          }
-        }
-
-        public var id: GraphQLID {
-          get {
-            return snapshot["id"]! as! GraphQLID
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "id")
-          }
-        }
-
-        public var viewed: Bool {
-          get {
-            return snapshot["viewed"]! as! Bool
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "viewed")
-          }
-        }
-
-        public var date: String? {
-          get {
-            return snapshot["date"] as? String
-          }
-          set {
-            snapshot.updateValue(newValue, forKey: "date")
-          }
+        set {
+          snapshot.updateValue(newValue, forKey: "action")
         }
       }
     }
