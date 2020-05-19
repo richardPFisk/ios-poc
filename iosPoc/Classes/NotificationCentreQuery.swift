@@ -540,8 +540,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
               return Item(snapshot: ["__typename": "Job", "id": id, "title": title.snapshot, "advertiser": advertiser.flatMap { $0.snapshot }, "location": location.flatMap { $0.snapshot }, "branding": branding.flatMap { $0.snapshot }])
             }
 
-            public static func makeRatingNotificationItem(id: GraphQLID, title: AsRatingNotificationItem.Title) -> Item {
-              return Item(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot])
+            public static func makeRatingNotificationItem(id: GraphQLID, title: AsRatingNotificationItem.Title, averageCompanyRating: Double? = nil, companyRecommendedPercentage: Double? = nil) -> Item {
+              return Item(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot, "averageCompanyRating": averageCompanyRating, "companyRecommendedPercentage": companyRecommendedPercentage])
             }
 
             public var __typename: String {
@@ -1284,6 +1284,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 GraphQLField("title", type: .nonNull(.object(Title.selections))),
                 GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
                 GraphQLField("title", type: .nonNull(.object(Title.selections))),
+                GraphQLField("averageCompanyRating", type: .scalar(Double.self)),
+                GraphQLField("companyRecommendedPercentage", type: .scalar(Double.self)),
               ]
 
               public var snapshot: Snapshot
@@ -1292,8 +1294,8 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 self.snapshot = snapshot
               }
 
-              public init(id: GraphQLID, title: Title) {
-                self.init(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot])
+              public init(id: GraphQLID, title: Title, averageCompanyRating: Double? = nil, companyRecommendedPercentage: Double? = nil) {
+                self.init(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot, "averageCompanyRating": averageCompanyRating, "companyRecommendedPercentage": companyRecommendedPercentage])
               }
 
               public var __typename: String {
@@ -1320,6 +1322,24 @@ public final class NotificationCentreQuery: GraphQLQuery {
                 }
                 set {
                   snapshot.updateValue(newValue.snapshot, forKey: "title")
+                }
+              }
+
+              public var averageCompanyRating: Double? {
+                get {
+                  return snapshot["averageCompanyRating"] as? Double
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "averageCompanyRating")
+                }
+              }
+
+              public var companyRecommendedPercentage: Double? {
+                get {
+                  return snapshot["companyRecommendedPercentage"] as? Double
+                }
+                set {
+                  snapshot.updateValue(newValue, forKey: "companyRecommendedPercentage")
                 }
               }
 
@@ -1706,7 +1726,7 @@ public final class NotificationUpdateViewedMutation: GraphQLMutation {
 
 public struct ItemsFragment: GraphQLFragment {
   public static let fragmentString =
-    "fragment itemsFragment on NotificationItem {\n  __typename\n  id\n  title {\n    __typename\n    ...actionableFragment\n  }\n  ... on Job {\n    id\n    title {\n      __typename\n      ...actionableFragment\n    }\n    advertiser {\n      __typename\n      name\n    }\n    location {\n      __typename\n      flattened\n    }\n    branding {\n      __typename\n      logo\n      tooltip\n    }\n  }\n  ... on RatingNotificationItem {\n    id\n    title {\n      __typename\n      ...actionableFragment\n    }\n  }\n}"
+    "fragment itemsFragment on NotificationItem {\n  __typename\n  id\n  title {\n    __typename\n    ...actionableFragment\n  }\n  ... on Job {\n    id\n    title {\n      __typename\n      ...actionableFragment\n    }\n    advertiser {\n      __typename\n      name\n    }\n    location {\n      __typename\n      flattened\n    }\n    branding {\n      __typename\n      logo\n      tooltip\n    }\n  }\n  ... on RatingNotificationItem {\n    id\n    title {\n      __typename\n      ...actionableFragment\n    }\n    averageCompanyRating\n    companyRecommendedPercentage\n  }\n}"
 
   public static let possibleTypes = ["Job", "RatingNotificationItem"]
 
@@ -1731,8 +1751,8 @@ public struct ItemsFragment: GraphQLFragment {
     return ItemsFragment(snapshot: ["__typename": "Job", "id": id, "title": title.snapshot, "advertiser": advertiser.flatMap { $0.snapshot }, "location": location.flatMap { $0.snapshot }, "branding": branding.flatMap { $0.snapshot }])
   }
 
-  public static func makeRatingNotificationItem(id: GraphQLID, title: AsRatingNotificationItem.Title) -> ItemsFragment {
-    return ItemsFragment(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot])
+  public static func makeRatingNotificationItem(id: GraphQLID, title: AsRatingNotificationItem.Title, averageCompanyRating: Double? = nil, companyRecommendedPercentage: Double? = nil) -> ItemsFragment {
+    return ItemsFragment(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot, "averageCompanyRating": averageCompanyRating, "companyRecommendedPercentage": companyRecommendedPercentage])
   }
 
   public var __typename: String {
@@ -2422,6 +2442,8 @@ public struct ItemsFragment: GraphQLFragment {
       GraphQLField("title", type: .nonNull(.object(Title.selections))),
       GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
       GraphQLField("title", type: .nonNull(.object(Title.selections))),
+      GraphQLField("averageCompanyRating", type: .scalar(Double.self)),
+      GraphQLField("companyRecommendedPercentage", type: .scalar(Double.self)),
     ]
 
     public var snapshot: Snapshot
@@ -2430,8 +2452,8 @@ public struct ItemsFragment: GraphQLFragment {
       self.snapshot = snapshot
     }
 
-    public init(id: GraphQLID, title: Title) {
-      self.init(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot])
+    public init(id: GraphQLID, title: Title, averageCompanyRating: Double? = nil, companyRecommendedPercentage: Double? = nil) {
+      self.init(snapshot: ["__typename": "RatingNotificationItem", "id": id, "title": title.snapshot, "averageCompanyRating": averageCompanyRating, "companyRecommendedPercentage": companyRecommendedPercentage])
     }
 
     public var __typename: String {
@@ -2458,6 +2480,24 @@ public struct ItemsFragment: GraphQLFragment {
       }
       set {
         snapshot.updateValue(newValue.snapshot, forKey: "title")
+      }
+    }
+
+    public var averageCompanyRating: Double? {
+      get {
+        return snapshot["averageCompanyRating"] as? Double
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "averageCompanyRating")
+      }
+    }
+
+    public var companyRecommendedPercentage: Double? {
+      get {
+        return snapshot["companyRecommendedPercentage"] as? Double
+      }
+      set {
+        snapshot.updateValue(newValue, forKey: "companyRecommendedPercentage")
       }
     }
 

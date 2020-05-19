@@ -25,6 +25,8 @@ struct NodeView: View {
         IfLet(self.viewModel, whenPresent: { newSavedSearch in
             VStack {
                 VStack(spacing: 2) {
+//                    CompanyRating(viewModel: CompanyRatingViewModel(), companyName: "SEEK")
+//                        .frame(width: 300.0)
                     if !self.viewed {
                         Text("New")
                             .font(.caption)
@@ -33,7 +35,6 @@ struct NodeView: View {
                             .background(self.theme["backgroundPositive"])
                             .cornerRadius(5)
                         Divider()
-
                     }
                     Text("\(self.viewModel.title.text)")
                         .foregroundColor(self.theme["textPrimary"])

@@ -27,6 +27,8 @@ fragment itemsFragment on NotificationItem {
     title {
       ...actionableFragment
     } 
+    averageCompanyRating
+    companyRecommendedPercentage
   }
 }
 

@@ -11,14 +11,13 @@ import Combine
 
 struct RatingView : View {
     @State var rating: Int
-    var label = ""
+    @State var label = ""
     
     var offColor: Color
     var onColor: Color
     
-    init(_ rating: Int, label: String, onColor: Color = Color.yellow, offColor: Color = Color.gray) {
+    init(_ rating: Int, onColor: Color = Color.yellow, offColor: Color = Color.gray) {
         _rating = State<Int>(initialValue: rating)
-        self.label = label
         self.onColor = onColor
         self.offColor = offColor
     }
@@ -38,16 +37,16 @@ struct RatingView : View {
     
     var body: some View {
         HStack {
-            if label.isEmpty == false {
-                Text(label)
-            }
-
             ForEach(1..<maximumRating + 1) { number in
                 self.image(for: number)
                     .foregroundColor(number > self.rating ? self.offColor : self.onColor)
                     .onTapGesture {
                         self.rating = number
+                        self.label = "\(number)/\(self.maximumRating)"
                     }
+            }
+            if label.isEmpty == false {
+                Text(label)
             }
         }
     }
