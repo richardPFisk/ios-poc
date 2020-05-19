@@ -24,15 +24,16 @@ struct NodeView: View {
     var body: some View {
         IfLet(self.viewModel, whenPresent: { newSavedSearch in
             VStack {
-                HStack {
-                    if self.viewed {
-                        Spacer(minLength: 7)
+                VStack(spacing: 2) {
+                    if !self.viewed {
                         Text("New")
                             .font(.caption)
                             .foregroundColor(self.theme["textPositive"])
                             .padding(.all, 3)
                             .background(self.theme["backgroundPositive"])
                             .cornerRadius(5)
+                        Divider()
+
                     }
                     Text("\(self.viewModel.title.text)")
                         .foregroundColor(self.theme["textPrimary"])
@@ -43,8 +44,10 @@ struct NodeView: View {
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 if self.itemsViewModel.count == 1 {
-                    NotificationJobView(self.itemsViewModel[0], theme: self.theme)
-                        .padding(.all, 8.0)
+                    HStack {
+                        NotificationJobView(self.itemsViewModel[0], theme: self.theme)
+                            .padding(.all, 8.0)
+                    }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 }
                 else {
                     ScrollView(.horizontal, content: {
@@ -58,7 +61,6 @@ struct NodeView: View {
                 }
                 
             }
-            .frame(width: UIScreen.main.bounds.width)
         }, whenNil: {
             EmptyView()
         })

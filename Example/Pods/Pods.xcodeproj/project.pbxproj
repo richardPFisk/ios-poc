@@ -1509,25 +1509,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		3806AE202473743800BFF8F4 /* NewViews */ = {
+		3806AE282473953700BFF8F4 /* GeneralViews */ = {
 			isa = PBXGroup;
 			children = (
-				3806AE24247375DF00BFF8F4 /* NodeView.swift */,
+				3806AE0A246E111300BFF8F4 /* RatingView.swift */,
+				3806AE0E246E1E8600BFF8F4 /* AnimatedProgressView.swift */,
+				98559DE2493946872F01959AFAD3AD1A /* CircleImageView.swift */,
+				6EF32F2F4F6B3E763B512835E38E9BEE /* IfLet.swift */,
 			);
-			path = NewViews;
-			sourceTree = "<group>";
-		};
-		3806AE23247374BD00BFF8F4 /* NewViewModels */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = NewViewModels;
+			path = GeneralViews;
 			sourceTree = "<group>";
 		};
 		3D2E510648E2EAC45FD24BCCEB92E9B9 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				3806AE23247374BD00BFF8F4 /* NewViewModels */,
 				C3F929055774E54D99BA94F4D31DA2A5 /* InfiniteScrollViewModel.swift */,
 				096BB689BA384308A579A45537895A38 /* NotificationViewModel.swift */,
 				3806AE2624738E7600BFF8F4 /* JobViewModel.swift */,
@@ -1828,14 +1823,11 @@
 		B90EA0F07A8F8DFF1B28300920062BC6 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				3806AE202473743800BFF8F4 /* NewViews */,
+				3806AE282473953700BFF8F4 /* GeneralViews */,
 				12D17CF7BBC6EE93EA7AF0A17D939AF3 /* InfiniteScrollView.swift */,
-				98559DE2493946872F01959AFAD3AD1A /* CircleImageView.swift */,
-				6EF32F2F4F6B3E763B512835E38E9BEE /* IfLet.swift */,
+				3806AE24247375DF00BFF8F4 /* NodeView.swift */,
 				B5B36E878389D10887A680703E31CBB0 /* NotificationJobView.swift */,
 				38F8141A245A7DBE0062E99E /* LoadingView.swift */,
-				3806AE0A246E111300BFF8F4 /* RatingView.swift */,
-				3806AE0E246E1E8600BFF8F4 /* AnimatedProgressView.swift */,
 				3806AE162472325500BFF8F4 /* CardView.swift */,
 			);
 			name = Views;

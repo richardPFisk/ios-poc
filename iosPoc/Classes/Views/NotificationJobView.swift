@@ -33,6 +33,8 @@ struct NotificationJobView : View {
                                             .aspectRatio(contentMode: .fit)
                                     })
                                     .frame(width: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0), height: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0))
+                            }.onAppear {
+                                print("Global center \(job.title): \(geo.frame(in: .global).midX) x \(geo.frame(in: .global).midY)")
                             }
                         }
                     },
@@ -47,6 +49,7 @@ struct NotificationJobView : View {
                         .foregroundColor(self.theme["textSecondary"])
                         .frame(width: 180, height: 50)
                 }
+
             }.gesture(TapGesture().onEnded {
 
                 let path = self.jobViewModel?.url?.path ?? ""

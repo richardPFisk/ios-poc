@@ -27,7 +27,6 @@ public struct InfiniteScrollView: View {
             LoadingView()
         }
         else {
-        GeometryReader { geo in
             List {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
                     VStack {
@@ -37,25 +36,19 @@ public struct InfiniteScrollView: View {
                             .padding(.all, 20.0)
                             .onAppear {
                                 self.viewModel.updateViewed(listItem.id, index)
+                                
+                                let count = self.viewModel.items.count
+                                if index == count-1 {
+                                    self.viewModel.getNewItems(currentListSize: count)
+                                }
                             }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.id, index)
-                            }
-
-                    }.onAppear {
-                        let count = self.viewModel.items.count
-                        if index == count-1 {
-                            self.viewModel.getNewItems(currentListSize: count)
-                        }
                     }
-                    .frame(width: geo.size.width)
+                    .frame(width: UIScreen.main.bounds.width)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .background(self.theme["backgroundSecondary"])
                 }
             }
             .background(self.theme["backgroundSecondary"])
-            
-        }
         }
     }
 }

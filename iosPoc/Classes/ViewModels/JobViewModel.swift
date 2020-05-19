@@ -26,8 +26,6 @@ struct JobViewModel {
     
     init?(_ job: AsJob?) {
         if let jobValue = job {
-            print(jobValue)
-            print("")
             let optionalAction = jobValue.title.actions?.map { $0.asNavigationAction }.compactMap { $0 }.first
             self.url = URL(string: optionalAction?.action ?? "")
             self.title = jobValue.title.text

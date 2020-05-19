@@ -51,8 +51,9 @@ class InfiniteScrollViewModel: ObservableObject {
     }
     
     func getNewItems(currentListSize: Int) {
+        print("getNewItems \(currentListSize) \(self.pageInfo.hasNextPage)")
         if self.pageInfo.hasNextPage {
-            client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
+            client.getNotifications(first: 6, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
                     let newItems: [Notifications.Edge.Node?] = resultValue.edges.map { $0.node }
     
