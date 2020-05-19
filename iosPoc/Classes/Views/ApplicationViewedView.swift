@@ -23,15 +23,15 @@ struct ApplicationViewedView: View {
         IfLet(self.viewModel, whenPresent: { appViewed in
             VStack(alignment: .center, spacing: 20) {
                 HStack {
-                   if !self.viewed {
-                       Text("New")
-                           .font(.caption)
-                           .foregroundColor(self.theme["textPositive"])
-                           .padding(.all, 3)
-                           .background(self.theme["backgroundPositive"])
-                           .cornerRadius(5)
-                   }
-                    Text(appViewed.node.title)
+                    if !self.viewed {
+                        Text("New")
+                        .font(.caption)
+                        .foregroundColor(self.theme["textPositive"])
+                        .padding(.all, 3)
+                        .background(self.theme["backgroundPositive"])
+                        .cornerRadius(5)
+                    }
+                    Text("NOPE title")
                         .foregroundColor(self.theme["textPrimary"])
                         .lineLimit(nil)
                         .multilineTextAlignment(.center)

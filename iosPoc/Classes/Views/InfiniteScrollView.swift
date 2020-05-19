@@ -31,39 +31,40 @@ public struct InfiniteScrollView: View {
             List {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
                     VStack {
-                        NewSavedSearchView(listItem.value.asNewViewModel, self.theme, viewed: listItem.value.viewed)
-                            .onAppear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .background(self.theme["backgroundPrimary"])
-                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
-                            .padding(.all, 20.0)
-
-                        ApplicationViewedView(listItem.value.applicationViewedViewModel, theme: self.theme, viewed: listItem.value.viewed)
-                            .onAppear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .background(self.theme["backgroundPrimary"])
-                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
-                            .padding(.all, 20.0)
+//                        NewSavedSearchView(listItem.value.asNewViewModel, self.theme, viewed: listItem.value.viewed)
+//                            .onAppear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .onDisappear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .background(self.theme["backgroundPrimary"])
+//                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
+//                            .padding(.all, 20.0)
+//
+//                        ApplicationViewedView(listItem.value.applicationViewedViewModel, theme: self.theme, viewed: listItem.value.viewed)
+//                            .onAppear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .onDisappear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .background(self.theme["backgroundPrimary"])
+//                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
+//                            .padding(.all, 20.0)
                             
                         
-                        NotificationView(listItem.value, viewed: listItem.value.viewed)
-                            .onAppear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .onDisappear {
-                                self.viewModel.updateViewed(listItem.value.id, index)
-                            }
-                            .background(self.theme["backgroundPrimary"])
-                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
-                            .padding(.all, 20.0)
+//                        NotificationView(listItem.value, viewed: listItem.value.viewed)
+//                            .onAppear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .onDisappear {
+//                                self.viewModel.updateViewed(listItem.value.id, index)
+//                            }
+//                            .background(self.theme["backgroundPrimary"])
+//                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
+//                            .padding(.all, 20.0)
+                        Text("fuck")
 
                     }.onAppear {
                         let count = self.viewModel.items.count

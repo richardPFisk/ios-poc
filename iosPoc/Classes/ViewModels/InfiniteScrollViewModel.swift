@@ -14,7 +14,7 @@ struct PageInfoViewModel {
 }
 
 class InfiniteScrollViewModel: ObservableObject {
-    @Published var items: [ListData<NotificationViewModel>] = []
+    @Published var items: [ListData<SeekNotification>] = []
     @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
     
@@ -24,10 +24,10 @@ class InfiniteScrollViewModel: ObservableObject {
     
     func convertGraphQL(node: SeekNotification.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
-            let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
-            let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
-            
-            return NotificationViewModel(node: nodeValue, id: nodeValue.id, viewed: nodeValue.viewed, applicationViewedViewModel: appViewed, asNewViewModel: asNew)
+//            let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
+//            let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
+            print("\(node)")
+            return NotificationViewModel(node: nodeValue, id: nodeValue.id, viewed: nodeValue.viewed)
         }
         return nil
     }
@@ -46,31 +46,32 @@ class InfiniteScrollViewModel: ObservableObject {
     }
     
     func updateViewed(_ id: String, _ index: Int) {
-        if self.items[index].value.dateOnScreen == nil {
-           self.items[index].value.dateOnScreen = Date()
-        }
-        else if !self.items[index].value.viewed && hasBeenOnScreen(self.items[index].value.dateOnScreen) {
-            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
-                DispatchQueue.main.async { [weak self] in
-                    guard let self = self else {
-                      return
-                    }
-                    if let viewed = result?.node?.viewed {
-                        self.items[index].value.viewed = viewed
-                    }
-                }
-            }
-        }
+//        if self.items[index].value.dateOnScreen == nil {
+//           self.items[index].value.dateOnScreen = Date()
+//        }
+//        else if !self.items[index].value.viewed && hasBeenOnScreen(self.items[index].value.dateOnScreen) {
+//            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+//                DispatchQueue.main.async { [weak self] in
+//                    guard let self = self else {
+//                      return
+//                    }
+//                    if let viewed = result?.node?.viewed {
+////                        self.items[index].value.viewed = viewed
+//                    }
+//                }
+//            }
+//        }
     }
     
     func getNewItems(currentListSize: Int) {
         if self.pageInfo.hasNextPage {
             client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
-                    let newItems: [ListData<NotificationViewModel>?] = resultValue.edges.enumerated().map { (index, element) in
+                    let newItems: [ListData<SeekNotification>?] = resultValue.edges.enumerated().map { (index, element) in
                         if let node = element.node {
-                            let notificationViewModel = NotificationViewModel(node: node, id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
-                            return ListData(value: notificationViewModel, id: index + self.items.count)
+                            print("getNewItems node \(node)")
+//                            let notificationViewModel = NotificationViewModel(node: node, id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
+//                            return ListData(value: notificationViewModel, id: index + self.items.count)
                         }
                         return nil
                     }

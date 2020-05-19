@@ -28,9 +28,7 @@ query notificationCentre($first: Int, $after: String) {
         __typename
         id 
         allowFallback
-        viewed {
-          ...actionable
-        }
+        viewed
         items {
           ...on Job {
              __typename

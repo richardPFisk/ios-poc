@@ -1,0 +1,12 @@
+mutation notificationUpdateViewed($id: ID!) {
+  notificationUpdateViewed(input: {
+    id: $id
+  }) {
+    node {
+      id
+      viewed
+      date
+      __typename
+    }
+  }
+}

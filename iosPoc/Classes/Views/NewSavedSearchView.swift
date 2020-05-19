@@ -13,28 +13,28 @@ import SwiftUI
 struct NewSavedSearchView: View {
     var viewModel: Optional<AsNewViewModel>
     var theme: Dictionary<String, Color>
-    var viewed: Bool
+    var viewedText: String
     
-    init(_ viewModel: Optional<AsNewViewModel>, _ theme: Dictionary<String, Color>, viewed: Bool) {
+    init(_ viewModel: Optional<AsNewViewModel>, _ theme: Dictionary<String, Color>, viewedText: String) {
         self.viewModel = viewModel
         self.theme = theme
-        self.viewed = viewed
+        self.viewedText = viewedText
     }
     
     var body: some View {
         IfLet(self.viewModel, whenPresent: { newSavedSearch in
             VStack {
                 HStack {
-                    if !self.viewed {
+                    if self.viewedText != "" {
                         Spacer(minLength: 7)
-                        Text("New")
+                        Text("\(self.viewedText)")
                             .font(.caption)
                             .foregroundColor(self.theme["textPositive"])
                             .padding(.all, 3)
                             .background(self.theme["backgroundPositive"])
                             .cornerRadius(5)
                     }
-                    Text(newSavedSearch.node.title)
+                    Text("NOPE title")
                         .foregroundColor(self.theme["textPrimary"])
                         .lineLimit(nil)
                         .multilineTextAlignment(.center)

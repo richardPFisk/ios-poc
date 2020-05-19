@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-typealias AsNew = SeekNotification.Edge.Node.AsNewSavedSearchNotification
-typealias AppViewed = SeekNotification.Edge.Node.AsApplicationViewedNotification
-typealias AppViewedJob = SeekNotification.Edge.Node.AsApplicationViewedNotification.Job;
-typealias AsNewJob = SeekNotification.Edge.Node.AsNewSavedSearchNotification.Job;
+//typealias AsNew = SeekNotification.Edge.Node.AsNewSavedSearchNotification
+//typealias AppViewed = SeekNotification.Edge.Node.AsApplicationViewedNotification
+//typealias AppViewedJob = SeekNotification.Edge.Node.AsApplicationViewedNotification.Job;
+//typealias AsNewJob = SeekNotification.Edge.Node.AsNewSavedSearchNotification.Job;
 
 struct JobLocation {
     var flattened: String?
@@ -28,13 +28,13 @@ struct JobViewModel {
     var advertiser: Advertiser?
     var brandingLogo: URL?
     
-    static func convertGraphQL(_ job: AppViewedJob) -> JobViewModel {
-        JobViewModel(url: URL(string: job.url)!, title: job.title, location: JobLocation(flattened: job.location?.flattened), advertiser: Advertiser(name: job.advertiser?.name), brandingLogo: job.brandingLogo)
-    }
-    
-    static func convertGraphQL(_ job: AsNewJob) -> JobViewModel {
-        JobViewModel(url: URL(string: job.url)!, title: job.title, location: JobLocation(flattened: job.location?.flattened), advertiser: Advertiser(name: job.advertiser?.name), brandingLogo: job.brandingLogo)
-    }
+//    static func convertGraphQL(_ job: AppViewedJob) -> JobViewModel {
+//        JobViewModel(url: URL(string: job.url)!, title: job.title, location: JobLocation(flattened: job.location?.flattened), advertiser: Advertiser(name: job.advertiser?.name), brandingLogo: job.brandingLogo)
+//    }
+//    
+//    static func convertGraphQL(_ job: AsNewJob) -> JobViewModel {
+//        JobViewModel(url: URL(string: job.url)!, title: job.title, location: JobLocation(flattened: job.location?.flattened), advertiser: Advertiser(name: job.advertiser?.name), brandingLogo: job.brandingLogo)
+//    }
 }
 
 struct NotificationViewModel {
@@ -44,12 +44,10 @@ struct NotificationViewModel {
     var id: String
     var viewed: Bool
     var dateOnScreen:Date?
-    var applicationViewedViewModel: ApplicationViewedViewModel?
-    var asNewViewModel: AsNewViewModel?
     var client = GraphQLPocCLient()
-    var hasSpecificType: Bool {
-        get {
-            return applicationViewedViewModel != nil || asNewViewModel != nil
-        }
-    }
+//    var hasSpecificType: Bool {
+//        get {
+//            return applicationViewedViewModel != nil || asNewViewModel != nil
+//        }
+//    }
 }
