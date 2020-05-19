@@ -1,4 +1,36 @@
-fragment actionable on Actionable {
+fragment itemsFragment on NotificationItem {
+  id
+  title {
+    ...actionableFragment
+  }
+  ...on Job {
+     __typename
+    id
+    title {
+      ...actionableFragment
+    }
+    advertiser {
+      __typename
+      name
+    }
+    location {
+      __typename
+      flattened
+    }
+    branding {
+      logo
+      tooltip
+    } 
+  }
+  ...on RatingNotificationItem {
+    id
+    title {
+      ...actionableFragment
+    } 
+  }
+}
+
+fragment actionableFragment on Actionable {
   text
   actions {
    action
@@ -10,6 +42,7 @@ fragment actionable on Actionable {
     }
   }
 }
+
 query notificationCentre($first: Int, $after: String) {
   notifications(first: $first, after: $after) {
     __typename
@@ -29,32 +62,11 @@ query notificationCentre($first: Int, $after: String) {
         id 
         allowFallback
         viewed
+        title {
+          ...actionableFragment
+        }
         items {
-          ...on Job {
-             __typename
-            id
-            title {
-              ...actionable
-            }
-            advertiser {
-              __typename
-              name
-            }
-            location {
-              __typename
-              flattened
-            }
-            branding {
-              logo
-              tooltip
-            } 
-          }
-          ...on NotificationItem {
-            id
-            title {
-              ...actionable
-            } 
-          }
+          ...itemsFragment
         }
       }
       cursor

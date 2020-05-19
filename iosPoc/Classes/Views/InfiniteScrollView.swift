@@ -4,7 +4,7 @@ import SwiftUI
 
 public struct InfiniteScrollView: View {
     @ObservedObject var viewModel = InfiniteScrollViewModel()
-    var theme: Dictionary<String, Color> = ["blah" : Color(UIColor.blue), "viewed": Color(red: 225/255.0, green: 225/255.0, blue: 225/255.0)]
+    var theme: Dictionary<String, Color> = [:]
     
     public init(){
         self.viewModel.getNewItems(currentListSize: 0)
