@@ -13,9 +13,14 @@ struct RatingView : View {
     @State var rating: Int
     var label = ""
     
-    init(_ rating: Int, label: String) {
+    var offColor: Color
+    var onColor: Color
+    
+    init(_ rating: Int, label: String, onColor: Color = Color.yellow, offColor: Color = Color.gray) {
         _rating = State<Int>(initialValue: rating)
         self.label = label
+        self.onColor = onColor
+        self.offColor = offColor
     }
 
     var maximumRating = 5
@@ -23,9 +28,6 @@ struct RatingView : View {
     var offImage: Image?
     var onImage = Image(systemName: "star.fill")
 
-    var offColor = Color.gray
-    var onColor = Color.yellow
-    
     func image(for number: Int) -> Image {
         if number > rating {
             return offImage ?? onImage

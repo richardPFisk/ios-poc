@@ -24,43 +24,30 @@ class InfiniteScrollViewModel: ObservableObject {
     
     func convertGraphQL(node: Notifications.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
-//            let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
-//            let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
-            print("\(node)")
             return NotificationViewModel(node: nodeValue, id: nodeValue.id, viewed: nodeValue.viewed)
         }
         return nil
     }
     
-    func hasBeenOnScreen(_ dateOnScreen: Date?, maxSeconds: Int = 2) -> Bool {
-        if let dateOnScreenValue = dateOnScreen {
-            let calendar1 = Calendar.current
-            let components = calendar1
-                .dateComponents([.year,.month,.day,.hour,.minute,.second,.nanosecond], from: dateOnScreenValue, to: Date())
-            if let elapsedSeconds = components.second {
-                return elapsedSeconds > maxSeconds
-            }
-            return false
-        }
-        return false
-    }
-    
     func updateViewed(_ id: String, _ index: Int) {
-//        if self.items[index].value.dateOnScreen == nil {
-//           self.items[index].value.dateOnScreen = Date()
-//        }
-//        else if !self.items[index].value.viewed && hasBeenOnScreen(self.items[index].value.dateOnScreen) {
-//            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
-//                DispatchQueue.main.async { [weak self] in
-//                    guard let self = self else {
-//                      return
-//                    }
-//                    if let viewed = result?.node?.viewed {
-////                        self.items[index].value.viewed = viewed
-//                    }
-//                }
-//            }
-//        }
+        if !self.items[index].viewed {
+            client.notificationUpdateViewed(id: id, dispatchQueue: dispatchQueue) { (result, error) in
+                if let errorValue = error {
+                    print("update error \(errorValue)")
+                }
+                else {
+                    print("something updated \(id) \(index)")
+                }
+                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1.5) { [weak self] in
+                    guard let self = self else {
+                      return
+                    }
+                    if let viewed = result?.node?.viewed {
+                        self.items[index].viewed = viewed
+                    }
+                }
+            }
+        }
     }
     
     func getNewItems(currentListSize: Int) {

@@ -104,17 +104,12 @@
 		36C809AD8402F351B53528AB7210C3BB /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A5B06EE76C1CD8DA7654EBDC438FF84 /* SystemConfiguration.framework */; };
 		3722B93E1E8BF31C11CDF45AA815A767 /* QuickTestSuite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 183A486C9F01BFBED2B058EC2A2B93AC /* QuickTestSuite.swift */; };
 		37B980F9CDE4DB538416F1902C0E946E /* AWSSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 654F5AFC72EF5F85DA9443D3978EA888 /* AWSSerialization.m */; };
-		3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE08246E0D1600BFF8F4 /* StarView.swift */; };
 		3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0A246E111300BFF8F4 /* RatingView.swift */; };
-		3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */; };
 		3806AE0F246E1E8600BFF8F4 /* AnimatedProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE0E246E1E8600BFF8F4 /* AnimatedProgressView.swift */; };
 		3806AE172472325500BFF8F4 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE162472325500BFF8F4 /* CardView.swift */; };
 		3806AE1F24724F7500BFF8F4 /* ColorExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE1E24724F7500BFF8F4 /* ColorExtension.swift */; };
-		3806AE222473748A00BFF8F4 /* SingleItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE212473748A00BFF8F4 /* SingleItemView.swift */; };
 		3806AE25247375DF00BFF8F4 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE24247375DF00BFF8F4 /* NodeView.swift */; };
-		385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13912463D4D30017AA24 /* AsNewViewModel.swift */; };
-		385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */; };
-		38B147F8246A81C500C2612D /* NotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B147F7246A81C500C2612D /* NotificationView.swift */; };
+		3806AE2724738E7600BFF8F4 /* JobViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE2624738E7600BFF8F4 /* JobViewModel.swift */; };
 		38B72051F26368B657ACE1CDEA474D88 /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6784A2738E8CFD3291EDE84477E274BA /* mach_excServer.c */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		38C04B795FA3BD0EAA9298E821A1F37A /* RTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = B704BFB66A7246E752C3BC1B63CEBC27 /* RTree.swift */; };
 		38F8141C245A7FD60062E99E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8141A245A7DBE0062E99E /* LoadingView.swift */; };
@@ -389,7 +384,6 @@
 		C61F5441D6A5449C89C39DB69678CCBF /* NSArray+AWSMTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 77B80FBF20D52477189A6839CAA867AE /* NSArray+AWSMTLManipulationAdditions.m */; };
 		C65C3AB428791B770B1E874C1D3CB461 /* AWSDDLegacyMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 316387E25988BADCE2AA47FE260C2E19 /* AWSDDLegacyMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C7554548C2423B622E77FBFB237F72CE /* NSDictionary+AWSMTLManipulationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 20EA7468B60D2F9F255B0E75B9DBF1AF /* NSDictionary+AWSMTLManipulationAdditions.m */; };
-		C916E1A01060755F431B73941AAF829B /* ApplicationViewedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49999A7D84EC83BA706B60C84477967 /* ApplicationViewedView.swift */; };
 		C959F21DA5A85F4DF6EDD8BF60808C1C /* AWSSTSResources.h in Headers */ = {isa = PBXBuildFile; fileRef = 8AD6CFCE99629FD41331216539D123D9 /* AWSSTSResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C971A8D42C7C043DC4970A69B81546A7 /* DSL.h in Headers */ = {isa = PBXBuildFile; fileRef = DDB7BD6846ADE6E651E719547A1E5DEB /* DSL.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C97361916EC293C29E4B460DAD208CDC /* AWSCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = EC82FB571511FBB33C18E977FDE96EB5 /* AWSCategory.m */; };
@@ -461,7 +455,6 @@
 		EA95078F1977882D5A24E69695839D24 /* AWSTMDiskCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 40BAE1D912D9EA1565AD0D6F5A964469 /* AWSTMDiskCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EAC1BE7DC29550A1A4ECDB7B6BEEE3C7 /* Blob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A831CFECEF2CBDAC9B1E544C6B5D105 /* Blob.swift */; };
 		EB13561E71736E81399CB85419419570 /* AdapterProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67298A9B5224A666137F993345DE3E2B /* AdapterProtocols.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
-		EC0E28D329CF29DC476AE1C9EE4F9488 /* NewSavedSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B2FF4387489F0E09BDB2D3D3BC317F /* NewSavedSearchView.swift */; };
 		EC19A431DE38B00A19C0114A0F3C3517 /* GraphQLOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = EC844B404241DD9B3FA6867C2F74A1A1 /* GraphQLOperation.swift */; };
 		EC99B39D0756FA7A38B8EDD2F622B351 /* URLImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB5E91CF320D3E9ED4A6AE84B6A6918 /* URLImageService.swift */; };
 		EDD6F0CB0C4A0FBF470FF1FA37E28FCC /* BeAnInstanceOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E239357D592376C34D4B3B25D6301 /* BeAnInstanceOf.swift */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
@@ -757,17 +750,12 @@
 		37B786F8D3E2D8D8E8E7BD351BC73285 /* Deprecations+Removals.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Deprecations+Removals.swift"; path = "AWSAppSyncClient/Deprecations+Removals.swift"; sourceTree = "<group>"; };
 		37D3083A57D2260306A6B60FA3EBFACA /* ExpectationMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpectationMessage.swift; path = Sources/Nimble/ExpectationMessage.swift; sourceTree = "<group>"; };
 		37D33A6D2EEED255DA400E6837A22D97 /* CwlBadInstructionException.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CwlBadInstructionException.swift; path = Carthage/Checkouts/CwlPreconditionTesting/Sources/CwlPreconditionTesting/CwlBadInstructionException.swift; sourceTree = "<group>"; };
-		3806AE08246E0D1600BFF8F4 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
 		3806AE0A246E111300BFF8F4 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
-		3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
 		3806AE0E246E1E8600BFF8F4 /* AnimatedProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedProgressView.swift; sourceTree = "<group>"; };
 		3806AE162472325500BFF8F4 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		3806AE1E24724F7500BFF8F4 /* ColorExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ColorExtension.swift; path = iosPoc/Classes/ColorExtension.swift; sourceTree = "<group>"; };
-		3806AE212473748A00BFF8F4 /* SingleItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleItemView.swift; sourceTree = "<group>"; };
 		3806AE24247375DF00BFF8F4 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
-		385B13912463D4D30017AA24 /* AsNewViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsNewViewModel.swift; sourceTree = "<group>"; };
-		385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationViewedViewModel.swift; sourceTree = "<group>"; };
-		38B147F7246A81C500C2612D /* NotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationView.swift; sourceTree = "<group>"; };
+		3806AE2624738E7600BFF8F4 /* JobViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobViewModel.swift; sourceTree = "<group>"; };
 		38F8141A245A7DBE0062E99E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		393A4C7C021415B23462AB81A40B48B8 /* AWSFMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSFMDatabaseQueue.h; path = AWSCore/FMDB/AWSFMDatabaseQueue.h; sourceTree = "<group>"; };
 		395C791F698B868D7287C22A08CEBAF3 /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/SQLite/Typed/Expression.swift; sourceTree = "<group>"; };
@@ -1041,7 +1029,6 @@
 		B3B76ECB4EAA7EA90B48B5097815F1B5 /* AWSAppSyncClient.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AWSAppSyncClient.swift; path = AWSAppSyncClient/AWSAppSyncClient.swift; sourceTree = "<group>"; };
 		B3D5BFCF559D35D18C4A686A80BF9537 /* NMBExceptionCapture.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = NMBExceptionCapture.m; path = Sources/NimbleObjectiveC/NMBExceptionCapture.m; sourceTree = "<group>"; };
 		B4486C5B18DBD2A2B9F86220563B1C30 /* Foundation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Foundation.swift; path = Sources/SQLite/Foundation.swift; sourceTree = "<group>"; };
-		B49999A7D84EC83BA706B60C84477967 /* ApplicationViewedView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ApplicationViewedView.swift; sourceTree = "<group>"; };
 		B4ABA119AACD64008B6C245D9E5A26C6 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		B4C9382C1050C9386DE7AD804729BF89 /* AWSPerformMutationQueue.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AWSPerformMutationQueue.swift; path = AWSAppSyncClient/Internal/AWSPerformMutationQueue.swift; sourceTree = "<group>"; };
 		B4D853951D2CE455185B96999119A2F7 /* Quick.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Quick.debug.xcconfig; sourceTree = "<group>"; };
@@ -1148,7 +1135,6 @@
 		E81B7394FF7066D88B760DC20EDD898B /* Pods-notification-centre_Tests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-notification-centre_Tests-umbrella.h"; sourceTree = "<group>"; };
 		E855F66D122854F69DB507C2EAF8B69A /* NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m"; path = "AWSCore/Mantle/NSValueTransformer+AWSMTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
 		E8720298D4C54527DD1788B6F5922B02 /* NMBExceptionCapture.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = NMBExceptionCapture.h; path = Sources/NimbleObjectiveC/NMBExceptionCapture.h; sourceTree = "<group>"; };
-		E9B2FF4387489F0E09BDB2D3D3BC317F /* NewSavedSearchView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = NewSavedSearchView.swift; sourceTree = "<group>"; };
 		E9D629FC0D519EF4C08A47E28C251EE6 /* Behavior.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Behavior.swift; path = Sources/Quick/Behavior.swift; sourceTree = "<group>"; };
 		EB0E7EA77EA951BAD10955D6D3B4F364 /* Foundation+Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Foundation+Utils.swift"; path = "AWSAppSyncClient/Internal/Foundation+Utils.swift"; sourceTree = "<group>"; };
 		EB639F1EEC9DDCC337CEAB032A45D7AE /* Quick-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Quick-dummy.m"; sourceTree = "<group>"; };
@@ -1526,7 +1512,6 @@
 		3806AE202473743800BFF8F4 /* NewViews */ = {
 			isa = PBXGroup;
 			children = (
-				3806AE212473748A00BFF8F4 /* SingleItemView.swift */,
 				3806AE24247375DF00BFF8F4 /* NodeView.swift */,
 			);
 			path = NewViews;
@@ -1545,8 +1530,7 @@
 				3806AE23247374BD00BFF8F4 /* NewViewModels */,
 				C3F929055774E54D99BA94F4D31DA2A5 /* InfiniteScrollViewModel.swift */,
 				096BB689BA384308A579A45537895A38 /* NotificationViewModel.swift */,
-				385B13912463D4D30017AA24 /* AsNewViewModel.swift */,
-				385B13942463D5030017AA24 /* ApplicationViewedViewModel.swift */,
+				3806AE2624738E7600BFF8F4 /* JobViewModel.swift */,
 			);
 			name = ViewModels;
 			path = iosPoc/Classes/ViewModels;
@@ -1846,16 +1830,11 @@
 			children = (
 				3806AE202473743800BFF8F4 /* NewViews */,
 				12D17CF7BBC6EE93EA7AF0A17D939AF3 /* InfiniteScrollView.swift */,
-				B49999A7D84EC83BA706B60C84477967 /* ApplicationViewedView.swift */,
 				98559DE2493946872F01959AFAD3AD1A /* CircleImageView.swift */,
 				6EF32F2F4F6B3E763B512835E38E9BEE /* IfLet.swift */,
-				E9B2FF4387489F0E09BDB2D3D3BC317F /* NewSavedSearchView.swift */,
 				B5B36E878389D10887A680703E31CBB0 /* NotificationJobView.swift */,
 				38F8141A245A7DBE0062E99E /* LoadingView.swift */,
-				38B147F7246A81C500C2612D /* NotificationView.swift */,
-				3806AE08246E0D1600BFF8F4 /* StarView.swift */,
 				3806AE0A246E111300BFF8F4 /* RatingView.swift */,
-				3806AE0C246E1DDC00BFF8F4 /* ProgressBar.swift */,
 				3806AE0E246E1E8600BFF8F4 /* AnimatedProgressView.swift */,
 				3806AE162472325500BFF8F4 /* CardView.swift */,
 			);
@@ -2805,29 +2784,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C916E1A01060755F431B73941AAF829B /* ApplicationViewedView.swift in Sources */,
 				E56719263762693ABFD76F7C9E43315F /* CircleImageView.swift in Sources */,
 				0EB3EBA600FC1CF70288E6ABCC794D9D /* IfLet.swift in Sources */,
+				3806AE2724738E7600BFF8F4 /* JobViewModel.swift in Sources */,
 				3806AE0F246E1E8600BFF8F4 /* AnimatedProgressView.swift in Sources */,
 				3806AE0B246E111300BFF8F4 /* RatingView.swift in Sources */,
 				89C1F5908B73F7552A4F742F658AAA60 /* InfiniteScrollView.swift in Sources */,
 				4D20695041C4548632C1169D3C81CAE3 /* InfiniteScrollViewModel.swift in Sources */,
-				3806AE222473748A00BFF8F4 /* SingleItemView.swift in Sources */,
 				5CEAC1413F80DB6B7E09A9385B3EF3A3 /* iosPoc-dummy.m in Sources */,
 				3806AE1F24724F7500BFF8F4 /* ColorExtension.swift in Sources */,
-				EC0E28D329CF29DC476AE1C9EE4F9488 /* NewSavedSearchView.swift in Sources */,
 				38F8141C245A7FD60062E99E /* LoadingView.swift in Sources */,
-				385B13932463D4EC0017AA24 /* AsNewViewModel.swift in Sources */,
 				0BB45B4ADC15F8227F8D4311A6D6BF2C /* NotificationCentreQuery.swift in Sources */,
 				3806AE25247375DF00BFF8F4 /* NodeView.swift in Sources */,
 				E2554C7EB1DE30126D664A04A1851294 /* NotificationCentreQueryClient.swift in Sources */,
-				3806AE0D246E1DDC00BFF8F4 /* ProgressBar.swift in Sources */,
 				65102648B3C3371C5446B1BC0DFE3AA2 /* NotificationJobView.swift in Sources */,
 				C5015867C4B11646F836749B33360785 /* NotificationViewModel.swift in Sources */,
-				385B13952463D5030017AA24 /* ApplicationViewedViewModel.swift in Sources */,
 				3806AE172472325500BFF8F4 /* CardView.swift in Sources */,
-				3806AE09246E0D1600BFF8F4 /* StarView.swift in Sources */,
-				38B147F8246A81C500C2612D /* NotificationView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

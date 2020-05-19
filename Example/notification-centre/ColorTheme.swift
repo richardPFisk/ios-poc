@@ -18,6 +18,7 @@ struct ColorThemeProvider {
         values["textPrimary"] = Color("textPrimary")
         values["textNeutral"] = Color("textNeutral")
         values["backgroundPrimary"] = Color("backgroundPrimary")
+        values["backgroundSecondary"] = Color("backgroundSecondary")
         values["backgroundBrand"] = Color("backgroundBrand")
         values["snackbarBackground"] = Color("snackbarBackground")
         values["textSecondary"] = Color("textSecondary")

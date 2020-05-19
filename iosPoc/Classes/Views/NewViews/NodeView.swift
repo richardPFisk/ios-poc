@@ -6,9 +6,6 @@
 //
 
 import Foundation
-
-//Notifications.Edge.Node
-
 import SwiftUI
 
 struct NodeView: View {
