@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct ContentView: View {
+struct AnimatedProgressView: View {
     @State var progressValue: Float = 0.0
     var newProgressValue: Float?
     

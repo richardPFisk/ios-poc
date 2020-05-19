@@ -1,4 +1,13 @@
 //
+//  SingleJobItemView.swift
+//  iosPoc
+//
+//  Created by Richard Fisk on 19/5/20.
+//
+
+import Foundation
+
+//
 //  ApplicationViewedView.swift
 //
 //  Created by Richard Fisk on 28/4/20.
@@ -8,7 +17,7 @@
 import Foundation
 import SwiftUI
 
-struct ApplicationViewedView: View {
+struct SingleItemView: View {
     var viewModel: Optional<ApplicationViewedViewModel>
     var theme: Dictionary<String, Color> = [:]
     var viewed: Bool
@@ -42,9 +51,6 @@ struct ApplicationViewedView: View {
 
                 NotificationJobView(appViewed.job, theme: self.theme)
                     .padding(.all, 8.0)
-//                RatingView(4, label: "Review")
-//                    .padding(.bottom, 20.0)
-//                ContentView(progressValue: 0.0, newProgressValue: 0.9)
             }
             .frame(width: UIScreen.main.bounds.width)
         }, whenNil: {

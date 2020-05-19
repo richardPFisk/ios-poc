@@ -49,7 +49,7 @@ struct NotificationJobView : View {
                 }
             }.gesture(TapGesture().onEnded {
 
-                let path = self.jobViewModel?.url.path ?? ""
+                let path = self.jobViewModel?.url?.path ?? ""
                 let customScheme = "seekjobs:/\(path)"
                 let url = URL(string: customScheme)!
                 
@@ -65,6 +65,6 @@ struct NotificationJobView : View {
 
 struct NotificationJobView_Previews: PreviewProvider {
     static var previews: some View {
-        NotificationJobView(JobViewModel(url: URL(string: "https://www.seek.com.au")!, title: "title", brandingLogo: URL(string: "https://image-service-cdn.cloud.seek.com.au/6aa399bad6c6109736adb6d1fdd0909a8438a5b7?timestamp=1587971674")), theme: [:])
+        NotificationJobView(nil, theme: [:])
     }
 }

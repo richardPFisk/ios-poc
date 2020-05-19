@@ -31,6 +31,10 @@ public struct InfiniteScrollView: View {
             List {
                 ForEach(self.viewModel.items.enumerated().map({ $0 }), id: \.1.self.id) { (index, listItem) in
                     VStack {
+                        NodeView(listItem, theme: self.theme, viewed: listItem.viewed)
+                            .background(self.theme["backgroundPrimary"])
+                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
+                            .padding(.all, 20.0)
 //                        NewSavedSearchView(listItem.value.asNewViewModel, self.theme, viewed: listItem.value.viewed)
 //                            .onAppear {
 //                                self.viewModel.updateViewed(listItem.value.id, index)
@@ -64,7 +68,6 @@ public struct InfiniteScrollView: View {
 //                            .background(self.theme["backgroundPrimary"])
 //                            .clipShape(RoundedRectangle(cornerRadius: 15.0))
 //                            .padding(.all, 20.0)
-                        Text("fuck")
 
                     }.onAppear {
                         let count = self.viewModel.items.count

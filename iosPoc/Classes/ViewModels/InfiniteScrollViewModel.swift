@@ -14,7 +14,7 @@ struct PageInfoViewModel {
 }
 
 class InfiniteScrollViewModel: ObservableObject {
-    @Published var items: [ListData<SeekNotification>] = []
+    @Published var items: [Notifications.Edge.Node] = []
     @Published var isLoading = true
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
     
@@ -22,7 +22,7 @@ class InfiniteScrollViewModel: ObservableObject {
     
     let dispatchQueue = DispatchQueue(label: "clientRequestQueue", qos: .userInitiated)
     
-    func convertGraphQL(node: SeekNotification.Edge.Node?) -> NotificationViewModel? {
+    func convertGraphQL(node: Notifications.Edge.Node?) -> NotificationViewModel? {
         if let nodeValue = node {
 //            let appViewed = ApplicationViewedViewModel.convertGraphQL(nodeValue.asApplicationViewedNotification)
 //            let asNew = AsNewViewModel.convertGraphQL(nodeValue.asNewSavedSearchNotification)
@@ -67,14 +67,8 @@ class InfiniteScrollViewModel: ObservableObject {
         if self.pageInfo.hasNextPage {
             client.getNotifications(first: 10, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
-                    let newItems: [ListData<SeekNotification>?] = resultValue.edges.enumerated().map { (index, element) in
-                        if let node = element.node {
-                            print("getNewItems node \(node)")
-//                            let notificationViewModel = NotificationViewModel(node: node, id: node.id, viewed: node.viewed, applicationViewedViewModel: ApplicationViewedViewModel.convertGraphQL(node.asApplicationViewedNotification), asNewViewModel: AsNewViewModel.convertGraphQL(node.asNewSavedSearchNotification))
-//                            return ListData(value: notificationViewModel, id: index + self.items.count)
-                        }
-                        return nil
-                    }
+                    let newItems: [Notifications.Edge.Node?] = resultValue.edges.map { $0.node }
+    
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else {
                           return

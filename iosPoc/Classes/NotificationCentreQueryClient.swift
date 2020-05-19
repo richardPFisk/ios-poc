@@ -6,9 +6,9 @@
 import Foundation
 import AWSAppSync
 
-public typealias SeekNotification = NotificationCentreQuery.Data.Notification;
+public typealias Notifications = NotificationCentreQuery.Data.Notification;
 public typealias NotificationUpdateViewed = NotificationUpdateViewedMutation.Data.NotificationUpdateViewed
-public typealias NotificationResultHandler = (_ result: SeekNotification?, _ error: Error?) -> Void
+public typealias NotificationResultHandler = (_ result: Notifications?, _ error: Error?) -> Void
 public typealias NotificationResultMutationHandler = (_ result: NotificationUpdateViewed?, _ error: Error?) -> Void
 //public typealias blah = NotificationCentreQuery.Data.Notification
 struct GraphQLPocCLient {
