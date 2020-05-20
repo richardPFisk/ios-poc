@@ -15,7 +15,7 @@ struct PageInfoViewModel {
 
 class InfiniteScrollViewModel: ObservableObject {
     @Published var items: [Notifications.Edge.Node] = []
-    @Published var isLoading = true
+    @Published var isLoading: Bool = false
     @Published var pageInfo: PageInfoViewModel = PageInfoViewModel(startCursor: nil, hasPrevPage: false, endCursor: nil, hasNextPage: true)
     
     var client = GraphQLPocCLient()
@@ -50,13 +50,18 @@ class InfiniteScrollViewModel: ObservableObject {
         }
     }
     
-    func getNewItems(currentListSize: Int) {
+    func getNewItems(currentListSize: Int, completionHandler: @escaping () -> Void) {
+        let completionHandlerValue = completionHandler
+        
         print("getNewItems \(currentListSize) \(self.pageInfo.hasNextPage)")
-        if self.pageInfo.hasNextPage {
+        if self.pageInfo.hasNextPage && !self.isLoading {
+            self.isLoading = true
+
+            
             client.getNotifications(first: 6, after: self.pageInfo.endCursor, dispatchQueue: dispatchQueue) { (result, error) in
                 if case .some(let resultValue) = result {
                     let newItems: [Notifications.Edge.Node?] = resultValue.edges.map { $0.node }
-    
+                    
                     DispatchQueue.main.async { [weak self] in
                         guard let self = self else {
                           return
@@ -64,6 +69,7 @@ class InfiniteScrollViewModel: ObservableObject {
                         self.items.append(contentsOf: newItems.compactMap { $0 })
                         self.pageInfo = PageInfoViewModel(startCursor: resultValue.pageInfo.startCursor, hasPrevPage: resultValue.pageInfo.hasPrevPage, endCursor: resultValue.pageInfo.endCursor, hasNextPage: resultValue.pageInfo.hasNextPage)
                         self.isLoading = false
+                        completionHandlerValue()
                     }
                 }
                 if case .some(let errorValue) = error {
@@ -73,6 +79,7 @@ class InfiniteScrollViewModel: ObservableObject {
                         }
                         print("GraphQL error {}", errorValue)
                         self.isLoading = false
+                        completionHandlerValue()
                     }
                 }
             }

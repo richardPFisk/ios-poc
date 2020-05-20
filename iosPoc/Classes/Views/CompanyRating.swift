@@ -13,30 +13,39 @@ class CompanyRatingViewModel: ObservableObject {
 }
 
 struct CompanyRating : View {
-    @ObservedObject var viewModel: CompanyRatingViewModel
-    @State private var selectedRecommend: Int = -1
+    var viewModel: RatingViewModel
     var recommendSelections = ["Yes", "No"]
-    var companyName: String
+    
+    init? (_ viewModel: RatingViewModel?) {
+        if let viewModelValue = viewModel {
+            self.viewModel = viewModelValue
+        }
+        else {
+            return nil
+        }
+    }
     
     @ViewBuilder
     var body: some View {
         VStack {
-            Text("How would you rate working at \(companyName)")
+//            Text(self.viewModel.title)
             RatingView(0)
-            Text("Would you recommend \(companyName)?")
-            if selectedRecommend == -1 {
-                Picker("Recommend?", selection: self.$viewModel.selectedRecommend) {
-                    Text("Not Selected").tag(-1)
-                    Text("Yes").tag(0)
-                    Text("No").tag(1)
-                }.pickerStyle(SegmentedPickerStyle())
-                .onReceive(viewModel.objectWillChange) { (value) in
-                    print(value)
-                }
+                .padding(.all, 8.0)
+                .padding(.bottom, 20.0)
+//            Text("Would you recommend \(companyName)?")
+            if self.viewModel.selectedCompanyRating == -1 {
+//                Picker("Recommend?", selection: self.viewModel.$selectedCompanyRating) {
+//                    Text("Not Selected").tag(-1)
+//                    Text("Yes").tag(0)
+//                    Text("No").tag(1)
+//                }.pickerStyle(SegmentedPickerStyle())
+//                .onReceive(viewModel.objectWillChange) { (value) in
+//                    print(value)
+//                }
             }
             else {
-                Text("\(recommendSelections[selectedRecommend])")
-                AnimatedProgressView(progressValue: 0, newProgressValue: 0.8)
+//                Text("\(recommendSelections[self.$viewModel.wouldRecommend ? 1 : 0])")
+//                AnimatedProgressView(progressValue: 0, newProgressValue: self.$viewModel.companyRecommendedPercentage)
             }
         }
     }

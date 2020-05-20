@@ -1,13 +1,11 @@
-
 import SwiftUI
-
 
 public struct InfiniteScrollView: View {
     @ObservedObject var viewModel = InfiniteScrollViewModel()
+    @State var loadingFirstPage = true
     var theme: Dictionary<String, Color> = [:]
     
     public init(){
-        self.viewModel.getNewItems(currentListSize: 0)
         UITableView.appearance().separatorStyle = .none
         UITableView.appearance().backgroundColor = UIColor.clear
     }
@@ -23,8 +21,13 @@ public struct InfiniteScrollView: View {
     @ViewBuilder
     public var body: some View {
 
-        if self.viewModel.isLoading {
+        if self.loadingFirstPage {
             LoadingView()
+                .onAppear {
+                    self.viewModel.getNewItems(currentListSize: 0) {
+                        self.loadingFirstPage = false
+                    }
+                }
         }
         else {
             List {
@@ -36,16 +39,19 @@ public struct InfiniteScrollView: View {
                             .padding(.all, 20.0)
                             .onAppear {
                                 self.viewModel.updateViewed(listItem.id, index)
-                                
-                                let count = self.viewModel.items.count
-                                if index == count-1 {
-                                    self.viewModel.getNewItems(currentListSize: count)
-                                }
                             }
                     }
                     .frame(width: UIScreen.main.bounds.width)
                     .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     .background(self.theme["backgroundSecondary"])
+                    .onAppear {
+                        let count = self.viewModel.items.count
+                        if index == count-1 {
+                            self.viewModel.getNewItems(currentListSize: count) {
+                                self.loadingFirstPage = false
+                            }
+                        }
+                    }
                 }
             }
             .background(self.theme["backgroundSecondary"])

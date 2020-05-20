@@ -111,6 +111,7 @@
 		3806AE25247375DF00BFF8F4 /* NodeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE24247375DF00BFF8F4 /* NodeView.swift */; };
 		3806AE2724738E7600BFF8F4 /* JobViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE2624738E7600BFF8F4 /* JobViewModel.swift */; };
 		3806AE2A2473B30B00BFF8F4 /* CompanyRating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE292473B30B00BFF8F4 /* CompanyRating.swift */; };
+		3806AE2C24749DE700BFF8F4 /* RatingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806AE2B24749DE700BFF8F4 /* RatingViewModel.swift */; };
 		38B72051F26368B657ACE1CDEA474D88 /* mach_excServer.c in Sources */ = {isa = PBXBuildFile; fileRef = 6784A2738E8CFD3291EDE84477E274BA /* mach_excServer.c */; settings = {COMPILER_FLAGS = "-DPRODUCT_NAME=Nimble/Nimble"; }; };
 		38C04B795FA3BD0EAA9298E821A1F37A /* RTree.swift in Sources */ = {isa = PBXBuildFile; fileRef = B704BFB66A7246E752C3BC1B63CEBC27 /* RTree.swift */; };
 		38F8141C245A7FD60062E99E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38F8141A245A7DBE0062E99E /* LoadingView.swift */; };
@@ -758,6 +759,7 @@
 		3806AE24247375DF00BFF8F4 /* NodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NodeView.swift; sourceTree = "<group>"; };
 		3806AE2624738E7600BFF8F4 /* JobViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JobViewModel.swift; sourceTree = "<group>"; };
 		3806AE292473B30B00BFF8F4 /* CompanyRating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanyRating.swift; sourceTree = "<group>"; };
+		3806AE2B24749DE700BFF8F4 /* RatingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingViewModel.swift; sourceTree = "<group>"; };
 		38F8141A245A7DBE0062E99E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		393A4C7C021415B23462AB81A40B48B8 /* AWSFMDatabaseQueue.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AWSFMDatabaseQueue.h; path = AWSCore/FMDB/AWSFMDatabaseQueue.h; sourceTree = "<group>"; };
 		395C791F698B868D7287C22A08CEBAF3 /* Expression.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Expression.swift; path = Sources/SQLite/Typed/Expression.swift; sourceTree = "<group>"; };
@@ -1528,6 +1530,7 @@
 				C3F929055774E54D99BA94F4D31DA2A5 /* InfiniteScrollViewModel.swift */,
 				096BB689BA384308A579A45537895A38 /* NotificationViewModel.swift */,
 				3806AE2624738E7600BFF8F4 /* JobViewModel.swift */,
+				3806AE2B24749DE700BFF8F4 /* RatingViewModel.swift */,
 			);
 			name = ViewModels;
 			path = iosPoc/Classes/ViewModels;
@@ -2796,6 +2799,7 @@
 				65102648B3C3371C5446B1BC0DFE3AA2 /* NotificationJobView.swift in Sources */,
 				C5015867C4B11646F836749B33360785 /* NotificationViewModel.swift in Sources */,
 				3806AE172472325500BFF8F4 /* CardView.swift in Sources */,
+				3806AE2C24749DE700BFF8F4 /* RatingViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
