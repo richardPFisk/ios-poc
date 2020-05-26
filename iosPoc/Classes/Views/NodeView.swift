@@ -16,6 +16,22 @@ struct NodeView: View {
     var theme: Dictionary<String, Color> = [:]
     var viewed: Bool
     
+    var interfaceTypesOnly = false
+    
+    func getNavigationAction(actions: [Notifications.Edge.Node.Item.Title.Action]?) -> URL? {
+        let optionalAction = actions?.map { $0.asNavigationAction }.compactMap { $0 }.first
+        let url = URL(string: optionalAction?.action ?? "")
+        
+        if let urlValue = url {
+            let path = urlValue.path
+            let customScheme = "seekjobs:/\(path)"
+            let customUrl = URL(string: customScheme)
+
+            return customUrl
+        }
+        return nil
+    }
+    
     init(_ viewModel: Notifications.Edge.Node, theme: Dictionary<String, Color>, viewed: Bool) {
         self.theme = theme
         self.viewModel = viewModel
@@ -47,7 +63,7 @@ struct NodeView: View {
                         .font(.headline)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                if self.jobItemsViewModel.count == 1 {
+                if !self.interfaceTypesOnly && self.jobItemsViewModel.count == 1 {
                     HStack {
                         NotificationJobView(self.jobItemsViewModel[0], theme: self.theme)
                             .padding(.top, 8)
@@ -55,7 +71,7 @@ struct NodeView: View {
                             .padding(.horizontal, 10.0)
                     }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 }
-                else if self.jobItemsViewModel.count > 1 {
+                else if !self.interfaceTypesOnly && self.jobItemsViewModel.count > 1 {
                     ScrollView(.horizontal, content: {
                         HStack {
                             ForEach((self.jobItemsViewModel).indices, id: \.self) { index in
@@ -67,10 +83,39 @@ struct NodeView: View {
                         }
                     })
                 }
-                else if self.ratingItemsViewModel.count == 1 {
+                else if !self.interfaceTypesOnly && self.ratingItemsViewModel.count >= 1 {
                     HStack {
                         CompanyRating(self.ratingItemsViewModel[0])
                     }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                }
+                else {
+                    ScrollView(.horizontal, content: {
+                        HStack(spacing: 8) {
+                            ForEach(self.viewModel.items.indices, id: \.self) { index in
+                                Text("\(self.viewModel.items[index].title.text)")
+                                    .foregroundColor(.purple)
+                                    .lineLimit(nil)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
+                                    .font(.headline)
+                                    .overlay(
+                                        Capsule(style: .continuous)
+                                            .stroke(Color.purple, lineWidth: 6)
+                                ).onTapGesture {
+                                    let url = self.getNavigationAction(actions: self.viewModel.items[index].title.actions)
+ 
+                                    if let urlValue = url {
+                                        UIApplication.shared.open(urlValue, options: [:], completionHandler: { completed in
+                                            print("completed {} {}", completed, urlValue)
+                                        })
+                                    }
+                                }
+                            }
+                        }
+                        .padding(.all, 10.0)
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
+                    })
+                    .padding(.all, 10.0)
                 }
             }
         }, whenNil: {

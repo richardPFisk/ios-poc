@@ -19,7 +19,7 @@ struct GraphQLPocCLient {
     }
     
     func getClient() -> ApolloClient? {
-        guard let url = URL(string: "https://candidate-graphql-api-poc.cloud.seek.com.au/graphql")
+        guard let url = URL(string: "http://localhost:4000/graphql")
         else { return nil }
 
         let graphQLClient = ApolloClient(url: url)
