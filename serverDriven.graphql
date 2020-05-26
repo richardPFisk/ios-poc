@@ -22,14 +22,6 @@ fragment itemsFragment on NotificationItem {
       tooltip
     } 
   }
-  ...on RatingNotificationItem {
-    id
-    title {
-      ...actionableFragment
-    } 
-    averageCompanyRating
-    companyRecommendedPercentage
-  }
 }
 
 fragment actionableFragment on Actionable {

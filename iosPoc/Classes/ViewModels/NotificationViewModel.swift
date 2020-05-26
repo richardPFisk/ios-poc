@@ -17,9 +17,4 @@ struct NotificationViewModel {
     var viewed: Bool
     var dateOnScreen:Date?
     var client = GraphQLPocCLient()
-//    var hasSpecificType: Bool {
-//        get {
-//            return applicationViewedViewModel != nil || asNewViewModel != nil
-//        }
-//    }
 }

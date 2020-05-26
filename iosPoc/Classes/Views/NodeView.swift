@@ -11,7 +11,6 @@ import SwiftUI
 struct NodeView: View {
     var viewModel: Notifications.Edge.Node
     var jobItemsViewModel: [JobViewModel]
-    var ratingItemsViewModel: [RatingViewModel]
     
     var theme: Dictionary<String, Color> = [:]
     var viewed: Bool
@@ -36,7 +35,6 @@ struct NodeView: View {
         self.theme = theme
         self.viewModel = viewModel
         self.jobItemsViewModel = viewModel.items.map { JobViewModel($0.asJob) }.compactMap { $0 }
-        self.ratingItemsViewModel = viewModel.items.map { RatingViewModel($0.asRatingNotificationItem) }.compactMap { $0 }
         
         self.viewed = viewed
     }
@@ -82,11 +80,6 @@ struct NodeView: View {
                             }
                         }
                     })
-                }
-                else if !self.interfaceTypesOnly && self.ratingItemsViewModel.count >= 1 {
-                    HStack {
-                        CompanyRating(self.ratingItemsViewModel[0])
-                    }.frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity, alignment: .center)
                 }
                 else {
                     ScrollView(.horizontal, content: {
