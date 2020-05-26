@@ -33,8 +33,6 @@ struct NotificationJobView : View {
                                             .aspectRatio(contentMode: .fit)
                                     })
                                     .frame(width: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0), height: CGFloat(Double(geo.size.width) * Double(2.0).squareRoot()/2.0))
-                            }.onAppear {
-//                                print("Global center \(job.title): \(geo.frame(in: .global).midX) x \(geo.frame(in: .global).midY)")
                             }
                         }
                     },

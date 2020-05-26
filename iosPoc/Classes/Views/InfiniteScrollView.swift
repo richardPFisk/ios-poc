@@ -22,12 +22,13 @@ public struct InfiniteScrollView: View {
     public var body: some View {
 
         if self.loadingFirstPage {
-            LoadingView()
+            LoadingView(self.theme)
                 .onAppear {
                     self.viewModel.getNewItems(currentListSize: 0) {
                         self.loadingFirstPage = false
                     }
                 }
+                .background(self.theme["backgroundSecondary"])
         }
         else {
             List {
