@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
   s.name             = 'iosPoc'
-  s.version          = '0.2.2'
+  s.version          = '0.2.3'
   s.summary          = 'iosPoc proof of concept'
 
   s.description      =  "Proof of concept for server driven UIs, using the notification centre domain"
